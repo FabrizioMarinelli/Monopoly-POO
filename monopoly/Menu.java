@@ -79,11 +79,8 @@ public class Menu {
     public Menu(){
         Scanner myObj = new Scanner(System.in);
 
-<<<<<<< HEAD
         System.out.println("Introduzca la cantidad de jugadorep");
-=======
         System.out.println("Introduzca la cantidad de jugadrrrrrr");
->>>>>>> origin/main
         int cantidadJugadores = myObj.nextInt();
         System.out.println("hay " + cantidadJugadores + " jugadores");
 
