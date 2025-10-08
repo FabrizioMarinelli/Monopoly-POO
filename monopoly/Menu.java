@@ -27,6 +27,8 @@ public class Menu {
     * Parámetro: cadena de caracteres (el comando).
     */
     private void analizarComando(String comando) {
+
+
     }
 
     /*Método que realiza las acciones asociadas al comando 'describir jugador'.
@@ -49,6 +51,20 @@ public class Menu {
 
     //Método que ejecuta todas las acciones relacionadas con el comando 'lanzar dados'.
     private void lanzarDados() {
+        //Creamos los dados con los que realizaremos las tiradas
+        Dado dado1 = new Dado();
+        Dado dado2 = new Dado();
+        //Hacemos las tiradas
+        int tiradaDado1 = dado1.hacerTirada();
+        int tiradaDado2  =dado1.hacerTirada();
+        //calculamos el valor total
+        int valorDados = tiradaDado1 + tiradaDado2;
+
+        System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
+        System.out.println("El jugador" + "avanza" + valorDados + "posiciones.");
+
+
+
     }
 
     /*Método que ejecuta todas las acciones realizadas con el comando 'comprar nombre_casilla'.
@@ -79,8 +95,7 @@ public class Menu {
     public Menu(){
         Scanner myObj = new Scanner(System.in);
 
-        System.out.println("Introduzca la cantidad de jugadoreeeeeeesesee");
-        System.out.println("Introduzca la cantidad de jugadrrrrrr");
+        System.out.println("Introduzca la cantidad de jugadores");
         int cantidadJugadores = myObj.nextInt();
         System.out.println("hay " + cantidadJugadores + " jugadores");
 

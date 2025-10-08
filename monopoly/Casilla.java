@@ -19,24 +19,123 @@ public class Casilla {
 
     //Constructores:
     public Casilla() {
+        this.avatares = new ArrayList<>();
+        this.duenho  = null;
     }//Parámetros vacíos
 
     /*Constructor para casillas tipo Solar, Servicios o Transporte:
     * Parámetros: nombre casilla, tipo (debe ser solar, serv. o transporte), posición en el tablero, valor y dueño.
      */
     public Casilla(String nombre, String tipo, int posicion, float valor, Jugador duenho) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.posicion = posicion;
+        this.valor = valor;
+        this.duenho = null;
+        this.avatares = new ArrayList<>();
+        this.impuesto = 0; //esto hay q cambiarlo mas adelante
+        this.hipoteca = 0;//esto tb hay que cambiarlos
     }
 
     /*Constructor utilizado para inicializar las casillas de tipo IMPUESTOS.
     * Parámetros: nombre, posición en el tablero, impuesto establecido y dueño.
      */
     public Casilla(String nombre, int posicion, float impuesto, Jugador duenho) {
+        this.nombre = nombre;
+        this.tipo = "Impuesto";
+        this.posicion = posicion;
+        this.valor = valor;
+        this.duenho = null;
+        this.avatares = new ArrayList<>();
+        this.impuesto = impuesto; //esto hay q cambiarlo mas adelante
+        this.hipoteca = 0;//esto tb hay que cambiarlos
     }
 
     /*Constructor utilizado para crear las otras casillas (Suerte, Caja de comunidad y Especiales):
     * Parámetros: nombre, tipo de la casilla (será uno de los que queda), posición en el tablero y dueño.
      */
     public Casilla(String nombre, String tipo, int posicion, Jugador duenho) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.posicion = posicion;
+        this.valor = valor;
+        this.duenho = null;
+        this.avatares = new ArrayList<>();
+        this.impuesto = 0;
+        this.hipoteca = 0;
+    }
+
+    //GETTERS Y SETTERS
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+    public int getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
+
+    public Jugador getDuenho() {
+        return duenho;
+    }
+
+    public void setDuenho(Jugador duenho) {
+        this.duenho = duenho;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
+
+    public float getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(float impuesto) {
+        this.impuesto = impuesto;
+    }
+
+    public float getHipoteca() {
+        return hipoteca;
+    }
+
+    public void setHipoteca(float hipoteca) {
+        this.hipoteca = hipoteca;
+    }
+
+    public ArrayList<Avatar> getAvatares() {
+        return avatares;
+    }
+
+    public void setAvatares(ArrayList<Avatar> avatares) {
+        this.avatares = avatares;
     }
 
     //Método utilizado para añadir un avatar al array de avatares en casilla.
