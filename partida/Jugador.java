@@ -19,6 +19,15 @@ public class Jugador {
 
     //Constructor vacío. Se usará para crear la banca.
     public Jugador() {
+
+        this.nombre = "Banca";
+        this.avatar = null; //La banca no tiene avatar
+        this.fortuna = Float.MAX_VALUE; //la banca tiene dinero infinito
+        this.enCarcel = false;
+        this.gastos = 0;
+        this.tiradasCarcel = 0;
+        this.vueltas = 0;
+        this.propiedades = new ArrayList<>();
     }
 
     /*Constructor principal. Requiere parámetros:
@@ -27,6 +36,81 @@ public class Jugador {
     * que dos avatares tengan mismo ID). Desde este constructor también se crea el avatar.
      */
     public Jugador(String nombre, String tipoAvatar, Casilla inicio, ArrayList<Avatar> avCreados) {
+        this.nombre = nombre;
+        this.fortuna = 15000000; //Fortuna inicial 15000000
+        this.enCarcel = false;
+        this.gastos = 0;
+        this.tiradasCarcel = 0;
+        this.vueltas = 0;
+        this.propiedades = new ArrayList<>();
+
+        //Por ultimo se crea el avatar
+
+        this.avatar = new Avatar(tipoAvatar,this, inicio, avCreados);
+    }
+    //GETTERS Y SETTERS
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
+
+    public float getFortuna() {
+        return fortuna;
+    }
+
+    public void setFortuna(float fortuna) {
+        this.fortuna = fortuna;
+    }
+
+    public float getGastos() {
+        return gastos;
+    }
+
+    public void setGastos(float gastos) {
+        this.gastos = gastos;
+    }
+
+    public boolean isEnCarcel() {
+        return enCarcel;
+    }
+
+    public void setEnCarcel(boolean enCarcel) {
+        this.enCarcel = enCarcel;
+    }
+
+    public int getTiradasCarcel() {
+        return tiradasCarcel;
+    }
+
+    public void setTiradasCarcel(int tiradasCarcel) {
+        this.tiradasCarcel = tiradasCarcel;
+    }
+
+    public int getVueltas() {
+        return vueltas;
+    }
+
+    public void setVueltas(int vueltas) {
+        this.vueltas = vueltas;
+    }
+
+    public ArrayList<Casilla> getPropiedades() {
+        return propiedades;
+    }
+
+    public void setPropiedades(ArrayList<Casilla> propiedades) {
+        this.propiedades = propiedades;
     }
 
     //Otros métodos:
