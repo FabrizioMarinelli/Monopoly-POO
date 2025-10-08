@@ -101,4 +101,9 @@ public class Menu {
 
     }
 
+    //Método que inicializa y muestra por pantalla el tablero
+    private void iniciarlizarTablero() {
+
+    }
+
 }
