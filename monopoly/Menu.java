@@ -1,6 +1,6 @@
 package monopoly;
 
-import java.util.ArrayList;
+import  java.util.ArrayList;
 import partida.*;
 import java.util.Scanner;
 
@@ -17,6 +17,12 @@ public class Menu {
     private Jugador banca; //El jugador banca.
     private boolean tirado; //Booleano para comprobar si el jugador que tiene el turno ha tirado o no.
     private boolean solvente; //Booleano para comprobar si el jugador que tiene el turno es solvente, es decir, si ha pagado sus deudas.
+    //Añadimos una nueva clase indice para saber cual es el jugador actual
+    private int indiceJugadorActual;
+    public Menu(){
+        this.banca = new Jugador();
+        this.tablero = new Tablero(banca);
+    }
 
 
     // Método para inciar una partida: crea los jugadores y avatares.
@@ -89,10 +95,14 @@ public class Menu {
     private void listarAvatares() {
     }
 
-    // Método que realiza las acciones asociadas al comando 'acabar turno'.
+
+    //Para qye quiero eso???
+    //Estaba en el esquelto???
+
+   /* // Método que realiza las acciones asociadas al comando 'acabar turno'.
     private void acabarTurno() {
     }
-    public Menu(){
+   /* public Menu(){
         Scanner myObj = new Scanner(System.in);
 
         System.out.println("Introduzca la cantidad de jugadores");
@@ -100,10 +110,17 @@ public class Menu {
         System.out.println("hay " + cantidadJugadores + " jugadores");
 
     }
-
+    */
     //Método que inicializa y muestra por pantalla el tablero
-    private void iniciarlizarTablero() {
-
+    public void iniciarTablero() {
+        System.out.println("Bienvenido al Monopoly creado por Carolina, Fabrizio y Maria");
+        System.out.println(tablero.toString());
     }
 
+    //Método para acabar el turno de un jugador
+    public void acabarTurno(){
+        indiceJugadorActual = (indiceJugadorActual+1)%jugadores.size();
+        Jugador siguiente = jugadores.get(indiceJugadorActual);
+        System.out.println("Turno del jugador: " + siguiente.getNombre());
+    }
 }

@@ -3,7 +3,6 @@ package monopoly;
 import partida.*;
 import java.util.ArrayList;
 
-
 public class Casilla {
 
     //Atributos:
@@ -183,4 +182,7 @@ public class Casilla {
         return "A";
     }
 
+    /*public getDescripcion (String nombre){
+
+    }*/
 }

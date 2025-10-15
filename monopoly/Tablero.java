@@ -6,6 +6,16 @@ import java.util.HashMap;
 
 
 public class Tablero {
+    // Códigos ANSI para colorear las casillas en la consola
+    private static final String RESET    = "\u001B[0m";
+    private static final String ROJO     = "\u001B[31m";
+    private static final String VERDE    = "\u001B[32m";
+    private static final String AMARILLO = "\u001B[33m";
+    private static final String AZUL     = "\u001B[34m";
+    private static final String MAGENTA  = "\u001B[35m";
+    private static final String CIAN     = "\u001B[36m";
+    private static final String BLANCO   = "\u001B[37m";
+
     //Atributos.
     private ArrayList<ArrayList<Casilla>> posiciones; //Posiciones del tablero: se define como un arraylist de arraylists de casillas (uno por cada lado del tablero).
     private HashMap<String, Grupo> grupos; //Grupos del tablero, almacenados como un HashMap con clave String (será el color del grupo).
@@ -19,6 +29,56 @@ public class Tablero {
         this.generarCasillas(); //Crea las 40 casillas llamando a las funciones insertar()
     }
 
+    //Método para colorear las casillas
+    private String colorearCasilla(Casilla c) {
+        String color = RESET;
+        //En funcion de lo que obtenga la cadena será un color u otro
+        if(c.getTipo().equalsIgnoreCase("solar")){
+            //Como en solares en funcion del número de idendtificacion se utilia un color u otro utilizamos un switch
+            switch (c.getNombre().toLowerCase()) {
+                case "solar1": case "solar2":
+                    color = BLANCO;
+                    break;
+                case "solar3": case "solar4": case "solar5":
+                    color = CIAN;
+                    break;
+                case "solar6": case "solar7": case "solar8":
+                    color = MAGENTA;
+                    break;
+                case "solar9": case "solar10": case "solar11":
+                    color = "\u001B[38;5;208m"; //Naranja
+                    break;
+                case "solar12": case "solar13": case "solar14":
+                    color = ROJO;
+                    break;
+                case "solar15": case "solar16": case "solar17":
+                    color = AMARILLO;
+                    break;
+                case "solar18": case "solar19": case "solar20":
+                    color = VERDE;
+                    break;
+                case "solar21": case "solar22":
+                    color = AZUL;
+                    break;
+                default:
+                    color = RESET;
+            }
+        }else if (c.getTipo().equalsIgnoreCase("suerte")){
+            color = BLANCO;
+        }else if (c.getTipo().equalsIgnoreCase("comunidad")){
+            color = BLANCO;
+        }else if (c.getTipo().equalsIgnoreCase("servicios")){
+            color = BLANCO;
+        }else if (c.getTipo().equalsIgnoreCase("transporte")){
+            color = BLANCO;
+        }else if (c.getTipo().equalsIgnoreCase("especial")){
+            color = BLANCO;
+        }
+
+        int tamano = c.getNombre().length();    //Lo usaremos para ajustar el espacio de todas las casillas al mismo tamaño
+        //Ponemos RESET porque no queremos que se siga escribiendo en el color que estamos utilizando en consola
+        return color + c.getNombre() + " ".repeat(10-tamano) + RESET;
+    }
 
     //Método para crear todas las casillas del tablero. Formado a su vez por cuatro métodos (1/lado).
     private void generarCasillas() {
@@ -41,7 +101,7 @@ public class Tablero {
         //Transporte -> (nombre, tipo, pos, valor, banca)
         //Suerte -> (nombre, tipo, pos, banca)
 
-        ladoNorte.add(new Casilla("Solar11", "Solar", 21, 2_200_000f, banca));
+        ladoNorte.add(new Casilla("Parking", "Especial", 20, banca));
         ladoNorte.add(new Casilla("Solar12", "Solar", 22, 2_200_000f, banca));
         ladoNorte.add(new Casilla("Suerte2", "Suerte", 23, banca));
         ladoNorte.add(new Casilla("Solar13", "Solar", 24, 2_200_000f, banca));
@@ -69,6 +129,7 @@ public class Tablero {
         ladoSur.add(new Casilla("Solar3",  "Solar",      7, 1_000_000f, banca));
         ladoSur.add(new Casilla("Suerte",  "Suerte",     8,  banca));
         ladoSur.add(new Casilla("Solar4",  "Solar",      9, 1_000_000f, banca));
+        ladoSur.add(new Casilla("Solar5",  "Solar",      9, 1_000_000f, banca));
         ladoSur.add(new Casilla("Carcel",  "Especial",  10,  banca));
 
         posiciones.add(ladoSur);
@@ -78,16 +139,15 @@ public class Tablero {
     private void insertarLadoOeste() {
         ArrayList<Casilla> ladoOeste = new ArrayList<>();
 
-        ladoOeste.add(new Casilla("Solar5", "Solar", 11, 1_200_000f, banca));
-        ladoOeste.add(new Casilla("Solar6", "Solar", 12, 1_400_000f, banca));
+        ladoOeste.add(new Casilla("Solar6", "Solar", 11, 1_200_000f, banca));
+        ladoOeste.add(new Casilla("Solar7", "Solar", 12, 1_400_000f, banca));
         ladoOeste.add(new Casilla("Serv1", "Servicios", 13, 500_000f, banca));
-        ladoOeste.add(new Casilla("Solar7", "Solar", 14, 1_400_000f, banca));
-        ladoOeste.add(new Casilla("Solar8", "Solar", 15, 1_600_000f, banca));
+        ladoOeste.add(new Casilla("Solar8", "Solar", 14, 1_400_000f, banca));
+        ladoOeste.add(new Casilla("Solar9", "Solar", 15, 1_600_000f, banca));
         ladoOeste.add(new Casilla("Trans2", "Transporte", 16, 500_000f, banca));
-        ladoOeste.add(new Casilla("Solar9", "Solar", 17, 1_800_000f, banca));
+        ladoOeste.add(new Casilla("Solar10", "Solar", 17, 1_800_000f, banca));
         ladoOeste.add(new Casilla("Caja2", "Comunidad", 18, banca));
-        ladoOeste.add(new Casilla("Solar10", "Solar", 19, 1_800_000f, banca));
-        ladoOeste.add(new Casilla("Parking", "Especial", 20, banca));
+        ladoOeste.add(new Casilla("Solar11", "Solar", 19, 1_800_000f, banca));
 
         posiciones.add(ladoOeste);
     }
@@ -115,30 +175,30 @@ public class Tablero {
         StringBuilder sb = new StringBuilder(); //StringBuilder para construir de manera eficiente el texto
 
         //Obtenemos las listas de las casillas de los diferentes lados del tablero
-        ArrayList<Casilla> norte = posiciones.get(0);
-        ArrayList<Casilla> sur = posiciones.get(1);
-        ArrayList<Casilla> este = posiciones.get(2);
-        ArrayList<Casilla> oeste = posiciones.get(3);
+        ArrayList<Casilla> norte = posiciones.get(2);
+        ArrayList<Casilla> sur = posiciones.get(0);
+        ArrayList<Casilla> este = posiciones.get(3);
+        ArrayList<Casilla> oeste = posiciones.get(1);
 
         //Imprimimos el lado norte
-        for (Casilla c: norte){
-            sb.append("|").append(c.getNombre());   //Permite que cada casilla se imprima así: |Contenido|
+        for(int i = 0; i < norte.size(); i++){
+            //Imprimimos la casilla del lado izquiero con sus barras laterales
+            sb.append("|" + colorearCasilla(norte.get(i)));
         }
         sb.append("|\n");   //Cuando se termine queremos que haga un salto de línea para que comience con los laterales
 
         // Imprimir los lados de los lados
         //En el for se imprimirá cada línea del medio del tablero
-        for (int i = 0; i < oeste.size(); i++){
+        for(int i = 0; i < oeste.size(); i++){
             //Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append(String.format("|%-10s", oeste.get(i).getNombre()));   //El '%' es un especificador de formato y '-10s' permite alinear el texto ocupando un tamaño de 10 caracteres
-            //Imprimimos varios de espacios en blaco
-            for (int j = 0; j < norte.size() - 2; j++){
-                //Metemos más espacios en el medio para que el tablero tenga forma rectangular
-                sb.append("           ");
-            }
+            sb.append("|" + colorearCasilla(oeste.get(i)) + "|");
+
+            //Metemos más espacios en el medio para que el tablero tenga forma rectangular
+            sb.append(" ".repeat(11*9-1));
+
             //Imprimimos la casilla de la derecha
             if (i < este.size()){
-                sb.append(String.format("%10s|", este.get(i).getNombre()));
+                sb.append("|" + colorearCasilla(este.get(i)) + "|");
             }
             //Imprimimos el salto de línea para comenzar a realizar la línea inferior
             sb.append("\n");
@@ -146,9 +206,9 @@ public class Tablero {
 
         //Imprimimos el lado sur del revés para que se pueda cerrar el rectángulo
         //Si no las casillas saldrían en un orden inverso
-        for (int i = sur.size() - 1; i >= 0; i--){
-            //Usamos get(i) para imprimir las casillas
-            sb.append("|").append(sur.get(i).getNombre());
+        for(int i = 0; i < sur.size(); i++){
+            //Imprimimos la casilla del lado izquiero con sus barras laterales
+            sb.append("|" + colorearCasilla(sur.get(i)));
         }
         sb.append("|\n");
         return sb.toString();
@@ -168,10 +228,9 @@ public class Tablero {
         return null;
     }
 
-    /*
-      TO DO:
-      Poner la instruccion en menu para probar la ejecucuión
-      Revisar hashmap colores
-      Revisar hashmap colores
-    */
+    //Método para describir la casilla
+   /* public Casilla describirCasilla(String nombre){
+
+
+    }*/
 }
