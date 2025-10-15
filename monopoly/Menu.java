@@ -64,12 +64,15 @@ public class Menu {
         int tiradaDado1 = dado1.hacerTirada();
         int tiradaDado2  =dado1.hacerTirada();
         //calculamos el valor total
-        int valorDados = tiradaDado1 + tiradaDado2;
+        int valorTirada = tiradaDado1 + tiradaDado2;
 
         System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
-        System.out.println("El jugador" + "avanza" + valorDados + "posiciones.");
+        System.out.println("El jugador" + "avanza" + valorTirada + "posiciones.");
 
-
+        //comprobamos si la tirada es doce, entonces el jugador vuelve a lanzar los dados
+        if (valorTirada == 12){
+            lanzarDados();
+        }
 
     }
 

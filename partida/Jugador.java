@@ -116,25 +116,69 @@ public class Jugador {
     //Otros métodos:
     //Método para añadir una propiedad al jugador. Como parámetro, la casilla a añadir.
     public void anhadirPropiedad(Casilla casilla) {
+        //se comprueba que la casilla no pertenezca ya al jugador
+        if(!propiedades.contains(casilla)){
+            propiedades.add(casilla);
+            casilla.setDuenho(this);
+        }
+
     }
 
     //Método para eliminar una propiedad del arraylist de propiedades de jugador.
     public void eliminarPropiedad(Casilla casilla) {
+        //se comprueba que la propiedad pertenezca al jugador
+        if(propiedades.contains(casilla)){
+            propiedades.remove(casilla);
+            casilla.setDuenho(null);
+        }
     }
 
     //Método para añadir fortuna a un jugador
     //Como parámetro se pide el valor a añadir. Si hay que restar fortuna, se pasaría un valor negativo.
     public void sumarFortuna(float valor) {
+        this.fortuna += valor;
     }
 
     //Método para sumar gastos a un jugador.
     //Parámetro: valor a añadir a los gastos del jugador (será el precio de un solar, impuestos pagados...).
     public void sumarGastos(float valor) {
+        this.gastos += valor;
     }
 
     /*Método para establecer al jugador en la cárcel. 
     * Se requiere disponer de las casillas del tablero para ello (por eso se pasan como parámetro).*/
     public void encarcelar(ArrayList<ArrayList<Casilla>> pos) {
+        Casilla carcel = null;
+        //Se busca la casilla de la carcel en el tablero
+        for(ArrayList<Casilla> lado : pos){
+            for(Casilla c : lado){
+                if(c.getNombre().equalsIgnoreCase("Cárcel")){
+                    //cuando se encuentra se guarda en la variable
+                    carcel = c;
+                    break;
+                }
+            }
+            if(carcel != null) break;
+        }
+
+        if(carcel != null) {
+            //elminamos al avatar de su casilla actual
+            this.avatar.getLugar().getAvatares().remove(this.avatar);
+
+            //Y lo movemos a la casilla de la carcel
+            this.avatar.setLugar(carcel);
+            carcel.getAvatares().add(this.avatar);
+
+            //ponemos el valor de carcel a true dentro del jugador
+            this.enCarcel = true;
+
+            //Inicializamos el contador de tiradas en la carcel
+            this.tiradasCarcel = 0;
+
+            System.out.println(nombre + "ha sido enviado a la carcel.");
+
+        }
+
     }
 
 }
