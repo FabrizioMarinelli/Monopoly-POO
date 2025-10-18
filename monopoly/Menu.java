@@ -3,7 +3,16 @@ package monopoly;
 import  java.util.ArrayList;
 import partida.*;
 import java.util.Scanner;
-
+import java.io.BufferedReader;
+import partida.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 public class Menu {
 
     //Atributos
@@ -19,21 +28,101 @@ public class Menu {
     private boolean solvente; //Booleano para comprobar si el jugador que tiene el turno es solvente, es decir, si ha pagado sus deudas.
     //Añadimos una nueva clase indice para saber cual es el jugador actual
     private int indiceJugadorActual;
-    public Menu(){
+    // Método para inciar una partida: crea los jugadores y avatares.
+
+
+    private void iniciarPartida() {
+        jugadores = new ArrayList<>();
+        avatares = new ArrayList<>();
+        System.out.println("modo sin documento...");
+        Scanner myObj = new Scanner(System.in);
+        //System.out.println("linea " + fileScanner.nextLine());
+        System.out.println("Indicar numero de jugadores: ");
+        System.out.println("Crear jugador (NombreJugador) (TipoAvatar) ");
+        String comando  = myObj.nextLine();
+        comando = comando.toLowerCase();
+        String[] comandoSplit = comando.split("[\\s]");
+
+    }
+    // Método para inciar una partida: crea los jugadores y avatares.
+    private void iniciarPartida(BufferedReader br) {
+        jugadores = new ArrayList<>();
+        avatares = new ArrayList<>();
+        Scanner fileScanner = new Scanner(br);
+        Scanner myObj = new Scanner(System.in);
+        try {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                linea = linea.toLowerCase();
+                analizarComando(linea);
+            }
+        }catch (java.io.IOException e){
+            System.err.println("Error leyendo el archivo: " + e.getMessage());
+
+        }
+
+    }
+    public Menu(String[] args){
         this.banca = new Jugador();
         this.tablero = new Tablero(banca);
-    }
+        if (args.length > 0) {
+            String ruta = args[0];
+            try (BufferedReader br = Files.newBufferedReader(Paths.get(ruta), StandardCharsets.UTF_8);){
+                //System.out.println("linea " + fileScanner.nextLine());
+                iniciarPartida(br);
 
+            } catch (IOException e) {
+                System.err.println("No pude abrir/leer el archivo: " + ruta + " -> " + e.getMessage());
+                return;
+            }
+        } else {
+            // Modo interactivo (terminal)
+            System.out.println("Entrando sin documento: ");
+            iniciarPartida();
 
-    // Método para inciar una partida: crea los jugadores y avatares.
-    private void iniciarPartida() {
+        }
     }
-    
     /*Método que interpreta el comando introducido y toma la accion correspondiente.
     * Parámetro: cadena de caracteres (el comando).
     */
     private void analizarComando(String comando) {
-
+        String[] comandoSplit;
+        comandoSplit = comando.split("[\\s]");
+        switch (comandoSplit[0]) {
+            case "crear":
+                System.out.println("Llamando a crear Jugador");
+                Jugador nuevoJugador = new  Jugador(comandoSplit[2],comandoSplit[3],tablero.encontrar_casilla("Salida"),avatares);
+                jugadores.add(nuevoJugador);
+                System.out.println("se ha creado el jugador " + nuevoJugador.getNombre() + " avatar " +nuevoJugador.getAvatar().getId());
+                break;
+            case "jugador":
+                System.out.println("Indicando jugador con el turno");
+                break;
+            case "listar":
+                System.out.println("listando jugadores/ o en venta");
+                break;
+            case "lanzar":
+                System.out.println("lanzando dados (con o sin forzado)");
+                break;
+            case "acabar":
+                System.out.println("acabar turno");
+                break;
+            case "salir":
+                System.out.println("Salir de la carcel");
+                break;
+            case "describir":
+                System.out.println("describir casilla o jugador");
+                break;
+            case "comprar":
+                System.out.println("comprar propiedad");
+                break;
+            case "ver":
+                System.out.println("mostrando tablero");
+                break;
+            default:
+                System.out.println("Comando invalido");
+                break;
+        }
 
     }
 
