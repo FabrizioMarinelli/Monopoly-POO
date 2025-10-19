@@ -32,8 +32,6 @@ public class Menu {
 
 
     private void iniciarPartida() {
-        jugadores = new ArrayList<>();
-        avatares = new ArrayList<>();
         System.out.println("modo sin documento...");
         Scanner myObj = new Scanner(System.in);
         //System.out.println("linea " + fileScanner.nextLine());
@@ -46,14 +44,13 @@ public class Menu {
     }
     // Método para inciar una partida: crea los jugadores y avatares.
     private void iniciarPartida(BufferedReader br) {
-        jugadores = new ArrayList<>();
-        avatares = new ArrayList<>();
         Scanner fileScanner = new Scanner(br);
         Scanner myObj = new Scanner(System.in);
         try {
             String linea;
             while ((linea = br.readLine()) != null) {
                 linea = linea.toLowerCase();
+                System.out.println(linea);
                 analizarComando(linea);
             }
         }catch (java.io.IOException e){
@@ -63,8 +60,11 @@ public class Menu {
 
     }
     public Menu(String[] args){
+        jugadores = new ArrayList<>();
+        avatares = new ArrayList<>();
         this.banca = new Jugador();
         this.tablero = new Tablero(banca);
+        indiceJugadorActual = 0;
         if (args.length > 0) {
             String ruta = args[0];
             try (BufferedReader br = Files.newBufferedReader(Paths.get(ruta), StandardCharsets.UTF_8);){
@@ -90,22 +90,56 @@ public class Menu {
         comandoSplit = comando.split("[\\s]");
         switch (comandoSplit[0]) {
             case "crear":
-                System.out.println("Llamando a crear Jugador");
-                Jugador nuevoJugador = new  Jugador(comandoSplit[2],comandoSplit[3],tablero.encontrar_casilla("Salida"),avatares);
-                jugadores.add(nuevoJugador);
-                System.out.println("se ha creado el jugador " + nuevoJugador.getNombre() + " avatar " +nuevoJugador.getAvatar().getId());
+                if ((comandoSplit.length == 4) && (comandoSplit[3].equals("coche")||comandoSplit[3].equals("esfinge")||comandoSplit[3].equals("sombrero")||comandoSplit[3].equals("pelota") ) ){
+                    Jugador nuevoJugador = new  Jugador(comandoSplit[2],comandoSplit[3],tablero.encontrar_casilla("Salida"),avatares);
+                    jugadores.add(nuevoJugador);
+                    System.out.println("""
+                            {
+                                nombre: %s,
+                                avatar: %s
+                            }
+                            """.formatted(nuevoJugador.getNombre(),nuevoJugador.getAvatar().getId()));
+                } else {
+                    System.out.println("comando invalido");
+                }
                 break;
             case "jugador":
-                System.out.println("Indicando jugador con el turno");
+                if(!jugadores.isEmpty()) {
+                    System.out.println("""
+                            {
+                                nombre: %s,
+                                avatar: %s
+                            }
+                            """.formatted(jugadores.get(indiceJugadorActual).getNombre(), jugadores.get(indiceJugadorActual).getAvatar().getId()));
+                } else {
+                    System.out.println("Todavia no hay jugadores");
+                }
                 break;
             case "listar":
+                if (comandoSplit.length != 2) {
+                    System.out.println("comando invalido");
+                }else{
+                    if (comandoSplit[1].equals("jugadores")) {
+                        for (Jugador jugador : jugadores) {
+                            System.out.println(jugador.toString());
+                        }
+                        
+                    } else if (comandoSplit[1].equals("enventa")) {
+                        System.out.println("propieda");
+                        // falta implementar
+                    }
+                }
                 System.out.println("listando jugadores/ o en venta");
                 break;
             case "lanzar":
                 System.out.println("lanzando dados (con o sin forzado)");
                 break;
             case "acabar":
-                System.out.println("acabar turno");
+                if (!jugadores.isEmpty()) {
+                    acabarTurno();
+                } else {
+                    System.out.println("Todavia no hay jugadores");
+                }
                 break;
             case "salir":
                 System.out.println("Salir de la carcel");
@@ -117,7 +151,7 @@ public class Menu {
                 System.out.println("comprar propiedad");
                 break;
             case "ver":
-                System.out.println("mostrando tablero");
+                System.out.println(tablero.toString());
                 break;
             default:
                 System.out.println("Comando invalido");
@@ -130,6 +164,12 @@ public class Menu {
     * Parámetro: comando introducido
      */
     private void descJugador(String[] partes) {
+        for (Jugador jugador1 : jugadores) {
+            if (jugador1.getNombre().equals(partes[0])) {
+                jugador1.toString();
+                break;
+            }
+        }
     }
 
     /*Método que realiza las acciones asociadas al comando 'describir avatar'.
@@ -212,7 +252,7 @@ public class Menu {
     //Método para acabar el turno de un jugador
     public void acabarTurno(){
         indiceJugadorActual = (indiceJugadorActual+1)%jugadores.size();
-        Jugador siguiente = jugadores.get(indiceJugadorActual);
-        System.out.println("Turno del jugador: " + siguiente.getNombre());
+        //Jugador siguiente = jugadores.get(indiceJugadorActual);
+        System.out.println("Turno del jugador: " + jugadores.get(indiceJugadorActual).getNombre());
     }
 }

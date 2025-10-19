@@ -181,4 +181,17 @@ public class Jugador {
 
     }
 
+    @Override
+    public String toString() {
+        return """
+                {
+                    nombre: %s
+                    fortuna: %.2f
+                    avatar: %s
+                    propiedades: %s
+                    hipotecas: %s
+                    edificios: %s
+                }
+                """.formatted(this.nombre, this.fortuna, this.avatar.getId(), this.propiedades.isEmpty()? "-" : this.propiedades.toString(), this.propiedades.isEmpty()? "-" : this.propiedades.toString(),this.propiedades.isEmpty()? "-" : this.propiedades.toString());
+    }
 }

@@ -5,6 +5,7 @@ listar jugadores
 lanzar dados
 lanzar dados 2+4
 acabar turno
+acabar turno
 salir cárcel
 describir Solar8
 describir Parking
