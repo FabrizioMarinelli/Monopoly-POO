@@ -209,6 +209,43 @@ public class Menu {
     * Parámetro: cadena de caracteres con el nombre de la casilla.
      */
     private void comprar(String nombre) {
+        //  Establecemos el jugador actual
+        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
+
+        // Declaramos una variable para buscar la casilla que queremos comprar
+        Casilla casillaComprar = tablero.encontrar_casilla(nombre);
+
+        // Declaramos el resto de varibles necesarias
+        float precio = casillaComprar.getValor();
+        String tipo = casillaComprar.getTipo().toLowerCase();
+
+        // Comprobamos si el tipo de la casilla que queremos comprar es correcta
+        if (!(tipo.equals("solar") || tipo.equals("transporte") || tipo.equals("servicios"))) {
+            System.out.println("La casilla " + nombre + " no se puede comprar.");
+            return;
+        }
+        // Comprobamos si la casilla pertenece a otro jugador o a la banca
+        if (!casillaComprar.getDuenho().equals(banca)) {
+            System.out.println("La casilla " + nombre + " pertenece a " + casillaComprar.getDuenho() + ".");
+            return;
+        }
+
+        // Comprobamos que el jugador tiene dienero suficiente para comprar la propiedad
+        if (jugadorActual.getFortuna() < precio) {
+            System.out.println("No tienes suficiente dinero para comprar " + nombre + ". Precio: " + precio);
+            return;
+        }
+
+        // Comprobamos que el jugador este en la casilla para poder comprarla
+        if (!jugadorActual.getAvatar().getLugar().equals(casillaComprar)) {
+            System.out.println("No estás en la casilla " + nombre + ". Solo puedes comprar donde estás.");
+            return;
+        }
+
+        // Permitimos que el jugador compre la casilla actual
+        casillaComprar.comprarCasilla(jugadorActual, banca);
+        System.out.println(jugadorActual.getNombre() + " ha comprado la casilla '" + nombre + "' por " + precio + ".");
+
     }
 
     //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'. 
