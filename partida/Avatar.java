@@ -81,6 +81,42 @@ public class Avatar {
     * EN ESTA VERSIÓN SUPONEMOS QUE valorTirada siemrpe es positivo.
      */
     public void moverAvatar(ArrayList<ArrayList<Casilla>> casillas, int valorTirada) {
+        //Vamos a meter todo el tablero en una sola lista(ordenada)
+        ArrayList<Casilla> tableroJunto = new ArrayList<>();
+        for(ArrayList<Casilla> lado : casillas){
+            tableroJunto.addAll(lado);
+        }
+
+        //declaramos las variables necesarias
+        int totalCasillas = tableroJunto.size();
+        int posicionActual = tableroJunto.indexOf(this.lugar);
+        int posicionNueva = (posicionActual + valorTirada) % totalCasillas;
+        Casilla nuevaCasilla = tableroJunto.get(posicionNueva);
+
+        //Comprobamos que la posicion sea correcta
+        if(posicionActual == -1 || posicionActual > 40){
+            System.out.println("Error: el avatar se encuentra en una casilla inválida");
+            return;
+        }
+
+        //Si el jugador pasa por la casilla de salida debe recibir 2 millones y sumar una vuelta a ese jugador
+        if ( posicionActual + valorTirada >= totalCasillas){
+            jugador.sumarFortuna(2000000);
+            jugador.setVueltas(jugador.getVueltas() + 1);
+            System.out.println(jugador.getNombre() + "ha pasado por la casilla de salida, recibe 2 millones de euros");
+        }
+        //Quitamos el avatar de la casilla actual para moverlo a la nueva casilla
+        this.lugar.getAvatares().remove(this);
+
+        //Movemos el avatar a la nueva casilla
+        this.lugar = nuevaCasilla;
+
+        //añadimos el avatar al registro de avatares de la casilla
+        nuevaCasilla.getAvatares().add(this);
+
+        //Imprimimos donde se encuentra el avatar ahora
+        System.out.println(jugador.getNombre() + "se ha movido a la casilla: " + nuevaCasilla.getNombre());
+
     }
 
     /*Método que permite generar un ID para un avatar. Sólo lo usamos en esta clase (por ello es privado).
