@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2277a9f5-8ac6-4285-865d-fd41e47863c8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/monopoly/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Casilla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Grupo.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Grupo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monopoly/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monopoly/MonopolyETSE.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/MonopolyETSE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monopoly/Tablero.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Tablero.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +72,9 @@
       <workItem from="1760077032933" duration="1204000" />
       <workItem from="1760281340861" duration="9018000" />
       <workItem from="1760432148010" duration="3653000" />
-      <workItem from="1760522774554" duration="268000" />
+      <workItem from="1760522774554" duration="7769000" />
+      <workItem from="1760689902683" duration="334000" />
+      <workItem from="1760887870754" duration="11719000" />
     </task>
     <servers />
   </component>

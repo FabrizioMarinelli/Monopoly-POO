@@ -53,6 +53,8 @@ public class Menu {
     * Parámetros: nombre de la casilla a describir.
     */
     private void descCasilla(String nombre) {
+        Casilla casilla = new Casilla();
+        System.out.println(casilla.infoCasilla(nombre));
     }
 
     //Método que ejecuta todas las acciones relacionadas con el comando 'lanzar dados'.
@@ -80,7 +82,19 @@ public class Menu {
     }
 
     //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'. 
-    private void salirCarcel() {
+    private void salirCarcel(Jugador jugador) {
+        //Si ha salido de la carcel por jugar una tarjeta de salida de la cárcel, la tarjeta debería de proporcionar un mensaje de aviso
+        if(jugador.getTiradasCarcel() > 2){
+            if(jugador.getFortuna() >= 500_000f){
+                jugador.setFortuna(jugador.getFortuna() - 500_000f);
+                System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
+            }else{
+                //jugador.setEliminado(true);
+            }
+        }
+        jugador.setTiradasCarcel(0);
+        jugador.setEnCarcel(false);
+        System.out.println(jugador.getNombre() + " ha salido de la cárcel.");
     }
 
     // Método que realiza las acciones asociadas al comando 'listar enventa'.
@@ -95,32 +109,16 @@ public class Menu {
     private void listarAvatares() {
     }
 
-
-    //Para qye quiero eso???
-    //Estaba en el esquelto???
-
-   /* // Método que realiza las acciones asociadas al comando 'acabar turno'.
+   // Método que realiza las acciones asociadas al comando 'acabar turno'.
     private void acabarTurno() {
+        indiceJugadorActual = (indiceJugadorActual+1)%jugadores.size();
+        Jugador siguiente = jugadores.get(indiceJugadorActual);
+        System.out.println("Turno del jugador: " + siguiente.getNombre());
     }
-   /* public Menu(){
-        Scanner myObj = new Scanner(System.in);
 
-        System.out.println("Introduzca la cantidad de jugadores");
-        int cantidadJugadores = myObj.nextInt();
-        System.out.println("hay " + cantidadJugadores + " jugadores");
-
-    }
-    */
     //Método que inicializa y muestra por pantalla el tablero
     public void iniciarTablero() {
         System.out.println("Bienvenido al Monopoly creado por Carolina, Fabrizio y Maria");
         System.out.println(tablero.toString());
-    }
-
-    //Método para acabar el turno de un jugador
-    public void acabarTurno(){
-        indiceJugadorActual = (indiceJugadorActual+1)%jugadores.size();
-        Jugador siguiente = jugadores.get(indiceJugadorActual);
-        System.out.println("Turno del jugador: " + siguiente.getNombre());
     }
 }

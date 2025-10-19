@@ -15,6 +15,15 @@ public class Casilla {
     private float impuesto; //Cantidad a pagar por caer en la casilla: el alquiler en solares/servicios/transportes o impuestos.
     private float hipoteca; //Valor otorgado por hipotecar una casilla
     private ArrayList<Avatar> avatares; //Avatares que están situados en la casilla.
+    private float valorHotel;
+    private float valorCasa;
+    private float valorPiscina;
+    private float valorPistaDeporte;
+    private float alquilerCasa;
+    private float alquilerHotel;
+    private float alquilerPiscina;
+    private float alquilerPistaDeporte;
+
 
     //Constructores:
     public Casilla() {
@@ -25,16 +34,42 @@ public class Casilla {
     /*Constructor para casillas tipo Solar, Servicios o Transporte:
     * Parámetros: nombre casilla, tipo (debe ser solar, serv. o transporte), posición en el tablero, valor y dueño.
      */
-    public Casilla(String nombre, String tipo, int posicion, float valor, Jugador duenho) {
+    public Casilla(String nombre,
+                   String tipo,
+                   int posicion,
+                   float valor,
+                   Jugador duenho,
+                   Grupo grupo,
+                   ArrayList<Avatar> avatares,
+                   float impuesto,
+                   float hipoteca,
+                   float valorHotel,
+                   float valorCasa,
+                   float valorPiscina,
+                   float valorPistaDeporte,
+                   float alquilerCasa,
+                   float alquilerHotel,
+                   float alquilerPiscina,
+                   float alquilerPistaDeporte) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.posicion = posicion;
         this.valor = valor;
-        this.duenho = null;
+        this.duenho = duenho;
+        this.grupo = grupo;
         this.avatares = new ArrayList<>();
-        this.impuesto = 0; //esto hay q cambiarlo mas adelante
-        this.hipoteca = 0;//esto tb hay que cambiarlos
+        this.impuesto = impuesto;
+        this.hipoteca = hipoteca;
+        this.valorHotel = valorHotel;
+        this.valorCasa = valorCasa;
+        this.valorPiscina = valorPiscina;
+        this.valorPistaDeporte = valorPistaDeporte;
+        this.alquilerCasa = alquilerCasa;
+        this.alquilerHotel = alquilerHotel;
+        this.alquilerPiscina = alquilerPiscina;
+        this.alquilerPistaDeporte = alquilerPistaDeporte;
     }
+
 
     /*Constructor utilizado para inicializar las casillas de tipo IMPUESTOS.
     * Parámetros: nombre, posición en el tablero, impuesto establecido y dueño.
@@ -58,7 +93,6 @@ public class Casilla {
         this.tipo = tipo;
         this.posicion = posicion;
         this.valor = valor;
-        this.duenho = null;
         this.avatares = new ArrayList<>();
         this.impuesto = 0;
         this.hipoteca = 0;
@@ -170,9 +204,47 @@ public class Casilla {
 
     /*Método para mostrar información sobre una casilla.
     * Devuelve una cadena con información específica de cada tipo de casilla.*/
-    public String infoCasilla() {
+    public String infoCasilla(String nombre) {
+        //Comprobamos que la casilla de la cual nos piden datos es un Solar
+        //La función equalsIgnoreCase() funciona igual que equals() menos porque omite la diferencia entre mayúsculas y minúsculas
+        //No es necesario que se realice ninguna modificación en la implementación de la funcion equalsIgnoreCase(),
+        //pues en este caso solo estamos comparando texto, no estamos comparando objetos.
+        if(!tipo.equalsIgnoreCase("Solar")){
+            return "Esta casilla no es un solar\n";
+        }
 
-        return "A";
+        StringBuilder sb = new StringBuilder();
+
+        //Información del tipo
+        sb.append("Tipo: ").append(tipo).append("\n");
+
+        //Información del grupo/color
+        if(grupo != null){
+            sb.append("Grupo: ").append(grupo.getColorGrupo()).append("\n");
+        }else{
+            sb.append("Grupo: No pertenece a un grupo\n");
+        }
+
+        //Información del propietario
+        if(duenho != null){
+            sb.append("Duenho: ").append(duenho.getNombre()).append("\n");
+        }else{
+            sb.append("Duenho: Banca\n");
+        }
+
+        //Información de valores varios
+        sb.append("Valor: ").append(valor).append("\n");
+        sb.append("Alquiler: ").append(impuesto).append("\n");
+        sb.append("valor hotel: ").append(String.format("%.0f", valorHotel)).append(",\n");
+        sb.append("valor casa: ").append(String.format("%.0f", valorCasa)).append(",\n");
+        sb.append("valor piscina: ").append(String.format("%.0f", valorPiscina)).append(",\n");
+        sb.append("valor pista de deporte: ").append(String.format("%.0f", valorPistaDeporte)).append(",\n");
+        sb.append("alquiler casa: ").append(String.format("%.0f", alquilerCasa)).append(",\n");
+        sb.append("alquiler hotel: ").append(String.format("%.0f", alquilerHotel)).append(",\n");
+        sb.append("alquiler piscina: ").append(String.format("%.0f", alquilerPiscina)).append(",\n");
+        sb.append("alquiler pista de deporte: ").append(String.format("%.0f", alquilerPistaDeporte)).append("\n");
+
+        return sb.toString();
     }
 
     /* Método para mostrar información de una casilla en venta.
@@ -181,8 +253,17 @@ public class Casilla {
     public String casEnVenta() {
         return "A";
     }
-
-    /*public getDescripcion (String nombre){
-
-    }*/
 }
+
+
+/*
+* TO DO
+*
+* FUNCION SALIR DE LA CARCEL
+* FUNCION MOSTRAR TABLERO
+*
+*
+* COMENTAR CODIGO
+* REPSARLO
+*
+* */
