@@ -227,8 +227,6 @@ public class Casilla {
 
                 return actual.getFortuna() >= 0; // true si no ha quebrado
 
-
-
             case "impuesto":
                 //Cuando se cae en la casilla de impuesto se debe pagar siempre
                 System.out.println(actual.getNombre() + " ha caído en la casilla de impuesto: " + nombre + ".");
@@ -279,7 +277,7 @@ public class Casilla {
                 System.out.println(actual.getNombre() + " ha caído en una casilla desconocida: " + nombre);
                 return true;
         }
-        }
+    }
 
     /*Método usado para comprar una casilla determinada. Parámetros:
     * - Jugador que solicita la compra de la casilla.
