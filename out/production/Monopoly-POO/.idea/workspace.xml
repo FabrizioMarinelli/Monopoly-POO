@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="900b8216-b7fe-4f4a-ba18-0b6fe9176643" name="Changes" comment="" />
+    <list default="true" id="900b8216-b7fe-4f4a-ba18-0b6fe9176643" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/partida/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Jugador.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,7 +25,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.MonopolyETSE.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.MonopolyETSE.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -83,7 +85,9 @@
       <workItem from="1759918101878" duration="7386000" />
       <workItem from="1760524957844" duration="6223000" />
       <workItem from="1760742869443" duration="9418000" />
-      <workItem from="1760832710409" duration="1292000" />
+      <workItem from="1760832710409" duration="6359000" />
+      <workItem from="1760949433608" duration="3775000" />
+      <workItem from="1760958007595" duration="4452000" />
     </task>
     <servers />
   </component>
@@ -91,6 +95,14 @@
     <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.IllegalFormatConversionException" package="java.util" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="nuevoJugador.avatar.jugador" />

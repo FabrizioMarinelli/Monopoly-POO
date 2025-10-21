@@ -1,5 +1,5 @@
-crear jugador Pedro coche
-crear jugador Maria pelota
+crear jugador Pedro esfinge
+crear jugador Laura pelota
 jugador
 listar jugadores
 lanzar dados
@@ -9,6 +9,7 @@ acabar turno
 salir cárcel
 describir Solar8
 describir Parking
-describir jugador Maria
+describir jugador Laura
+describir jugador pepe
 comprar Mostoles
 listar enventa

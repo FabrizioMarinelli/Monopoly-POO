@@ -15,6 +15,15 @@ public class Casilla {
     private float impuesto; //Cantidad a pagar por caer en la casilla: el alquiler en solares/servicios/transportes o impuestos.
     private float hipoteca; //Valor otorgado por hipotecar una casilla
     private ArrayList<Avatar> avatares; //Avatares que están situados en la casilla.
+    private float valorHotel;
+    private float valorCasa;
+    private float valorPiscina;
+    private float valorPistaDeporte;
+    private float alquilerCasa;
+    private float alquilerHotel;
+    private float alquilerPiscina;
+    private float alquilerPistaDeporte;
+
 
     //Constructores:
     public Casilla() {
@@ -23,21 +32,47 @@ public class Casilla {
     }//Parámetros vacíos
 
     /*Constructor para casillas tipo Solar, Servicios o Transporte:
-    * Parámetros: nombre casilla, tipo (debe ser solar, serv. o transporte), posición en el tablero, valor y dueño.
+     * Parámetros: nombre casilla, tipo (debe ser solar, serv. o transporte), posición en el tablero, valor y dueño.
      */
-    public Casilla(String nombre, String tipo, int posicion, float valor, Jugador duenho) {
+    public Casilla(String nombre,
+                   String tipo,
+                   int posicion,
+                   float valor,
+                   Jugador duenho,
+                   Grupo grupo,
+                   ArrayList<Avatar> avatares,
+                   float impuesto,
+                   float hipoteca,
+                   float valorHotel,
+                   float valorCasa,
+                   float valorPiscina,
+                   float valorPistaDeporte,
+                   float alquilerCasa,
+                   float alquilerHotel,
+                   float alquilerPiscina,
+                   float alquilerPistaDeporte) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.posicion = posicion;
         this.valor = valor;
-        this.duenho = null;
+        this.duenho = duenho;
+        this.grupo = grupo;
         this.avatares = new ArrayList<>();
-        this.impuesto = 0; //esto hay q cambiarlo mas adelante
-        this.hipoteca = 0;//esto tb hay que cambiarlos
+        this.impuesto = impuesto;
+        this.hipoteca = hipoteca;
+        this.valorHotel = valorHotel;
+        this.valorCasa = valorCasa;
+        this.valorPiscina = valorPiscina;
+        this.valorPistaDeporte = valorPistaDeporte;
+        this.alquilerCasa = alquilerCasa;
+        this.alquilerHotel = alquilerHotel;
+        this.alquilerPiscina = alquilerPiscina;
+        this.alquilerPistaDeporte = alquilerPistaDeporte;
     }
 
+
     /*Constructor utilizado para inicializar las casillas de tipo IMPUESTOS.
-    * Parámetros: nombre, posición en el tablero, impuesto establecido y dueño.
+     * Parámetros: nombre, posición en el tablero, impuesto establecido y dueño.
      */
     public Casilla(String nombre, int posicion, float impuesto, Jugador duenho) {
         this.nombre = nombre;
@@ -51,14 +86,13 @@ public class Casilla {
     }
 
     /*Constructor utilizado para crear las otras casillas (Suerte, Caja de comunidad y Especiales):
-    * Parámetros: nombre, tipo de la casilla (será uno de los que queda), posición en el tablero y dueño.
+     * Parámetros: nombre, tipo de la casilla (será uno de los que queda), posición en el tablero y dueño.
      */
     public Casilla(String nombre, String tipo, int posicion, Jugador duenho) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.posicion = posicion;
         this.valor = valor;
-        this.duenho = null;
         this.avatares = new ArrayList<>();
         this.impuesto = 0;
         this.hipoteca = 0;
@@ -157,17 +191,17 @@ public class Casilla {
     }
 
     /*Método para evaluar qué hacer en una casilla concreta. Parámetros:
-    * - Jugador cuyo avatar está en esa casilla.
-    * - La banca (para ciertas comprobaciones).
-    * - El valor de la tirada: para determinar impuesto a pagar en casillas de servicios.
-    * Valor devuelto: true en caso de ser solvente (es decir, de cumplir las deudas), y false
-    * en caso de no cumplirlas.*/
+     * - Jugador cuyo avatar está en esa casilla.
+     * - La banca (para ciertas comprobaciones).
+     * - El valor de la tirada: para determinar impuesto a pagar en casillas de servicios.
+     * Valor devuelto: true en caso de ser solvente (es decir, de cumplir las deudas), y false
+     * en caso de no cumplirlas.*/
     public boolean evaluarCasilla(Jugador actual, Jugador banca, int tirada) {
         //comprobamos que el tipo pasado sea correcto
         if(tipo == null) tipo = "";
         //se hace un switch para definir el funcionamineto de unas casillas o de otras
         switch (tipo.toLowerCase()){
-            case "solar": case "servicios": case "transporte":
+            case "solar":
                 //Se comprueba si la propiedad tiene dueño o no
                 if(duenho == null || duenho.equals(banca)){
                     System.out.println(actual.getNombre() + " ha caído en " + nombre + ". Está en venta por " + valor + "€.");
@@ -180,6 +214,7 @@ public class Casilla {
                 }
                 //Si la propiedad tiene un propietario distinto al jugador que cayo en ella, debeb de cobrarle el alquiler
                 System.out.println(actual.getNombre() + " ha caído en " + nombre + ", propiedad de " + duenho.getNombre() + ".");
+                System.out.println("Debe pagar " + impuesto + "€ de alquiler.");
 
 
                 //se resta el alquiler a la fortuna del jugador que cayó en la casilla
@@ -193,6 +228,70 @@ public class Casilla {
 
                 return actual.getFortuna() >= 0; // true si no ha quebrado
 
+            case "servicios":
+                //comprobamos que el duenho sea la banca y si queremos podemos comprar
+                if (duenho == null || duenho.equals(banca)) {
+                    System.out.println(actual.getNombre() + " ha caído en el servicio " + nombre + ". Está en venta por " + valor + "€.");
+                    return true;
+                }
+                //Si el propietario es el jugador no tiene que pagar nada
+                if (duenho.equals(actual)) {
+                    System.out.println(actual.getNombre() + " ha caído en su propio servicio. No paga nada.");
+                    return true;
+                }
+
+                // Contar cuántos servicios tiene el dueño
+                int numServicios = 0;
+                for (Casilla c : duenho.getPropiedades()) {
+                    if (c.getTipo().equalsIgnoreCase("servicios")) numServicios++;
+                }
+
+                // Calcular multiplicador segun el numero de servicios que tenga el dueño
+                int multiplicador = (numServicios == 2) ? 10 : 4;
+                //Calulamos el percio del alquiler
+                float alquilerServicio = multiplicador * tirada * impuesto;
+
+                System.out.println(actual.getNombre() + " ha caído en el servicio " + nombre + " de " + duenho.getNombre() + ". Debe pagar " + alquilerServicio + "€ (" + multiplicador + " × tirada × factorServicio).");
+
+                //Cambiamos la fortuna del jugador actual y del dueño del servicio
+                actual.sumarFortuna(-alquilerServicio);
+                actual.sumarGastos(alquilerServicio);
+                duenho.sumarFortuna(alquilerServicio);
+
+                //Esta linea indica si el jugador aun tiene dinero
+                return actual.getFortuna() >= 0;
+
+            case "transporte":
+                //Comprobamos si la casilla perenece a la banca
+                if (duenho == null || duenho.equals(banca)) {
+                    System.out.println(actual.getNombre() + " ha caído en el transporte " + nombre + ". Está en venta por " + valor + "€.");
+                    return true;
+                }
+                //Comprobamos que la casilla no pertenezca ya al jugador
+                if (duenho.equals(actual)) {
+                    System.out.println(actual.getNombre() + " ha caído en su propio transporte. No paga nada.");
+                    return true;
+                }
+
+                // Calcular alquiler total: suma de los alquileres (impuestos) de todos los transportes del dueño
+                float alquilerTotal = 0;
+                int numTransportes = 0;
+                for (Casilla c : duenho.getPropiedades()) {
+                    if (c.getTipo().equalsIgnoreCase("transporte")) {
+                        alquilerTotal += c.getImpuesto();
+                        numTransportes++;
+                    }
+                }
+
+                System.out.println(actual.getNombre() + " ha caído en el transporte " + nombre + " de " + duenho.getNombre() + ". El propietario posee " + numTransportes + " transportes.");
+                System.out.println("Debe pagar un alquiler total de " + alquilerTotal + "€.");
+
+                //Se actualizan las fortunas del jugador y del dueño de la casilla
+                actual.sumarFortuna(-alquilerTotal);
+                actual.sumarGastos(alquilerTotal);
+                duenho.sumarFortuna(alquilerTotal);
+
+                return actual.getFortuna() >= 0;
 
 
             case "impuesto":
@@ -245,11 +344,11 @@ public class Casilla {
                 System.out.println(actual.getNombre() + " ha caído en una casilla desconocida: " + nombre);
                 return true;
         }
-        }
+    }
 
     /*Método usado para comprar una casilla determinada. Parámetros:
-    * - Jugador que solicita la compra de la casilla.
-    * - Banca del monopoly (es el dueño de las casillas no compradas aún).*/
+     * - Jugador que solicita la compra de la casilla.
+     * - Banca del monopoly (es el dueño de las casillas no compradas aún).*/
     public void comprarCasilla(Jugador solicitante, Jugador banca) {
         //se comprueba si la casilla pertenece a la banca o no
         if(duenho == null || duenho.equals(banca)){
@@ -275,18 +374,56 @@ public class Casilla {
     }
 
     /*Método para añadir valor a una casilla. Utilidad:
-    * - Sumar valor a la casilla de parking.
-    * - Sumar valor a las casillas de solar al no comprarlas tras cuatro vueltas de todos los jugadores.
-    * Este método toma como argumento la cantidad a añadir del valor de la casilla.*/
+     * - Sumar valor a la casilla de parking.
+     * - Sumar valor a las casillas de solar al no comprarlas tras cuatro vueltas de todos los jugadores.
+     * Este método toma como argumento la cantidad a añadir del valor de la casilla.*/
     public void sumarValor(float suma) {
         this.valor += suma;
     }
 
     /*Método para mostrar información sobre una casilla.
-    * Devuelve una cadena con información específica de cada tipo de casilla.*/
-    public String infoCasilla() {
+     * Devuelve una cadena con información específica de cada tipo de casilla.*/
+    public String infoCasilla(String nombre) {
+        //Comprobamos que la casilla de la cual nos piden datos es un Solar
+        //La función equalsIgnoreCase() funciona igual que equals() menos porque omite la diferencia entre mayúsculas y minúsculas
+        //No es necesario que se realice ninguna modificación en la implementación de la funcion equalsIgnoreCase(),
+        //pues en este caso solo estamos comparando texto, no estamos comparando objetos.
+        if(!tipo.equalsIgnoreCase("Solar")){
+            return "Esta casilla no es un solar\n";
+        }
 
-        return "A";
+        StringBuilder sb = new StringBuilder();
+
+        //Información del tipo
+        sb.append("Tipo: ").append(tipo).append("\n");
+
+        //Información del grupo/color
+        if(grupo != null){
+            sb.append("Grupo: ").append(grupo.getColorGrupo()).append("\n");
+        }else{
+            sb.append("Grupo: No pertenece a un grupo\n");
+        }
+
+        //Información del propietario
+        if(duenho != null){
+            sb.append("Duenho: ").append(duenho.getNombre()).append("\n");
+        }else{
+            sb.append("Duenho: Banca\n");
+        }
+
+        //Información de valores varios
+        sb.append("Valor: ").append(valor).append("\n");
+        sb.append("Alquiler: ").append(impuesto).append("\n");
+        sb.append("valor hotel: ").append(String.format("%.0f", valorHotel)).append(",\n");
+        sb.append("valor casa: ").append(String.format("%.0f", valorCasa)).append(",\n");
+        sb.append("valor piscina: ").append(String.format("%.0f", valorPiscina)).append(",\n");
+        sb.append("valor pista de deporte: ").append(String.format("%.0f", valorPistaDeporte)).append(",\n");
+        sb.append("alquiler casa: ").append(String.format("%.0f", alquilerCasa)).append(",\n");
+        sb.append("alquiler hotel: ").append(String.format("%.0f", alquilerHotel)).append(",\n");
+        sb.append("alquiler piscina: ").append(String.format("%.0f", alquilerPiscina)).append(",\n");
+        sb.append("alquiler pista de deporte: ").append(String.format("%.0f", alquilerPistaDeporte)).append("\n");
+
+        return sb.toString();
     }
 
     /* Método para mostrar información de una casilla en venta.
@@ -295,8 +432,4 @@ public class Casilla {
     public String casEnVenta() {
         return "A";
     }
-
-    /*public getDescripcion (String nombre){
-
-    }*/
 }

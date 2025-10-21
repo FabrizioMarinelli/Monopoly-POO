@@ -16,6 +16,8 @@ public class Jugador {
     private int tiradasCarcel; //Cuando está en la carcel, contará las tiradas sin éxito que ha hecho allí para intentar salir (se usa para limitar el numero de intentos).
     private int vueltas; //Cuenta las vueltas dadas al tablero.
     private ArrayList<Casilla> propiedades; //Propiedades que posee el jugador.
+    private ArrayList<Casilla> hipotecas;
+    private ArrayList<Casilla> edificios;
 
     //Constructor vacío. Se usará para crear la banca.
     public Jugador() {
@@ -35,7 +37,7 @@ public class Jugador {
     * avatares creados (usado para dos propósitos: evitar que dos jugadores tengan el mismo nombre y
     * que dos avatares tengan mismo ID). Desde este constructor también se crea el avatar.
      */
-    public Jugador(String nombre, String tipoAvatar, Casilla inicio, ArrayList<Avatar> avCreados) {
+    public Jugador(String nombre, String tipoAvatar, Casilla inicio, ArrayList<Avatar> avCreados, ArrayList<Jugador> jugadoresCreados) {
         this.nombre = nombre;
         this.fortuna = 15000000; //Fortuna inicial 15000000
         this.enCarcel = false;
@@ -43,7 +45,7 @@ public class Jugador {
         this.tiradasCarcel = 0;
         this.vueltas = 0;
         this.propiedades = new ArrayList<>();
-
+        jugadoresCreados.add(this);
         //Por ultimo se crea el avatar
 
         this.avatar = new Avatar(tipoAvatar,this, inicio, avCreados);
