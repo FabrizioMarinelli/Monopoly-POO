@@ -1,15 +1,24 @@
-crear jugador Pedro esfinge
-crear jugador Laura pelota
-jugador
+crear jugador Pedro pelota
+crear jugador Maria coche
 listar jugadores
-lanzar dados
-lanzar dados 2+4
+jugador
+lanzar dados 3+3
+comprar Solar4
+lanzar dados 1+1
+comprar Solar4
+listar enventa
+describir jugador Pedro
+lanzar dados 1+1
 acabar turno
+jugador
+lanzar dados 4+4
+describir jugador Maria
+comprar Solar4
+lanzar dados 1+1
+salir cárcel
+lanzar dados 1+2
 acabar turno
 salir cárcel
-describir Solar8
-describir Parking
-describir jugador Laura
-describir jugador pepe
-comprar Mostoles
-listar enventa
+describir Solar4
+lanzar dados
+ver tablero

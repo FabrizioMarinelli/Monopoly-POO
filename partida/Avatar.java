@@ -115,7 +115,7 @@ public class Avatar {
         nuevaCasilla.getAvatares().add(this);
 
         //Imprimimos donde se encuentra el avatar ahora
-        System.out.println(jugador.getNombre() + "se ha movido a la casilla: " + nuevaCasilla.getNombre());
+        //System.out.println(jugador.getNombre() + "se ha movido a la casilla: " + nuevaCasilla.getNombre());
 
     }
 

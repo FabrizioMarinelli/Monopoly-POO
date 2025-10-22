@@ -171,17 +171,25 @@ public class Tablero {
         if(c.getAvatares() != null && !c.getAvatares().isEmpty()){
             sb.append(" &");
             for (Avatar a : c.getAvatares()) {
-                Jugador j = a.getJugador();
-                //Comprobamos que los datos del jugador no estén vacíos
-                if (j != null && j.getNombre() != null && !j.getNombre().isEmpty()){
-                    //En caso de que no lo sean pasamos us inicial a mayúsculas
-                    //Así tenemos un "formato" específico para los avatares
-                    char inicial = Character.toUpperCase(j.getNombre().charAt(0));
-                    sb.append(inicial);
+                //Comprobamos que existan avatares en ese momento en la casilla
+                if (c.getAvatares() != null && !c.getAvatares().isEmpty()){
+                    //Imprimimos el identificador del avatar
+                    sb.append(a.getId());
                 }
             }
         }
-        return sb.toString();
+        //Establecemos una longitud fija
+        String texto = sb.toString();
+        int longitud = 6;
+
+        if(texto.length() < longitud){
+            //Rellenamos con espacios a la derecha
+            texto += " ".repeat(longitud - texto.length());
+        }else if(texto.length() > longitud) {
+            //Si se pasa de tamaño lo recortamos
+            texto = texto.substring(0, longitud);
+        }
+        return texto;
     }
 
 
@@ -210,7 +218,7 @@ public class Tablero {
             sb.append("|" + colorearCasilla(oeste.get(i)) + mostrarAvatares(oeste.get(i)) + "|");
 
             //Metemos más espacios en el medio para que el tablero tenga forma rectangular
-            sb.append(" ".repeat(11*9-1));
+            sb.append(" ".repeat(17*9-1));
 
             //Imprimimos la casilla de la derecha
             if (i < este.size()){
@@ -232,7 +240,7 @@ public class Tablero {
     //Método usado para buscar la casilla con el nombre pasado como argumento:
     public Casilla encontrar_casilla(String nombre){
         //Recorremos las listas
-        for (ArrayList<Casilla> lado : posiciones){
+        for (ArrayList<Casilla> lado : this.posiciones){
             for (Casilla c : lado){
                 //Devolvemos cada casillaº
                 if (c.getNombre().equalsIgnoreCase(nombre)){

@@ -351,25 +351,27 @@ public class Casilla {
      * - Banca del monopoly (es el dueño de las casillas no compradas aún).*/
     public void comprarCasilla(Jugador solicitante, Jugador banca) {
         //se comprueba si la casilla pertenece a la banca o no
-        if(duenho == null || duenho.equals(banca)){
+        if(this.duenho == null || this.duenho.equals(banca)){
             //se comprueba que el solicitante tenga el dinero suficiente para comprar la casilla
-            if(solicitante.getFortuna()>= valor){
+            if(solicitante.getFortuna()>= this.valor){
                 //Se le resta el valor de la propiedad a la fortuna del jugador
-                solicitante.sumarFortuna(-valor);
+                solicitante.sumarFortuna(-(this.valor));
                 //Se le suma el valor a los gastos del solicitante
-                solicitante.sumarGastos(valor);
+                solicitante.sumarGastos(this.valor);
                 //Y se suma ese valor a la fortuna de la banca
-                banca.sumarFortuna(valor);
+                banca.sumarFortuna(this.valor);
 
                 //se añade la propieda a las propiedades del solicitante
                 this.duenho = solicitante;
                 solicitante.anhadirPropiedad(this);
-                System.out.println("El jugador" + solicitante.getNombre() + "haa compprado la propiedad:" + nombre);
-            }
-            System.out.println("El jugador" + solicitante.getNombre() + "no dispone del dinero necesario para comprar la propiedad.");
+                System.out.println("El jugador " + solicitante.getNombre() + " ha comprado la propiedad:" + this.nombre);
 
+            }else {
+                System.out.println("El jugador" + solicitante.getNombre() + "no dispone del dinero necesario para comprar la propiedad.");
+            }
+            return;
         }
-        System.out.println("La propiedad ya pertenece a " +  duenho.getNombre());
+        System.out.println("La propiedad ya pertenece a " +  this.duenho.getNombre());
 
     }
 
@@ -388,40 +390,40 @@ public class Casilla {
         //La función equalsIgnoreCase() funciona igual que equals() menos porque omite la diferencia entre mayúsculas y minúsculas
         //No es necesario que se realice ninguna modificación en la implementación de la funcion equalsIgnoreCase(),
         //pues en este caso solo estamos comparando texto, no estamos comparando objetos.
-        if(!tipo.equalsIgnoreCase("Solar")){
+        if(!this.tipo.equalsIgnoreCase("Solar")){
             return "Esta casilla no es un solar\n";
         }
 
         StringBuilder sb = new StringBuilder();
 
         //Información del tipo
-        sb.append("Tipo: ").append(tipo).append("\n");
+        sb.append("Tipo: ").append(this.tipo).append("\n");
 
         //Información del grupo/color
-        if(grupo != null){
-            sb.append("Grupo: ").append(grupo.getColorGrupo()).append("\n");
+        if(this.grupo != null){
+            sb.append("Grupo: ").append(this.grupo.getColorGrupo()).append("\n");
         }else{
             sb.append("Grupo: No pertenece a un grupo\n");
         }
 
         //Información del propietario
-        if(duenho != null){
-            sb.append("Duenho: ").append(duenho.getNombre()).append("\n");
+        if(this.duenho != null){
+            sb.append("Duenho: ").append(this.duenho.getNombre()).append("\n");
         }else{
             sb.append("Duenho: Banca\n");
         }
 
         //Información de valores varios
-        sb.append("Valor: ").append(valor).append("\n");
-        sb.append("Alquiler: ").append(impuesto).append("\n");
-        sb.append("valor hotel: ").append(String.format("%.0f", valorHotel)).append(",\n");
-        sb.append("valor casa: ").append(String.format("%.0f", valorCasa)).append(",\n");
-        sb.append("valor piscina: ").append(String.format("%.0f", valorPiscina)).append(",\n");
-        sb.append("valor pista de deporte: ").append(String.format("%.0f", valorPistaDeporte)).append(",\n");
-        sb.append("alquiler casa: ").append(String.format("%.0f", alquilerCasa)).append(",\n");
-        sb.append("alquiler hotel: ").append(String.format("%.0f", alquilerHotel)).append(",\n");
-        sb.append("alquiler piscina: ").append(String.format("%.0f", alquilerPiscina)).append(",\n");
-        sb.append("alquiler pista de deporte: ").append(String.format("%.0f", alquilerPistaDeporte)).append("\n");
+        sb.append("Valor: ").append(this.valor).append("\n");
+        sb.append("Alquiler: ").append(this.impuesto).append("\n");
+        sb.append("valor hotel: ").append(String.format("%.0f", this.valorHotel)).append(",\n");
+        sb.append("valor casa: ").append(String.format("%.0f", this.valorCasa)).append(",\n");
+        sb.append("valor piscina: ").append(String.format("%.0f", this.valorPiscina)).append(",\n");
+        sb.append("valor pista de deporte: ").append(String.format("%.0f", this.valorPistaDeporte)).append(",\n");
+        sb.append("alquiler casa: ").append(String.format("%.0f", this.alquilerCasa)).append(",\n");
+        sb.append("alquiler hotel: ").append(String.format("%.0f", this.alquilerHotel)).append(",\n");
+        sb.append("alquiler piscina: ").append(String.format("%.0f", this.alquilerPiscina)).append(",\n");
+        sb.append("alquiler pista de deporte: ").append(String.format("%.0f", this.alquilerPistaDeporte)).append("\n");
 
         return sb.toString();
     }
@@ -431,5 +433,18 @@ public class Casilla {
      */
     public String casEnVenta() {
         return "A";
+    }
+
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Casilla)) return false;
+        Casilla other = (Casilla) o;
+        if (this.nombre == null) return other.nombre == null;
+        return this.nombre.equals(other.nombre);
     }
 }
