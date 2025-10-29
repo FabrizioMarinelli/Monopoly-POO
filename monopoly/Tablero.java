@@ -25,14 +25,22 @@ public class Tablero {
         this.banca = banca; //Guarda una referencia al objeto jugador que actuará como la banca. Así se permite que el tablero sepa quien es la banca
         this.posiciones =  new ArrayList<>();   //Guardará los cuatro lados del tablero
         this.grupos = new HashMap<>();  //Almacenará los diferentes gurpos de solares organizados según su color
-        this.generarCasillas(); //Crea las 40 casillas llamando a las funciones insertar()
+        Grupo g1  = new Grupo(encontrar_casilla("Solar1"),encontrar_casilla("Solar2"),"BLANCO");
+        Grupo g2  = new Grupo(encontrar_casilla("Solar3"),encontrar_casilla("Solar4"),encontrar_casilla("Solar5"),"CIAN");
+        Grupo g3  =new Grupo(encontrar_casilla("Solar6"),encontrar_casilla("Solar7"),encontrar_casilla("Solar8"),"MAGENTA");
+        Grupo g4  =new Grupo(encontrar_casilla("Solar9"),encontrar_casilla("Solar10"),encontrar_casilla("Solar11"),"NARANJA");
+        Grupo g5  =new Grupo(encontrar_casilla("Solar12"),encontrar_casilla("Solar13"),encontrar_casilla("Solar14"),"ROJO");
+        Grupo g6  =new Grupo(encontrar_casilla("Solar15"),encontrar_casilla("Solar16"),encontrar_casilla("Solar17"),"AMARILLO");
+        Grupo g7  =new Grupo(encontrar_casilla("Solar18"),encontrar_casilla("Solar19"),encontrar_casilla("Solar20"),"VERDE");
+        Grupo g8  =new Grupo(encontrar_casilla("Solar21"),encontrar_casilla("Solar22"),"AZUL");
+        this.generarCasillas(g1, g2, g3, g4, g5, g6, g7, g8); //Crea las 40 casillas llamando a las funciones insertar()
+
     }
 
     //Getter para la posiciones
     public ArrayList<ArrayList<Casilla>> getPosiciones() {
         return posiciones;
     }
-
 
     //Método para colorear las casillas
     private String colorearCasilla(Casilla c) {
@@ -86,79 +94,79 @@ public class Tablero {
     }
 
     //Método para crear todas las casillas del tablero. Formado a su vez por cuatro métodos (1/lado).
-    private void generarCasillas() {
+    private void generarCasillas(Grupo g1, Grupo g2, Grupo g3, Grupo g4 , Grupo g5, Grupo g6, Grupo g7, Grupo g8) {
         Casilla Casilla = new Casilla();
-        this.insertarLadoSur();
-        this.insertarLadoOeste();
-        this.insertarLadoNorte();
-        this.insertarLadoEste();
+        this.insertarLadoSur(g1,g2);
+        this.insertarLadoOeste(g3,g4);
+        this.insertarLadoNorte(g5,g6);
+        this.insertarLadoEste(g7,g8);
     }
 
     //Método para insertar las casillas del lado norte.
-    private void insertarLadoNorte() {
+    private void insertarLadoNorte(Grupo g5, Grupo g6) {
         ArrayList<Casilla> ladoNorte = new ArrayList<>();
 
         ladoNorte.add(new Casilla("Parking", "Especial", 21, banca));
-        ladoNorte.add(new Casilla("Solar12", "Solar", 22, 2_200_000f, banca, null, null, 1_100_000f, 0f, 1_500_000f, 1_500_000f, 300_000f, 600_000f, 2_200_000f, 10_500_000f, 2_100_000f, 2_100_000f));
+        ladoNorte.add(new Casilla("Solar12", "Solar", 22, 2_200_000f, banca, g5, null, 1_100_000f, 0f, 1_500_000f, 1_500_000f, 300_000f, 600_000f, 2_200_000f, 10_500_000f, 2_100_000f, 2_100_000f));
         ladoNorte.add(new Casilla("Suerte2", "Suerte", 23, banca));
-        ladoNorte.add(new Casilla("Solar13", "Solar", 24, 2_200_000f, banca, null, null, 1_100_000f, 0f, 1_500_000f, 1_500_000f, 300_000f, 600_000f, 2_200_000f, 10_500_000f, 2_100_000f, 2_100_000f));
-        ladoNorte.add(new Casilla("Solar14", "Solar", 25, 2_400_000f, banca, null, null, 1_200_000f, 0f, 1_600_000f, 1_600_000f, 400_000f, 700_000f, 2_400_000f, 11_000_000f, 2_400_000f, 2_400_000f));
+        ladoNorte.add(new Casilla("Solar13", "Solar", 24, 2_200_000f, banca, g5, null, 1_100_000f, 0f, 1_500_000f, 1_500_000f, 300_000f, 600_000f, 2_200_000f, 10_500_000f, 2_100_000f, 2_100_000f));
+        ladoNorte.add(new Casilla("Solar14", "Solar", 25, 2_400_000f, banca, g5, null, 1_200_000f, 0f, 1_600_000f, 1_600_000f, 400_000f, 700_000f, 2_400_000f, 11_000_000f, 2_400_000f, 2_400_000f));
         ladoNorte.add(new Casilla("Trans3", "Transporte", 26, 500_000f, banca,null, null, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
-        ladoNorte.add(new Casilla("Solar15", "Solar", 27, 2_600_000f, banca, null, null, 1_300_000f, 0f, 1_700_000f, 1_700_000f, 500_000f, 800_000f, 2_600_000f, 11_500_000f, 2_600_000f, 2_600_000f));
-        ladoNorte.add(new Casilla("Solar16", "Solar", 28, 2_600_000f, banca, null, null, 1_300_000f, 0f, 1_700_000f, 1_700_000f, 500_000f, 800_000f, 2_600_000f, 11_500_000f, 2_600_000f, 2_600_000f));
+        ladoNorte.add(new Casilla("Solar15", "Solar", 27, 2_600_000f, banca, g6, null, 1_300_000f, 0f, 1_700_000f, 1_700_000f, 500_000f, 800_000f, 2_600_000f, 11_500_000f, 2_600_000f, 2_600_000f));
+        ladoNorte.add(new Casilla("Solar16", "Solar", 28, 2_600_000f, banca, g6, null, 1_300_000f, 0f, 1_700_000f, 1_700_000f, 500_000f, 800_000f, 2_600_000f, 11_500_000f, 2_600_000f, 2_600_000f));
         ladoNorte.add(new Casilla("Serv2", "Servicios", 29, 500_000f, banca, null, null, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
-        ladoNorte.add(new Casilla("Solar17", "Solar", 30, 2_800_000f, banca, null, null, 1_400_000f, 0f, 1_800_000f, 1_800_000f, 600_000f, 900_000f, 2_800_000f, 12_000_000f, 2_800_000f, 2_800_000f));
+        ladoNorte.add(new Casilla("Solar17", "Solar", 30, 2_800_000f, banca, g6, null, 1_400_000f, 0f, 1_800_000f, 1_800_000f, 600_000f, 900_000f, 2_800_000f, 12_000_000f, 2_800_000f, 2_800_000f));
         ladoNorte.add(new Casilla("IrCarcel", "Especial", 31, banca));
         posiciones.add(ladoNorte);
     }
 
     //Método para insertar las casillas del lado sur.
-    private void insertarLadoSur() {
+    private void insertarLadoSur(Grupo g1, Grupo g2) {
         ArrayList<Casilla> ladoSur = new ArrayList<>();
 
         ladoSur.add(new Casilla("Salida", "Especial", 1, banca));
-        ladoSur.add(new Casilla("Solar1", "Solar", 2, 600_000f, banca, null, null, 300_000f, 0f, 500_000f, 500_000f, 300_000f, 700_000f, 1_800_000f, 9_000_000f, 1_800_000f, 1_800_000f));
+        ladoSur.add(new Casilla("Solar1", "Solar", 2, 600_000f, banca, g1, null, 300_000f, 0f, 500_000f, 500_000f, 300_000f, 700_000f, 1_800_000f, 9_000_000f, 1_800_000f, 1_800_000f));
         ladoSur.add(new Casilla("Caja1", "Comunidad", 3, banca));
-        ladoSur.add(new Casilla("Solar2", "Solar", 4, 600_000f, banca, null, null, 300_000f, 0f, 500_000f, 500_000f, 300_000f, 700_000f, 1_800_000f, 9_000_000f, 1_800_000f, 1_800_000f));
+        ladoSur.add(new Casilla("Solar2", "Solar", 4, 600_000f, banca, g1, null, 300_000f, 0f, 500_000f, 500_000f, 300_000f, 700_000f, 1_800_000f, 9_000_000f, 1_800_000f, 1_800_000f));
         ladoSur.add(new Casilla("Imp1", 5, 2_000_000f, banca));
         ladoSur.add(new Casilla("Trans1", "Transporte", 6, 500_000f, banca, null, null, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
-        ladoSur.add(new Casilla("Solar3", "Solar", 7, 1_000_000f, banca, null, null, 500_000f, 0f, 800_000f, 800_000f, 400_000f, 900_000f, 3_000_000f, 14_000_000f, 3_000_000f, 3_000_000f));
+        ladoSur.add(new Casilla("Solar3", "Solar", 7, 1_000_000f, banca, g2, null, 500_000f, 0f, 800_000f, 800_000f, 400_000f, 900_000f, 3_000_000f, 14_000_000f, 3_000_000f, 3_000_000f));
         ladoSur.add(new Casilla("Suerte1", "Suerte", 8, banca));
-        ladoSur.add(new Casilla("Solar4", "Solar", 9, 1_000_000f, banca, null, null, 500_000f, 0f, 800_000f, 800_000f, 400_000f, 900_000f, 3_000_000f, 14_000_000f, 3_000_000f, 3_000_000f));
-        ladoSur.add(new Casilla("Solar5", "Solar", 10, 1_000_000f, banca, null, null, 500_000f, 0f, 800_000f, 800_000f, 400_000f, 900_000f, 3_000_000f, 14_000_000f, 3_000_000f, 3_000_000f));
+        ladoSur.add(new Casilla("Solar4", "Solar", 9, 1_000_000f, banca, g2, null, 500_000f, 0f, 800_000f, 800_000f, 400_000f, 900_000f, 3_000_000f, 14_000_000f, 3_000_000f, 3_000_000f));
+        ladoSur.add(new Casilla("Solar5", "Solar", 10, 1_000_000f, banca, g2, null, 500_000f, 0f, 800_000f, 800_000f, 400_000f, 900_000f, 3_000_000f, 14_000_000f, 3_000_000f, 3_000_000f));
         ladoSur.add(new Casilla("Carcel", "Especial", 11, banca));
         posiciones.add(ladoSur);
     }
 
     //Método que inserta casillas del lado oeste.
-    private void insertarLadoOeste() {
+    private void insertarLadoOeste(Grupo g3, Grupo g4) {
         ArrayList<Casilla> ladoOeste = new ArrayList<>();
 
-        ladoOeste.add(new Casilla("Solar6", "Solar", 12, 1_200_000f, banca, null, null, 600_000f, 0f, 900_000f, 900_000f, 500_000f, 1_100_000f, 3_600_000f, 16_000_000f, 3_600_000f, 3_600_000f));
-        ladoOeste.add(new Casilla("Solar7", "Solar", 13, 1_400_000f, banca, null, null, 700_000f, 0f, 1_000_000f, 1_000_000f, 600_000f, 1_200_000f, 4_200_000f, 17_000_000f, 4_200_000f, 4_200_000f));
+        ladoOeste.add(new Casilla("Solar6", "Solar", 12, 1_200_000f, banca, g3, null, 600_000f, 0f, 900_000f, 900_000f, 500_000f, 1_100_000f, 3_600_000f, 16_000_000f, 3_600_000f, 3_600_000f));
+        ladoOeste.add(new Casilla("Solar7", "Solar", 13, 1_400_000f, banca, g3, null, 700_000f, 0f, 1_000_000f, 1_000_000f, 600_000f, 1_200_000f, 4_200_000f, 17_000_000f, 4_200_000f, 4_200_000f));
         ladoOeste.add(new Casilla("Serv1", "Servicios", 14, 500_000f, banca, null, null, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
-        ladoOeste.add(new Casilla("Solar8", "Solar", 15, 1_400_000f, banca, null, null, 700_000f, 0f, 1_000_000f, 1_000_000f, 600_000f, 1_200_000f, 4_200_000f, 17_000_000f, 4_200_000f, 4_200_000f));
-        ladoOeste.add(new Casilla("Solar9", "Solar", 16, 1_600_000f, banca, null, null, 800_000f, 0f, 1_100_000f, 1_100_000f, 700_000f, 1_400_000f, 4_800_000f, 19_000_000f, 4_800_000f, 4_800_000f));
+        ladoOeste.add(new Casilla("Solar8", "Solar", 15, 1_400_000f, banca, g3, null, 700_000f, 0f, 1_000_000f, 1_000_000f, 600_000f, 1_200_000f, 4_200_000f, 17_000_000f, 4_200_000f, 4_200_000f));
+        ladoOeste.add(new Casilla("Solar9", "Solar", 16, 1_600_000f, banca, g4, null, 800_000f, 0f, 1_100_000f, 1_100_000f, 700_000f, 1_400_000f, 4_800_000f, 19_000_000f, 4_800_000f, 4_800_000f));
         ladoOeste.add(new Casilla("Trans2", "Transporte", 17, 500_000f, banca, null, null, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
-        ladoOeste.add(new Casilla("Solar10", "Solar", 18, 1_800_000f, banca, null, null, 900_000f, 0f, 1_200_000f, 1_200_000f, 800_000f, 1_600_000f, 5_400_000f, 20_000_000f, 5_400_000f, 5_400_000f));
+        ladoOeste.add(new Casilla("Solar10", "Solar", 18, 1_800_000f, banca, g4, null, 900_000f, 0f, 1_200_000f, 1_200_000f, 800_000f, 1_600_000f, 5_400_000f, 20_000_000f, 5_400_000f, 5_400_000f));
         ladoOeste.add(new Casilla("Caja2", "Comunidad", 19, banca));
-        ladoOeste.add(new Casilla("Solar11", "Solar", 20, 1_800_000f, banca, null, null, 900_000f, 0f, 1_200_000f, 1_200_000f, 800_000f, 1_600_000f, 5_400_000f, 20_000_000f, 5_400_000f, 5_400_000f));
+        ladoOeste.add(new Casilla("Solar11", "Solar", 20, 1_800_000f, banca, g4, null, 900_000f, 0f, 1_200_000f, 1_200_000f, 800_000f, 1_600_000f, 5_400_000f, 20_000_000f, 5_400_000f, 5_400_000f));
         posiciones.add(ladoOeste);
     }
 
     //Método que inserta las casillas del lado este.
-    private void insertarLadoEste() {
+    private void insertarLadoEste(Grupo g7, Grupo g8) {
         ArrayList<Casilla> ladoEste = new ArrayList<>();
 
-        ladoEste.add(new Casilla("Solar18", "Solar", 32, 3_000_000f, banca, null, null, 1_500_000f, 0f, 1_900_000f, 1_900_000f, 700_000f, 1_000_000f, 3_000_000f, 12_500_000f, 3_000_000f, 3_000_000f));
-        ladoEste.add(new Casilla("Solar19", "Solar", 33, 3_000_000f, banca, null, null, 1_500_000f, 0f, 1_900_000f, 1_900_000f, 700_000f, 1_000_000f, 3_000_000f, 12_500_000f, 3_000_000f, 3_000_000f));
+        ladoEste.add(new Casilla("Solar18", "Solar", 32, 3_000_000f, banca, g7, null, 1_500_000f, 0f, 1_900_000f, 1_900_000f, 700_000f, 1_000_000f, 3_000_000f, 12_500_000f, 3_000_000f, 3_000_000f));
+        ladoEste.add(new Casilla("Solar19", "Solar", 33, 3_000_000f, banca, g7, null, 1_500_000f, 0f, 1_900_000f, 1_900_000f, 700_000f, 1_000_000f, 3_000_000f, 12_500_000f, 3_000_000f, 3_000_000f));
         ladoEste.add(new Casilla("Caja3", "Comunidad", 34, banca));
-        ladoEste.add(new Casilla("Solar20", "Solar", 35, 3_200_000f, banca, null, null, 1_600_000f, 0f, 2_000_000f, 2_000_000f, 800_000f, 1_100_000f, 3_200_000f, 13_000_000f, 3_200_000f, 3_200_000f));
+        ladoEste.add(new Casilla("Solar20", "Solar", 35, 3_200_000f, banca, g7, null, 1_600_000f, 0f, 2_000_000f, 2_000_000f, 800_000f, 1_100_000f, 3_200_000f, 13_000_000f, 3_200_000f, 3_200_000f));
         ladoEste.add(new Casilla("Trans4", "Transporte", 36, 500_000f, banca, null, null, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f));
-        ladoEste.add(new Casilla("Solar21", "Solar", 37, 3_500_000f, banca, null, null, 1_700_000f, 0f, 2_200_000f, 2_200_000f, 900_000f, 1_200_000f, 3_500_000f, 14_000_000f, 3_500_000f, 3_500_000f));
+        ladoEste.add(new Casilla("Solar21", "Solar", 37, 3_500_000f, banca, g8, null, 1_700_000f, 0f, 2_200_000f, 2_200_000f, 900_000f, 1_200_000f, 3_500_000f, 14_000_000f, 3_500_000f, 3_500_000f));
         ladoEste.add(new Casilla("Suerte3", "Suerte", 38, banca));
         ladoEste.add(new Casilla("Imp2", 39, 2_000_000f, banca));
-        ladoEste.add(new Casilla("Solar22", "Solar", 40, 4_000_000f, banca, null, null, 2_000_000f, 0f, 2_500_000f, 2_500_000f, 1_000_000f, 1_500_000f, 4_000_000f, 15_000_000f, 4_000_000f, 4_000_000f));
+        ladoEste.add(new Casilla("Solar22", "Solar", 40, 4_000_000f, banca, g8, null, 2_000_000f, 0f, 2_500_000f, 2_500_000f, 1_000_000f, 1_500_000f, 4_000_000f, 15_000_000f, 4_000_000f, 4_000_000f));
         posiciones.add(ladoEste);
     }
 
@@ -250,6 +258,7 @@ public class Tablero {
         }
         return null;
     }
+
 
 
     //Método para describir la casilla
