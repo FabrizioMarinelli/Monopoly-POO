@@ -457,7 +457,7 @@ public class Menu {
                         System.out.println("  nombre: " +c.getNombre());
                         System.out.println("  tipo: " + c.getTipo() + ","); //Imprimimos el tipo de casilla
                         if (c.getTipo().equalsIgnoreCase("Solar")) {    //Si es un solar imprimimos el grupo al que pertenece
-                            //System.out.println("  grupo: " + c.getGrupo().getColorGrupo() + ",");
+                            System.out.println("  grupo: " + c.getGrupo().getColorGrupo() + ",");
                         }
                         System.out.println("  valor: " + c.getValor());   //Se imprime el valor de la casilla
                         System.out.println("}");
