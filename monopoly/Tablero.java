@@ -19,20 +19,74 @@ public class Tablero {
     private ArrayList<ArrayList<Casilla>> posiciones; //Posiciones del tablero: se define como un arraylist de arraylists de casillas (uno por cada lado del tablero).
     private HashMap<String, Grupo> grupos; //Grupos del tablero, almacenados como un HashMap con clave String (será el color del grupo).
     private Jugador banca; //Un jugador que será la banca.
+    //atributos para las cartas
+    private ArrayList<Carta> cartasSuerte;
+    private ArrayList<Carta> cartasComunidad;
+    private int indiceSuerte = 0;
+    private int indiceComunidad = 0;
 
     //Constructor: únicamente le pasamos el jugador banca (que se creará desde el menú).
     public Tablero(Jugador banca) {
         this.banca = banca; //Guarda una referencia al objeto jugador que actuará como la banca. Así se permite que el tablero sepa quien es la banca
         this.posiciones =  new ArrayList<>();   //Guardará los cuatro lados del tablero
         this.grupos = new HashMap<>();  //Almacenará los diferentes gurpos de solares organizados según su color
+
         this.generarCasillas(); //Crea las 40 casillas llamando a las funciones insertar()
+        crearGrupos();
+        //iniciamos las cartas
+        cartasSuerte = new ArrayList<>();
+        cartasComunidad = new ArrayList<>();
+
+        cartasSuerte.add(new Carta(1, "Suerte", "Decides hacer un viaje de placer. Avanza hasta Solar19. Si pasas por la casilla de Salida, cobra 2.000.000€", "MOVER", 0, "Solar19"));
+        cartasSuerte.add(new Carta(2, "Suerte", "Los acreedores te persiguen por impago. Ve a la Cárcel. Ve directamente sin pasar por la casilla de Salida y sin cobrar los 2.000.000€. ", "CARCEL", 0, "Cárcel"));
+        cartasSuerte.add(new Carta(3, "Suerte", "¡Has ganado el bote de la lotería! Recibe 1.000.000€", "COBRAR", 1000000, null));
+        cartasSuerte.add(new Carta(4, "Suerte", "Has sido elegido presidente de la junta directiva. Paga a cada jugador 250.000€. ", "PAGAR", 250000, null));
+        cartasSuerte.add(new Carta(5, "Suerte", "¡Hora punta de tráfico! Retrocede tres casillas.", "AVANZAR", -3, null));
+        cartasSuerte.add(new Carta(6, "Suerte", "Te multan por usar el móvil mientras conduces. Paga 150.000€.", "PAGAR", 150000, null));
+        cartasSuerte.add(new Carta(7, "Suerte", "Avanza hasta la casilla de transporte más cercana. Si no tiene dueño, puedes comprarla. Si tiene dueño, paga al dueño el doble de la operación indicada.", "MOVER", 0, "Transporte"));
+
+        cartasComunidad.add(new Carta(1, "Comunidad", "Paga 500.000€ por un fin de semana en un balneario de 5 estrellas.", "PAGAR",500000, null));
+        cartasComunidad.add(new Carta(2, "Comunidad", "Te investigan por fraude de identidad. Ve a la Cárcel. Ve directamente sin pasar por la casilla de Salida y sin cobrar los 2.000.000€.", "CARCEL",0, "Cárcel"));
+        cartasComunidad.add(new Carta(3, "Comunidad", "Colócate en la casilla de Salida. Cobra 2.000.000€..", "MOVER",0, "Salida"));
+        cartasComunidad.add(new Carta(4, "Comunidad", "Devolución de Hacienda. Cobra 500.000€.", "COBRAR",500000, null));
+        cartasComunidad.add(new Carta(5, "Comunidad", "Retrocede hasta Solar1 para comprar antigüedades exóticas.", "AVANZAR",0, "Solar1"));
+        cartasComunidad.add(new Carta(6, "Comunidad", "Ve a Solar20 para disfrutar del San Fermín. Si pasas por la casilla de Salida, cobra 2.000.000€.", "MOVER",0, "Solar20"));
+
+
+    }
+    //Funcion para inicializar los grupos
+    private void crearGrupos() {
+        Grupo g1 = new Grupo(encontrar_casilla("Solar1"), encontrar_casilla("Solar2"), "BLANCO");
+        Grupo g2 = new Grupo(encontrar_casilla("Solar3"), encontrar_casilla("Solar4"), encontrar_casilla("Solar5"), "CIAN");
+        Grupo g3 = new Grupo(encontrar_casilla("Solar6"), encontrar_casilla("Solar7"), encontrar_casilla("Solar8"), "MAGENTA");
+        Grupo g4 = new Grupo(encontrar_casilla("Solar9"), encontrar_casilla("Solar10"), encontrar_casilla("Solar11"), "NARANJA");
+        Grupo g5 = new Grupo(encontrar_casilla("Solar12"), encontrar_casilla("Solar13"), encontrar_casilla("Solar14"), "ROJO");
+        Grupo g6 = new Grupo(encontrar_casilla("Solar15"), encontrar_casilla("Solar16"), encontrar_casilla("Solar17"), "AMARILLO");
+        Grupo g7 = new Grupo(encontrar_casilla("Solar18"), encontrar_casilla("Solar19"), encontrar_casilla("Solar20"), "VERDE");
+        Grupo g8 = new Grupo(encontrar_casilla("Solar21"), encontrar_casilla("Solar22"), "AZUL");
+
+        // Guardar en el HashMap
+        grupos.put("BLANCO", g1);
+        grupos.put("CIAN", g2);
+        grupos.put("MAGENTA", g3);
+        grupos.put("NARANJA", g4);
+        grupos.put("ROJO", g5);
+        grupos.put("AMARILLO", g6);
+        grupos.put("VERDE", g7);
+        grupos.put("AZUL", g8);
+
+        // Asignar el grupo a las casillas
+        for (Grupo g : grupos.values()) {
+            for (Casilla c : g.getMiembros()) {
+                c.setGrupo(g);
+            }
+        }
     }
 
     //Getter para la posiciones
     public ArrayList<ArrayList<Casilla>> getPosiciones() {
         return posiciones;
     }
-
 
     //Método para colorear las casillas
     private String colorearCasilla(Casilla c) {
@@ -250,6 +304,7 @@ public class Tablero {
         }
         return null;
     }
+
 
 
     //Método para describir la casilla
