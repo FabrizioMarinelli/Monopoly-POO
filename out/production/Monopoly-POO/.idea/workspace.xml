@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="900b8216-b7fe-4f4a-ba18-0b6fe9176643" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/partida/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Jugador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/MonopolyETSE.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/MonopolyETSE.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +71,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
@@ -87,7 +87,8 @@
       <workItem from="1760742869443" duration="9418000" />
       <workItem from="1760832710409" duration="6359000" />
       <workItem from="1760949433608" duration="3775000" />
-      <workItem from="1760958007595" duration="4452000" />
+      <workItem from="1760958007595" duration="34777000" />
+      <workItem from="1761733013500" duration="70000" />
     </task>
     <servers />
   </component>
@@ -106,6 +107,7 @@
     <watches-manager>
       <configuration name="Application">
         <watch expression="nuevoJugador.avatar.jugador" />
+        <watch expression="this" />
       </configuration>
     </watches-manager>
   </component>
