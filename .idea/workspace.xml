@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/monopoly/Carta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comandos_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/comandos_4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Carta.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Carta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Casilla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monopoly/Tablero.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Tablero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/comandos_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/comandos_4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Carolechu65"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/FabrizioMarinelli/Monopoly-POO.git&quot;,
+    &quot;accountId&quot;: &quot;58c50528-186d-4b85-82dc-b4450b35bc2c&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>

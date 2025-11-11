@@ -41,7 +41,7 @@ public class Tablero {
         cartasSuerte.add(new Carta(2, "Suerte", "Los acreedores te persiguen por impago. Ve a la Cárcel. Ve directamente sin pasar por la casilla de Salida y sin cobrar los 2.000.000€. ", "CARCEL", 0, "Cárcel"));
         cartasSuerte.add(new Carta(3, "Suerte", "¡Has ganado el bote de la lotería! Recibe 1.000.000€", "COBRAR", 1000000, null));
         cartasSuerte.add(new Carta(4, "Suerte", "Has sido elegido presidente de la junta directiva. Paga a cada jugador 250.000€. ", "PAGAR", 250000, null));
-        cartasSuerte.add(new Carta(5, "Suerte", "¡Hora punta de tráfico! Retrocede tres casillas.", "AVANZAR", -3, null));
+        cartasSuerte.add(new Carta(5, "Suerte", "¡Hora punta de tráfico! Retrocede tres casillas.", "RETROCEDER", -3, null));
         cartasSuerte.add(new Carta(6, "Suerte", "Te multan por usar el móvil mientras conduces. Paga 150.000€.", "PAGAR", 150000, null));
         cartasSuerte.add(new Carta(7, "Suerte", "Avanza hasta la casilla de transporte más cercana. Si no tiene dueño, puedes comprarla. Si tiene dueño, paga al dueño el doble de la operación indicada.", "MOVER", 0, "Transporte"));
 
@@ -49,7 +49,7 @@ public class Tablero {
         cartasComunidad.add(new Carta(2, "Comunidad", "Te investigan por fraude de identidad. Ve a la Cárcel. Ve directamente sin pasar por la casilla de Salida y sin cobrar los 2.000.000€.", "CARCEL",0, "Cárcel"));
         cartasComunidad.add(new Carta(3, "Comunidad", "Colócate en la casilla de Salida. Cobra 2.000.000€..", "MOVER",0, "Salida"));
         cartasComunidad.add(new Carta(4, "Comunidad", "Devolución de Hacienda. Cobra 500.000€.", "COBRAR",500000, null));
-        cartasComunidad.add(new Carta(5, "Comunidad", "Retrocede hasta Solar1 para comprar antigüedades exóticas.", "AVANZAR",0, "Solar1"));
+        cartasComunidad.add(new Carta(5, "Comunidad", "Retrocede hasta Solar1 para comprar antigüedades exóticas.", "RETROCEDER",0, "Solar1"));
         cartasComunidad.add(new Carta(6, "Comunidad", "Ve a Solar20 para disfrutar del San Fermín. Si pasas por la casilla de Salida, cobra 2.000.000€.", "MOVER",0, "Solar20"));
 
 
@@ -87,6 +87,7 @@ public class Tablero {
     public ArrayList<ArrayList<Casilla>> getPosiciones() {
         return posiciones;
     }
+
 
 
     //Método para colorear las casillas
@@ -306,6 +307,22 @@ public class Tablero {
         return null;
     }
 
+    //Método para calcular la siguiente carta
+    public Carta siguienteCarta(String tipo){
+        Carta carta = null;
+
+        //Buscamos cual es el tipo de la carta para poder calcular el indice que corresponda
+        if(tipo.equalsIgnoreCase("Suerte")){
+            carta = cartasSuerte.get(indiceSuerte);
+            indiceSuerte = (indiceSuerte +1) % cartasSuerte.size(); //de este modo avanza de manera circular
+        }else if(tipo.equalsIgnoreCase("Comunidad")){
+            carta = cartasComunidad.get(indiceComunidad);
+            indiceComunidad = (indiceComunidad + 1) % cartasComunidad.size();
+
+        }
+        //Devolvemos la carta
+        return carta;
+    }
 
     //Método para describir la casilla
    /* public Casilla describirCasilla(String nombre){

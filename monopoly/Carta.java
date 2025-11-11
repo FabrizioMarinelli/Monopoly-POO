@@ -1,6 +1,8 @@
 package monopoly;
 
+import partida.*;
 
+import java.util.ArrayList;
 
 public class Carta {
     private int id;
@@ -26,6 +28,60 @@ public class Carta {
     public String getAccion() { return accion; }
     public float getCantidad() { return cantidad; }
     public String getDestino() { return destino; }
+
+    public void ejecutarCarta(Jugador jugador, Tablero tablero, ArrayList<Jugador> jugadores){
+        System.out.println("Acción: " + descripcion);
+
+        switch (accion.toUpperCase()){
+            case "COBRAR":
+                jugador.sumarFortuna(this.cantidad);
+                break;
+            case "PAGAR":
+
+                if (descripcion.contains("cada jugador")) {
+                    // Pagar a cada jugador (excepto uno mismo)
+                    for (Jugador j : jugadores) {
+                        if (!j.equals(jugador)) {
+                            j.sumarFortuna(cantidad);
+                            jugador.sumarFortuna(-cantidad);
+                            jugador.sumarGastos(cantidad);
+                        }
+                    }
+                } else {
+                    // Carta normal de pagar al banco
+                    jugador.sumarFortuna(-cantidad);
+                    jugador.sumarGastos(cantidad);
+                }
+                break;
+            case "MOVER":
+                Casilla casillaDestino = tablero.encontrar_casilla(destino);
+
+                // Creamos un tablero para calcular posiciones que tiene que avanzar el personaje
+                ArrayList<Casilla> tableroJunto = new ArrayList<>();
+                for (ArrayList<Casilla> lado : tablero.getPosiciones()) {
+                    tableroJunto.addAll(lado);
+                }
+
+                int posActual = tableroJunto.indexOf(jugador.getAvatar().getLugar());
+                int posDestino = tableroJunto.indexOf(casillaDestino);
+
+                // Calculamos cuántas casillas avanzar (considerando el ciclo del tablero)
+                int avance = (posDestino - posActual + tableroJunto.size()) % tableroJunto.size();
+
+                // Movemos usando moverAvatar, que ya gestiona pasar por Salida
+                jugador.getAvatar().moverAvatar(tablero.getPosiciones(), avance);
+                break;
+            case "CÁRCEL":
+                jugador.encarcelar(tablero.getPosiciones());
+                break;
+            case "RETROCEDER":
+                jugador.getAvatar().moverAvatar(tablero.getPosiciones(), (int) this.cantidad);
+                break;
+        }
+
+
+    }
+
 }
 
 

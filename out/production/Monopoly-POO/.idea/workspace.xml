@@ -4,57 +4,63 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="900b8216-b7fe-4f4a-ba18-0b6fe9176643" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/partida/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Jugador.java" afterDir="false" />
+    <list default="true" id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Carta.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Carta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Casilla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Tablero.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Tablero.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Carolechu65"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/FabrizioMarinelli/Monopoly-POO.git&quot;,
+    &quot;accountId&quot;: &quot;58c50528-186d-4b85-82dc-b4450b35bc2c&quot;
+  }
 }</component>
-  <component name="ProjectId" id="33SilXljJyemX4nO4jGxmi4cyL5" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="34Puad72K5z1fwCisykDGjZLtgl" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.MonopolyETSE.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Fabricio/Desktop/POO/Monopoly Github/Monopoly-POO&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.customizations&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.MonopolyETSE.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "carolina",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/carolina-silva/Escritorio/POO/Monopoly-POO"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Fabricio\Desktop\POO\Monopoly Github\Monopoly-POO" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager">
-    <configuration name="MonopolyETSE" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="MonopolyETSE" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="monopoly.MonopolyETSE" />
       <module name="Monopoly-POO" />
-      <option name="PROGRAM_PARAMETERS" value="hola.txt" />
+      <option name="PROGRAM_PARAMETERS" value="comandos_4.txt" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="monopoly.*" />
@@ -65,48 +71,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
-      </set>
-    </attachedChunks>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MonopolyETSE" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="900b8216-b7fe-4f4a-ba18-0b6fe9176643" name="Changes" comment="" />
-      <created>1759317026861</created>
+      <changelist id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="" />
+      <created>1761127592592</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1759317026861</updated>
-      <workItem from="1759317028057" duration="2469000" />
-      <workItem from="1759918101878" duration="7386000" />
-      <workItem from="1760524957844" duration="6223000" />
-      <workItem from="1760742869443" duration="9418000" />
-      <workItem from="1760832710409" duration="6359000" />
-      <workItem from="1760949433608" duration="3775000" />
-      <workItem from="1760958007595" duration="4452000" />
+      <updated>1761127592592</updated>
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.util.IllegalFormatConversionException" package="java.util" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="nuevoJugador.avatar.jugador" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>
