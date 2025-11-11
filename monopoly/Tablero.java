@@ -88,6 +88,7 @@ public class Tablero {
         return posiciones;
     }
 
+
     //Método para colorear las casillas
     private String colorearCasilla(Casilla c) {
         String color = RESET;
@@ -304,7 +305,6 @@ public class Tablero {
         }
         return null;
     }
-
 
 
     //Método para describir la casilla
