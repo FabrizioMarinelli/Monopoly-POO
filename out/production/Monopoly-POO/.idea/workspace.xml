@@ -9,6 +9,11 @@
       <change beforePath="$PROJECT_DIR$/monopoly/Grupo.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Grupo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monopoly/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monopoly/Tablero.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Tablero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Grupo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Grupo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +55,27 @@
       <recent name="monopoly" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="MonopolyETSE" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="monopoly.MonopolyETSE" />
+      <module name="Monopoly-POO" />
+      <option name="PROGRAM_PARAMETERS" value="hola.txt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="monopoly.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MonopolyETSE" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -74,7 +100,12 @@
       <workItem from="1760432148010" duration="3653000" />
       <workItem from="1760522774554" duration="7769000" />
       <workItem from="1760689902683" duration="334000" />
-      <workItem from="1760887870754" duration="11719000" />
+      <workItem from="1760887870754" duration="11960000" />
+      <workItem from="1760969580298" duration="2037000" />
+      <workItem from="1760985774871" duration="6653000" />
+      <workItem from="1761032586049" duration="7960000" />
+      <workItem from="1761059264092" duration="3245000" />
+      <workItem from="1761065763941" duration="373000" />
     </task>
     <servers />
   </component>

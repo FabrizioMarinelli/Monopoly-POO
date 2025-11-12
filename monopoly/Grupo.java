@@ -39,6 +39,17 @@ class Grupo {
         this.numCasillas = 3;
     }
 
+    //Getters
+    //Getter del color del grupo
+    public String getColorGrupo(){
+        return colorGrupo;
+    }
+
+    //Getter de las casillas del grupo
+    public ArrayList<Casilla> getMiembros() {
+        return miembros;
+    }
+
     /* Método que añade una casilla al array de casillas miembro de un grupo.
     * Parámetro: casilla que se quiere añadir.
      */
@@ -60,15 +71,5 @@ class Grupo {
             }
         }
         return true;
-    }
-
-    //Getter del color del grupo
-    public String getColorGrupo(){
-         return colorGrupo;
-    }
-
-    //Getter de las casillas del grupo
-    public ArrayList<Casilla> getMiembros() {
-        return miembros;
     }
 }

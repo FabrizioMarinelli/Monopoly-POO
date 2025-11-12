@@ -3,6 +3,10 @@ package monopoly;
 import partida.*;
 import java.util.ArrayList;
 
+/*
+*Definimos la clase casilla que representa una casilla del tablero del monopoly.
+* Estas casillas son de diferentes tipos y en función de esto sus atributos serán diferentes
+ */
 public class Casilla {
 
     //Atributos:
@@ -15,6 +19,7 @@ public class Casilla {
     private float impuesto; //Cantidad a pagar por caer en la casilla: el alquiler en solares/servicios/transportes o impuestos.
     private float hipoteca; //Valor otorgado por hipotecar una casilla
     private ArrayList<Avatar> avatares; //Avatares que están situados en la casilla.
+    //Todos los atributos que vienen a continuación son unicamente de las casillas de tipo solar
     private float valorHotel;
     private float valorCasa;
     private float valorPiscina;
@@ -172,6 +177,7 @@ public class Casilla {
     }
 
     //Método utilizado para añadir un avatar al array de avatares en casilla.
+    //Le pasamos como argumento el avatar que queremos añadir
     public void anhadirAvatar(Avatar av) {
         //Se comprueba si existe el avatar y si esta registrado en los avatares
         if(av != null){
@@ -214,7 +220,6 @@ public class Casilla {
                 }
                 //Si la propiedad tiene un propietario distinto al jugador que cayo en ella, debeb de cobrarle el alquiler
                 System.out.println(actual.getNombre() + " ha caído en " + nombre + ", propiedad de " + duenho.getNombre() + ".");
-
 
                 //se resta el alquiler a la fortuna del jugador que cayó en la casilla
                 actual.sumarFortuna(-impuesto);
@@ -366,16 +371,3 @@ public class Casilla {
         return "A";
     }
 }
-
-
-/*
-* TO DO
-*
-* FUNCION SALIR DE LA CARCEL
-* FUNCION MOSTRAR TABLERO
-*
-*
-* COMENTAR CODIGO
-* REPSARLO
-*
-* */

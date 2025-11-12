@@ -28,6 +28,12 @@ public class Tablero {
         this.generarCasillas(); //Crea las 40 casillas llamando a las funciones insertar()
     }
 
+    //Getter para la posiciones
+    public ArrayList<ArrayList<Casilla>> getPosiciones() {
+        return posiciones;
+    }
+
+
     //Método para colorear las casillas
     private String colorearCasilla(Casilla c) {
         String color = RESET;
@@ -156,6 +162,37 @@ public class Tablero {
         posiciones.add(ladoEste);
     }
 
+//Método que devuelve un texto con el nombre de la casilla y la incial del jugador que se encuentra en ella
+//La hacemos private porque solo la vamos a utilizar dentro de la clase en la que la acabamos de definir
+    private String mostrarAvatares(Casilla c) {
+        StringBuilder sb = new StringBuilder();
+
+        // Si hay avatares en la casilla, mostramos sus iniciales junto un '&' como se muestra en el .pdf
+        if(c.getAvatares() != null && !c.getAvatares().isEmpty()){
+            sb.append(" &");
+            for (Avatar a : c.getAvatares()) {
+                //Comprobamos que existan avatares en ese momento en la casilla
+                if (c.getAvatares() != null && !c.getAvatares().isEmpty()){
+                    //Imprimimos el identificador del avatar
+                    sb.append(a.getId());
+                }
+            }
+        }
+        //Establecemos una longitud fija
+        String texto = sb.toString();
+        int longitud = 6;
+
+        if(texto.length() < longitud){
+            //Rellenamos con espacios a la derecha
+            texto += " ".repeat(longitud - texto.length());
+        }else if(texto.length() > longitud) {
+            //Si se pasa de tamaño lo recortamos
+            texto = texto.substring(0, longitud);
+        }
+        return texto;
+    }
+
+
     //Para imprimir el tablero, modificamos el método toString().
     @Override
     public String toString() {
@@ -170,32 +207,31 @@ public class Tablero {
         //Imprimimos el lado norte
         for(int i = 0; i < norte.size(); i++){
             //Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append("|" + colorearCasilla(norte.get(i)));
+            sb.append("|" + colorearCasilla(norte.get(i)) + mostrarAvatares(norte.get(i)));
         }
         sb.append("|\n");   //Cuando se termine queremos que haga un salto de línea para que comience con los laterales
 
-        // Imprimir los lados de los lados
+        //Imprimir los lados de los lados
         //En el for se imprimirá cada línea del medio del tablero
         for(int i = 0; i < oeste.size(); i++){
             //Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append("|" + colorearCasilla(oeste.get(i)) + "|");
+            sb.append("|" + colorearCasilla(oeste.get(i)) + mostrarAvatares(oeste.get(i)) + "|");
 
             //Metemos más espacios en el medio para que el tablero tenga forma rectangular
-            sb.append(" ".repeat(11*9-1));
+            sb.append(" ".repeat(17*9-1));
 
             //Imprimimos la casilla de la derecha
             if (i < este.size()){
-                sb.append("|" + colorearCasilla(este.get(i)) + "|");
+                sb.append("|" + colorearCasilla(este.get(i)) + mostrarAvatares(este.get(i)) + "|");
             }
             //Imprimimos el salto de línea para comenzar a realizar la línea inferior
             sb.append("\n");
         }
-
         //Imprimimos el lado sur del revés para que se pueda cerrar el rectángulo
         //Si no las casillas saldrían en un orden inverso
         for(int i = 0; i < sur.size(); i++){
             //Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append("|" + colorearCasilla(sur.get(i)));
+            sb.append("|" + colorearCasilla(sur.get(i)) + mostrarAvatares(sur.get(i)));
         }
         sb.append("|\n");
         return sb.toString();
@@ -214,6 +250,7 @@ public class Tablero {
         }
         return null;
     }
+
 
     //Método para describir la casilla
    /* public Casilla describirCasilla(String nombre){

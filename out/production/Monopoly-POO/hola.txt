@@ -1,5 +1,7 @@
 crear jugador Pedro coche
 crear jugador Maria pelota
+crear jugador Pepe esfinge
+crear jugador Pablo sombrero
 jugador
 listar jugadores
 lanzar dados
