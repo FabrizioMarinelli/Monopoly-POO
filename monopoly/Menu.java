@@ -302,7 +302,7 @@ public class Menu {
             }
             //Declaramos el lugar actual del avatar para poder evaluar su posicion
             Casilla casillaActual = avatar.getLugar();
-            boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, valorTirada);
+            boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, tablero,valorTirada, jugadores);
 
             //Si el jugador se queda sin dinero suficiente debe declararse en bancarota
             if (!sigueEnJuego) {
@@ -333,7 +333,7 @@ public class Menu {
             Casilla casillaFinal = avatar.getLugar();
             System.out.println("El avatar " + avatar.getId() + " avanza " + valorTirada + " posiciones, desde " + casillaInicial.getNombre() + " hasta " + casillaFinal.getNombre() + ".");
             // Evaluar la casilla en la que cayó el personaje
-            boolean sigueEnJuego = casillaFinal.evaluarCasilla(jugadorActual, banca, valorTirada);
+            boolean sigueEnJuego = casillaFinal.evaluarCasilla(jugadorActual, banca, tablero,valorTirada,jugadores);
 
             // Si el jugador cayó en IrCarcel lo metems en la carcel
             if (casillaFinal.getNombre().equals("Carcel") && !jugadorActual.isEnCarcel()) {
@@ -354,7 +354,6 @@ public class Menu {
                 System.out.println("El jugador esta en la carcel, no puede avanzar");
             }
         }
-        // FALTA IMPLEMENTAR VER TABLERO
 
 
 

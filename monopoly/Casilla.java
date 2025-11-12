@@ -196,7 +196,7 @@ public class Casilla {
      * - El valor de la tirada: para determinar impuesto a pagar en casillas de servicios.
      * Valor devuelto: true en caso de ser solvente (es decir, de cumplir las deudas), y false
      * en caso de no cumplirlas.*/
-    public boolean evaluarCasilla(Jugador actual, Jugador banca, int tirada) {
+    public boolean evaluarCasilla(Jugador actual, Jugador banca,Tablero tablero ,int tirada, ArrayList<Jugador> jugadores) {
         //comprobamos que el tipo pasado sea correcto
         if(tipo == null) tipo = "";
         //se hace un switch para definir el funcionamineto de unas casillas o de otras
@@ -332,12 +332,17 @@ public class Casilla {
                     return true;
                 }
 
-            case "suerte": // Aun falta por implementar
-                System.out.println(actual.getNombre() + " ha caído en una casilla de Suerte. (Pendiente implementar)");
+            case "suerte":
+                //evalua que jugador cae en la casilla
+                System.out.println(actual.getNombre() + " ha caído en una casilla de Suerte.");
+                Carta cartaSuerte = tablero.siguienteCarta("suerte");
+                cartaSuerte.ejecutarCarta(actual, tablero, jugadores);
                 return true;
 
             case "comunidad":   // Aun falta por implementar
-                System.out.println(actual.getNombre() + " ha caído en una casilla de Comunidad. (Pendiente implementar)");
+                System.out.println(actual.getNombre() + " ha caído en una casilla de Comunidad.");
+                Carta cartaComunidad = tablero.siguienteCarta("comunidad");
+                cartaComunidad.ejecutarCarta(actual,tablero, jugadores);
                 return true;
 
             default:
