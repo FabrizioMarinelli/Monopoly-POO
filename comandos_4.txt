@@ -1,0 +1,9 @@
+crear jugador Pedro pelota
+crear jugador Maria coche
+listar jugadores
+jugador
+lanzar dados 1+2
+comprar Solar19
+lanzar dados
+
+ver tablero
