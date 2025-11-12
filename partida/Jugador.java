@@ -18,6 +18,13 @@ public class Jugador {
     private ArrayList<Casilla> propiedades; //Propiedades que posee el jugador.
     private ArrayList<Casilla> hipotecas;
     private ArrayList<Casilla> edificios;
+    private float dineroInvertido = 0;           // dinero gastado en comprar cosas
+    private float pagoTasasEImpuestos = 0;       // dinero pagado por tasas/impuestos
+    private float pagoDeAlquileres = 0;          // dinero pagado al caer en propiedades de otros
+    private float cobroDeAlquileres = 0;         // dinero cobrado por sus propiedades
+    private float pasarPorCasillaDeSalida = 0;   // dinero ganado al pasar por salida
+    private float premiosInversionesOBote = 0;   // dinero ganado por premios o parking
+    private int vecesEnLaCarcel = 0;             // veces que fue encarcelado
 
     //Constructor vacío. Se usará para crear la banca.
     public Jugador() {
