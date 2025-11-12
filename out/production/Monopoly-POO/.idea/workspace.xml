@@ -19,6 +19,7 @@
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/MonopolyETSE.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/MonopolyETSE.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/partida/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Jugador.java" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +40,7 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="34PunbfInPHJcmUQKgq3gfINjKD" />
+
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -115,4 +117,5 @@
       </breakpoints>
     </breakpoint-manager>
   </component>
+
 </project>

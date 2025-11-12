@@ -20,7 +20,6 @@ public class Jugador {
     //Creamos el ArrayList de edificios que tienen los jugadores
     private ArrayList<Edificio> edificios = new ArrayList<>();
 
-
     //Constructor vacío. Se usará para crear la banca.
     public Jugador() {
 

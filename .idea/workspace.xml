@@ -28,6 +28,7 @@
     &quot;assignee&quot;: &quot;Carolechu65&quot;
   }
 }</component>
+
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/FabrizioMarinelli/Monopoly-POO.git&quot;,
@@ -49,6 +50,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "maria",
+
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/carolina-silva/Escritorio/POO/Monopoly-POO"
   }

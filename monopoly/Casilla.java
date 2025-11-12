@@ -229,7 +229,8 @@ public class Casilla {
      * - El valor de la tirada: para determinar impuesto a pagar en casillas de servicios.
      * Valor devuelto: true en caso de ser solvente (es decir, de cumplir las deudas), y false
      * en caso de no cumplirlas.*/
-    public boolean evaluarCasilla(Jugador actual, Jugador banca, int tirada) {
+
+    public boolean evaluarCasilla(Jugador actual, Jugador banca,Tablero tablero ,int tirada, ArrayList<Jugador> jugadores) {
         //comprobamos que el tipo pasado sea correcto
         if(tipo == null) tipo = "";
         //se hace un switch para definir el funcionamineto de unas casillas o de otras
@@ -326,7 +327,6 @@ public class Casilla {
 
                 return actual.getFortuna() >= 0;
 
-
             case "impuesto":
                 //Cuando se cae en la casilla de impuesto se debe pagar siempre
                 System.out.println(actual.getNombre() + " ha caído en la casilla de impuesto: " + nombre + ".");
@@ -365,12 +365,17 @@ public class Casilla {
                     return true;
                 }
 
-            case "suerte": // Aun falta por implementar
-                System.out.println(actual.getNombre() + " ha caído en una casilla de Suerte. (Pendiente implementar)");
+            case "suerte":
+                //evalua que jugador cae en la casilla
+                System.out.println(actual.getNombre() + " ha caído en una casilla de Suerte.");
+                Carta cartaSuerte = tablero.siguienteCarta("suerte");
+                cartaSuerte.ejecutarCarta(actual, tablero, jugadores);
                 return true;
 
             case "comunidad":   // Aun falta por implementar
-                System.out.println(actual.getNombre() + " ha caído en una casilla de Comunidad. (Pendiente implementar)");
+                System.out.println(actual.getNombre() + " ha caído en una casilla de Comunidad.");
+                Carta cartaComunidad = tablero.siguienteCarta("comunidad");
+                cartaComunidad.ejecutarCarta(actual,tablero, jugadores);
                 return true;
 
             default:
@@ -418,12 +423,14 @@ public class Casilla {
     }
 
     /*Método para mostrar información sobre una casilla.
+
      * Devuelve una cadena con información específica de cada tipo de casilla.*/
     public String infoCasilla(String nombre) {
         //Comprobamos que la casilla de la cual nos piden datos es un Solar
         //La función equalsIgnoreCase() funciona igual que equals() menos porque omite la diferencia entre mayúsculas y minúsculas
         //No es necesario que se realice ninguna modificación en la implementación de la funcion equalsIgnoreCase(),
         //pues en este caso solo estamos comparando texto, no estamos comparando objetos.
+
         if(!this.tipo.equalsIgnoreCase("Solar")){
             return "Esta casilla no es un solar\n";
         }
@@ -431,6 +438,7 @@ public class Casilla {
         StringBuilder sb = new StringBuilder();
 
         //Información del tipo
+
         sb.append("Tipo: ").append(this.tipo).append("\n");
 
         //Información del grupo/color
@@ -448,6 +456,7 @@ public class Casilla {
         }
 
         //Información de valores varios
+
         sb.append("Valor: ").append(this.valor).append("\n");
         sb.append("Alquiler: ").append(this.impuesto).append("\n");
         sb.append("valor hotel: ").append(String.format("%.0f", this.valorHotel)).append(",\n");

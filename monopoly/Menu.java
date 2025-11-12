@@ -435,6 +435,7 @@ public class Menu {
             //ver si tiene propiedades para vender o hipotecar o vender edificios
             //jugador.setEliminado(true);
         }
+
     }
     private void salirCarcel(Jugador jugador, int i) {
         jugador.setTiradasCarcel(0);
@@ -464,7 +465,8 @@ public class Menu {
                         System.out.println("  nombre: " +c.getNombre());
                         System.out.println("  tipo: " + c.getTipo() + ","); //Imprimimos el tipo de casilla
                         if (c.getTipo().equalsIgnoreCase("Solar")) {    //Si es un solar imprimimos el grupo al que pertenece
-                            //System.out.println("  grupo: " + c.getGrupo().getColorGrupo() + ",");
+
+                            System.out.println("  grupo: " + c.getGrupo().getColorGrupo() + ",");
                         }
                         System.out.println("  valor: " + c.getValor());   //Se imprime el valor de la casilla
                         System.out.println("}");
@@ -637,3 +639,4 @@ public class Menu {
     }
 
 }
+
