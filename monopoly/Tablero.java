@@ -162,7 +162,7 @@ public class Tablero {
         posiciones.add(ladoEste);
     }
 
-//Método que devuelve un texto con el nombre de la casilla y la incial del jugador que se encuentra en ella
+    //Método que devuelve un texto con el nombre de la casilla y la incial del jugador que se encuentra en ella
 //La hacemos private porque solo la vamos a utilizar dentro de la clase en la que la acabamos de definir
     private String mostrarAvatares(Casilla c) {
         StringBuilder sb = new StringBuilder();
@@ -240,7 +240,7 @@ public class Tablero {
     //Método usado para buscar la casilla con el nombre pasado como argumento:
     public Casilla encontrar_casilla(String nombre){
         //Recorremos las listas
-        for (ArrayList<Casilla> lado : posiciones){
+        for (ArrayList<Casilla> lado : this.posiciones){
             for (Casilla c : lado){
                 //Devolvemos cada casillaº
                 if (c.getNombre().equalsIgnoreCase(nombre)){
