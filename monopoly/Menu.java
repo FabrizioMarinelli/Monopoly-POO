@@ -159,6 +159,14 @@ public class Menu {
             case "ver":
                 verTablero();
                 break;
+            case "hipotecar":
+                if (jugadores.size() < 2) {
+                    System.out.println("Todavia no hay jugadores suficientes");
+                } else if (comandoSplit.length != 2) {
+                    System.out.println("Comando invalido");
+                } else {
+                    hipotecarPropiedad(comandoSplit[1]);
+                }
             default:
                 System.out.println("Comando invalido");
                 break;
@@ -324,6 +332,10 @@ public class Menu {
         if (jugadorActual.isEnCarcel()){
             return;
         }
+    }
+    private void hipotecarPropiedad(String nombre){
+
+
     }
     /*Método que ejecuta todas las acciones realizadas con el comando 'comprar nombre_casilla'.
      * Parámetro: cadena de caracteres con el nombre de la casilla.

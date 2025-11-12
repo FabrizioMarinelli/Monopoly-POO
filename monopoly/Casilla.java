@@ -14,6 +14,7 @@ public class Casilla {
     private Grupo grupo; //Grupo al que pertenece la casilla (si es solar).
     private float impuesto; //Cantidad a pagar por caer en la casilla: el alquiler en solares/servicios/transportes o impuestos.
     private float hipoteca; //Valor otorgado por hipotecar una casilla
+    private boolean propiedadHipotecada; //Indica si la propiedad esta hipotecada
     private ArrayList<Avatar> avatares; //Avatares que están situados en la casilla.
     private float valorHotel;
     private float valorCasa;
@@ -23,7 +24,6 @@ public class Casilla {
     private float alquilerHotel;
     private float alquilerPiscina;
     private float alquilerPistaDeporte;
-
 
     //Constructores:
     public Casilla() {
@@ -50,7 +50,7 @@ public class Casilla {
                    float alquilerCasa,
                    float alquilerHotel,
                    float alquilerPiscina,
-                   float alquilerPistaDeporte) {
+                   float alquilerPistaDeporte, float valorHipoteca){
         this.nombre = nombre;
         this.tipo = tipo;
         this.posicion = posicion;
@@ -68,6 +68,8 @@ public class Casilla {
         this.alquilerHotel = alquilerHotel;
         this.alquilerPiscina = alquilerPiscina;
         this.alquilerPistaDeporte = alquilerPistaDeporte;
+        this.propiedadHipotecada = false;
+        this.hipoteca = valorHipoteca;
     }
 
 
