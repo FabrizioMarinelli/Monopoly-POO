@@ -49,7 +49,7 @@ public class Menu {
             linea = myObj.nextLine().trim().toLowerCase();
         }
     }
-    // Método para inciar una partida: crea los jugadores y avatares.
+    // Metodo para inciar una partida: crea los jugadores y avatares.
     private void iniciarPartida(BufferedReader br) {
         //Leer archivo
         try {
@@ -121,10 +121,10 @@ public class Menu {
                     System.out.println("Todavia no hay jugadores suficientes");
                 } else {
                     if (comandoSplit.length == 2) {
-                        lanzarDados();
+                        lanzarDados(0,0);
                     } else if (comandoSplit.length == 3) {
                         String[] splitDados = comandoSplit[2].split("\\+");
-                        lanzarDadosForzado(Integer.parseInt(splitDados[0].trim()), Integer.parseInt(splitDados[1].trim()));
+                        lanzarDados(Integer.parseInt(splitDados[0].trim()), Integer.parseInt(splitDados[1].trim()));
                     } else {
                         System.out.println("comando invalido");
                     }
@@ -251,113 +251,79 @@ public class Menu {
         }
 
     }
-    private void lanzarDados() {
-
+    private void lanzarDados(int d1, int d2) {
         //Creamos los dados con los que realizaremos las tiradas
         Dado dado1 = new Dado();
         Dado dado2 = new Dado();
+        int tiradaDado1;
+        int tiradaDado2;
 
         //Declaramos al jugador actual
         Jugador jugadorActual = jugadores.get(indiceJugadorActual);
         Avatar avatar = jugadorActual.getAvatar();
 
-        //Declaramos variable para contar las veces que se sacaron dobles
-        int contador = 0;
-        boolean repetirTirada = false;
-
-        do {
-            repetirTirada = false;
-            //Hacemos las tiradas
-            int tiradaDado1 = dado1.hacerTirada();
-            int tiradaDado2 = dado2.hacerTirada();
-            //calculamos el valor total
-            int valorTirada = tiradaDado1 + tiradaDado2;
-
-            System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
-            //comprobamos si se sacaron dobles
-            if (tiradaDado1 == tiradaDado2) {
-                contador ++;
-                //Comprobamos que el contador de dobles no sea igual a 3, de ser a si encarcelamos al jugador
-                if (contador == 3) {
-                    System.out.println(jugadorActual.getNombre() + " ha sacado tres dobles seguidos. Va a la cárcel.");
-                    jugadorActual.encarcelar(tablero.getPosiciones());
-                    return;
-                } else if (jugadorActual.isEnCarcel()){
-                    salirCarcel(jugadorActual,1);
-                }
-                repetirTirada = true;
-                System.out.println("Has sacado dobles vuelves a tirar.");
-            }
-
-            //Movemos al avatar el numero de posiciones que le corresponda
-            if (!jugadorActual.isEnCarcel()) {
-                avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
-                System.out.println("El jugador" + "avanza" + valorTirada + "posiciones.");
-            } else{
-                if (jugadorActual.getTiradasCarcel() ==3){
-                    salirCarcel(jugadorActual);
-                } else {
-                    System.out.println("El jugador esta en la carcel, no puede avanzar");
-                }
-            }
-            //Declaramos el lugar actual del avatar para poder evaluar su posicion
-            Casilla casillaActual = avatar.getLugar();
-            boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, valorTirada);
-
-            //Si el jugador se queda sin dinero suficiente debe declararse en bancarota
-            if (!sigueEnJuego) {
-                System.out.println(jugadorActual.getNombre() + " no tiene suficiente dinero. Debe hipotecar o declararse en bancarrota.");
-                return;
-            }
-
-        }while (repetirTirada);
-
-    }
-    private void lanzarDadosForzado(int dado1, int dado2) {
-        //Declaramos cual es el jugador actual
-        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
-        Avatar avatar = jugadorActual.getAvatar();
-
-        //El valor de la tirada sera la suma de los dados
-        int valorTirada = dado1 + dado2;
-
-        System.out.println("\nTirada forzada " + jugadorActual.getNombre() + " obtiene: " + dado1 + " + " + dado2 + " = " + valorTirada);
-
-        //Movemos al avatar de lugar
-        if (dado1 == dado2 && jugadorActual.isEnCarcel()) {
-            salirCarcel(jugadorActual,1);
+        //Comprobar si el jugador tiene tiradas disponibles
+        if(!jugadorActual.getTiradaDisponible()){
+            System.out.println("El jugador actual no tiene tiradas disponibles");
+            return;
         }
-        Casilla casillaInicial = avatar.getLugar();
-        if (!jugadorActual.isEnCarcel()) {
-            avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
-            Casilla casillaFinal = avatar.getLugar();
-            System.out.println("El avatar " + avatar.getId() + " avanza " + valorTirada + " posiciones, desde " + casillaInicial.getNombre() + " hasta " + casillaFinal.getNombre() + ".");
-            // Evaluar la casilla en la que cayó el personaje
-            boolean sigueEnJuego = casillaFinal.evaluarCasilla(jugadorActual, banca, valorTirada);
 
-            // Si el jugador cayó en IrCarcel lo metems en la carcel
-            if (casillaFinal.getNombre().equals("Carcel") && !jugadorActual.isEnCarcel()) {
+        //Declaramos variable para contar las veces que se sacaron dobles y seteamos a false tirada disponible
+        jugadorActual.setTiradaDisponible(false);
+
+        //Hacemos las tiradas
+        if (d1!= 0 && d2!=0){
+            tiradaDado1 = d1;
+            tiradaDado2 = d2;
+        } else {
+            tiradaDado1 = dado1.hacerTirada();
+            tiradaDado2 = dado2.hacerTirada();
+        }
+
+        //calculamos el valor total
+        int valorTirada = tiradaDado1 + tiradaDado2;
+        System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
+
+        //comprobamos si se sacaron dobles
+        if (tiradaDado1 == tiradaDado2) {
+            jugadorActual.setTiradasRepetidas(jugadorActual.getTiradasRepetidas() + 1);
+            //Comprobamos que el contador de dobles no sea igual a 3, de ser a si encarcelamos al jugador
+            if (jugadorActual.getTiradasRepetidas() == 3) {
+                System.out.println(jugadorActual.getNombre() + " ha sacado tres dobles seguidos. Va a la cárcel.");
                 jugadorActual.encarcelar(tablero.getPosiciones());
                 return;
+            } else if (jugadorActual.isEnCarcel()){
+                salirCarcel(jugadorActual,1);
+                jugadorActual.setTiradasRepetidas(jugadorActual.getTiradasRepetidas() - 1);
             }
+            jugadorActual.setTiradaDisponible(true);
+            System.out.println("Has sacado dobles vuelves a tirar.");
+        }
 
-            // Si el jugador se quedó sin dinero no puede continuar jugando y tiene que declararse en bancarota  o hipotecar
-            if (!sigueEnJuego) {
-                System.out.println( jugadorActual.getNombre() + " no tiene suficiente dinero. Debe hipotecar o declararse en bancarrota.");
-                return;
-            }
-
-        } else {
+        //Movemos al avatar el numero de posiciones que le corresponda
+        if (!jugadorActual.isEnCarcel()) {
+            avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
+            System.out.println("El jugador" + " avanza " + valorTirada + " posiciones.");
+        } else{
+            jugadorActual.setTiradasCarcel(jugadorActual.getTiradasCarcel() + 1);
             if (jugadorActual.getTiradasCarcel() ==3){
                 salirCarcel(jugadorActual);
-            }else {
+            } else {
                 System.out.println("El jugador esta en la carcel, no puede avanzar");
             }
         }
-        // FALTA IMPLEMENTAR VER TABLERO
+        //Declaramos el lugar actual del avatar para poder evaluar su posicion
+        Casilla casillaActual = avatar.getLugar();
+        boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, valorTirada);
 
-
-
+        //Si el jugador se queda sin dinero suficiente debe declararse en bancarota
+        if (!sigueEnJuego) {
+            System.out.println(jugadorActual.getNombre() + " no tiene suficiente dinero. Debe hipotecar o declararse en bancarrota.");
+            return;
+        }
+        if (jugadorActual.isEnCarcel()){
+            return;
+        }
     }
     /*Método que ejecuta todas las acciones realizadas con el comando 'comprar nombre_casilla'.
      * Parámetro: cadena de caracteres con el nombre de la casilla.
@@ -417,7 +383,10 @@ public class Menu {
 
     //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'. 
     private void salirCarcel(Jugador jugador) {
-
+            if(!jugador.isEnCarcel()){
+                System.out.println("El jugador no se encuentra encarcelado actualmente");
+                return;
+            }
             if(jugador.getFortuna() >= 500_000f){
                 jugador.setFortuna(jugador.getFortuna() - 500_000f);
                 System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
@@ -529,6 +498,8 @@ public class Menu {
         }
         indiceJugadorActual = (indiceJugadorActual+1)%jugadores.size();
         Jugador siguiente = jugadores.get(indiceJugadorActual);
+        siguiente.setTiradaDisponible(true);
+        siguiente.setTiradasRepetidas(0);
         System.out.println("Turno del jugador: " + siguiente.getNombre());
     }
 

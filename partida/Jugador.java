@@ -15,6 +15,8 @@ public class Jugador {
     private boolean enCarcel; //Será true si el jugador está en la carcel
     private int tiradasCarcel; //Cuando está en la carcel, contará las tiradas sin éxito que ha hecho allí para intentar salir (se usa para limitar el numero de intentos).
     private int vueltas; //Cuenta las vueltas dadas al tablero.
+    private boolean tiradaDisponible;
+    private int tiradasRepetidas;
     private ArrayList<Casilla> propiedades; //Propiedades que posee el jugador.
     private ArrayList<Casilla> hipotecas;
     private ArrayList<Casilla> edificios;
@@ -30,6 +32,8 @@ public class Jugador {
         this.tiradasCarcel = 0;
         this.vueltas = 0;
         this.propiedades = new ArrayList<>();
+        this.tiradaDisponible = true;
+        this.tiradasRepetidas = 0;
     }
 
     /*Constructor principal. Requiere parámetros:
@@ -47,12 +51,27 @@ public class Jugador {
         this.propiedades = new ArrayList<>();
         this.hipotecas = new  ArrayList<>();
         this.edificios = new ArrayList<>();
+        this.tiradaDisponible = true;
+        this.tiradasRepetidas = 0;
         jugadoresCreados.add(this);
         //Por ultimo se crea el avatar
 
         this.avatar = new Avatar(tipoAvatar,this, inicio, avCreados);
     }
+
     //GETTERS Y SETTERS
+    public boolean getTiradaDisponible(){return tiradaDisponible;}
+
+    public void setTiradaDisponible(boolean valor){
+        this.tiradaDisponible = valor;
+    }
+
+    public int getTiradasRepetidas(){return tiradasRepetidas;}
+
+    public void setTiradasRepetidas(int valor){
+        this.tiradasRepetidas = valor;
+    }
+
     public String getNombre() {
         return nombre;
     }
