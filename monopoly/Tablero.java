@@ -19,76 +19,14 @@ public class Tablero {
     private ArrayList<ArrayList<Casilla>> posiciones; //Posiciones del tablero: se define como un arraylist de arraylists de casillas (uno por cada lado del tablero).
     private HashMap<String, Grupo> grupos; //Grupos del tablero, almacenados como un HashMap con clave String (será el color del grupo).
     private Jugador banca; //Un jugador que será la banca.
-    //atributos para las cartas
-    private ArrayList<Carta> cartasSuerte;
-    private ArrayList<Carta> cartasComunidad;
-    private int indiceSuerte = 0;
-    private int indiceComunidad = 0;
 
     //Constructor: únicamente le pasamos el jugador banca (que se creará desde el menú).
     public Tablero(Jugador banca) {
         this.banca = banca; //Guarda una referencia al objeto jugador que actuará como la banca. Así se permite que el tablero sepa quien es la banca
         this.posiciones =  new ArrayList<>();   //Guardará los cuatro lados del tablero
         this.grupos = new HashMap<>();  //Almacenará los diferentes gurpos de solares organizados según su color
-
         this.generarCasillas(); //Crea las 40 casillas llamando a las funciones insertar()
-        crearGrupos();
-        //iniciamos las cartas
-        cartasSuerte = new ArrayList<>();
-        cartasComunidad = new ArrayList<>();
-
-        cartasSuerte.add(new Carta(1, "Suerte", "Decides hacer un viaje de placer. Avanza hasta Solar19. Si pasas por la casilla de Salida, cobra 2.000.000€", "MOVER", 0, "Solar19"));
-        cartasSuerte.add(new Carta(2, "Suerte", "Los acreedores te persiguen por impago. Ve a la Cárcel. Ve directamente sin pasar por la casilla de Salida y sin cobrar los 2.000.000€. ", "CARCEL", 0, "Cárcel"));
-        cartasSuerte.add(new Carta(3, "Suerte", "¡Has ganado el bote de la lotería! Recibe 1.000.000€", "COBRAR", 1000000, null));
-        cartasSuerte.add(new Carta(4, "Suerte", "Has sido elegido presidente de la junta directiva. Paga a cada jugador 250.000€. ", "PAGAR", 250000, null));
-        cartasSuerte.add(new Carta(5, "Suerte", "¡Hora punta de tráfico! Retrocede tres casillas.", "RETROCEDER", -3, null));
-        cartasSuerte.add(new Carta(6, "Suerte", "Te multan por usar el móvil mientras conduces. Paga 150.000€.", "PAGAR", 150000, null));
-        cartasSuerte.add(new Carta(7, "Suerte", "Avanza hasta la casilla de transporte más cercana. Si no tiene dueño, puedes comprarla. Si tiene dueño, paga al dueño el doble de la operación indicada.", "MOVER", 0, "Transporte"));
-
-        cartasComunidad.add(new Carta(1, "Comunidad", "Paga 500.000€ por un fin de semana en un balneario de 5 estrellas.", "PAGAR",500000, null));
-        cartasComunidad.add(new Carta(2, "Comunidad", "Te investigan por fraude de identidad. Ve a la Cárcel. Ve directamente sin pasar por la casilla de Salida y sin cobrar los 2.000.000€.", "CARCEL",0, "Cárcel"));
-        cartasComunidad.add(new Carta(3, "Comunidad", "Colócate en la casilla de Salida. Cobra 2.000.000€..", "MOVER",0, "Salida"));
-        cartasComunidad.add(new Carta(4, "Comunidad", "Devolución de Hacienda. Cobra 500.000€.", "COBRAR",500000, null));
-        cartasComunidad.add(new Carta(5, "Comunidad", "Retrocede hasta Solar1 para comprar antigüedades exóticas.", "RETROCEDER",0, "Solar1"));
-        cartasComunidad.add(new Carta(6, "Comunidad", "Ve a Solar20 para disfrutar del San Fermín. Si pasas por la casilla de Salida, cobra 2.000.000€.", "MOVER",0, "Solar20"));
-
-
     }
-    //Funcion para inicializar los grupos
-    private void crearGrupos() {
-        Grupo g1 = new Grupo(encontrar_casilla("Solar1"), encontrar_casilla("Solar2"), "BLANCO");
-        Grupo g2 = new Grupo(encontrar_casilla("Solar3"), encontrar_casilla("Solar4"), encontrar_casilla("Solar5"), "CIAN");
-        Grupo g3 = new Grupo(encontrar_casilla("Solar6"), encontrar_casilla("Solar7"), encontrar_casilla("Solar8"), "MAGENTA");
-        Grupo g4 = new Grupo(encontrar_casilla("Solar9"), encontrar_casilla("Solar10"), encontrar_casilla("Solar11"), "NARANJA");
-        Grupo g5 = new Grupo(encontrar_casilla("Solar12"), encontrar_casilla("Solar13"), encontrar_casilla("Solar14"), "ROJO");
-        Grupo g6 = new Grupo(encontrar_casilla("Solar15"), encontrar_casilla("Solar16"), encontrar_casilla("Solar17"), "AMARILLO");
-        Grupo g7 = new Grupo(encontrar_casilla("Solar18"), encontrar_casilla("Solar19"), encontrar_casilla("Solar20"), "VERDE");
-        Grupo g8 = new Grupo(encontrar_casilla("Solar21"), encontrar_casilla("Solar22"), "AZUL");
-
-        // Guardar en el HashMap
-        grupos.put("BLANCO", g1);
-        grupos.put("CIAN", g2);
-        grupos.put("MAGENTA", g3);
-        grupos.put("NARANJA", g4);
-        grupos.put("ROJO", g5);
-        grupos.put("AMARILLO", g6);
-        grupos.put("VERDE", g7);
-        grupos.put("AZUL", g8);
-
-        // Asignar el grupo a las casillas
-        for (Grupo g : grupos.values()) {
-            for (Casilla c : g.getMiembros()) {
-                c.setGrupo(g);
-            }
-        }
-    }
-
-    //Getter para la posiciones
-    public ArrayList<ArrayList<Casilla>> getPosiciones() {
-        return posiciones;
-    }
-
-
 
     //Método para colorear las casillas
     private String colorearCasilla(Casilla c) {
@@ -218,37 +156,6 @@ public class Tablero {
         posiciones.add(ladoEste);
     }
 
-    //Método que devuelve un texto con el nombre de la casilla y la incial del jugador que se encuentra en ella
-//La hacemos private porque solo la vamos a utilizar dentro de la clase en la que la acabamos de definir
-    private String mostrarAvatares(Casilla c) {
-        StringBuilder sb = new StringBuilder();
-
-        // Si hay avatares en la casilla, mostramos sus iniciales junto un '&' como se muestra en el .pdf
-        if(c.getAvatares() != null && !c.getAvatares().isEmpty()){
-            sb.append(" &");
-            for (Avatar a : c.getAvatares()) {
-                //Comprobamos que existan avatares en ese momento en la casilla
-                if (c.getAvatares() != null && !c.getAvatares().isEmpty()){
-                    //Imprimimos el identificador del avatar
-                    sb.append(a.getId());
-                }
-            }
-        }
-        //Establecemos una longitud fija
-        String texto = sb.toString();
-        int longitud = 6;
-
-        if(texto.length() < longitud){
-            //Rellenamos con espacios a la derecha
-            texto += " ".repeat(longitud - texto.length());
-        }else if(texto.length() > longitud) {
-            //Si se pasa de tamaño lo recortamos
-            texto = texto.substring(0, longitud);
-        }
-        return texto;
-    }
-
-
     //Para imprimir el tablero, modificamos el método toString().
     @Override
     public String toString() {
@@ -263,31 +170,32 @@ public class Tablero {
         //Imprimimos el lado norte
         for(int i = 0; i < norte.size(); i++){
             //Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append("|" + colorearCasilla(norte.get(i)) + mostrarAvatares(norte.get(i)));
+            sb.append("|" + colorearCasilla(norte.get(i)));
         }
         sb.append("|\n");   //Cuando se termine queremos que haga un salto de línea para que comience con los laterales
 
-        //Imprimir los lados de los lados
+        // Imprimir los lados de los lados
         //En el for se imprimirá cada línea del medio del tablero
         for(int i = 0; i < oeste.size(); i++){
             //Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append("|" + colorearCasilla(oeste.get(i)) + mostrarAvatares(oeste.get(i)) + "|");
+            sb.append("|" + colorearCasilla(oeste.get(i)) + "|");
 
             //Metemos más espacios en el medio para que el tablero tenga forma rectangular
-            sb.append(" ".repeat(17*9-1));
+            sb.append(" ".repeat(11*9-1));
 
             //Imprimimos la casilla de la derecha
             if (i < este.size()){
-                sb.append("|" + colorearCasilla(este.get(i)) + mostrarAvatares(este.get(i)) + "|");
+                sb.append("|" + colorearCasilla(este.get(i)) + "|");
             }
             //Imprimimos el salto de línea para comenzar a realizar la línea inferior
             sb.append("\n");
         }
+
         //Imprimimos el lado sur del revés para que se pueda cerrar el rectángulo
         //Si no las casillas saldrían en un orden inverso
         for(int i = 0; i < sur.size(); i++){
             //Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append("|" + colorearCasilla(sur.get(i)) + mostrarAvatares(sur.get(i)));
+            sb.append("|" + colorearCasilla(sur.get(i)));
         }
         sb.append("|\n");
         return sb.toString();
@@ -296,7 +204,7 @@ public class Tablero {
     //Método usado para buscar la casilla con el nombre pasado como argumento:
     public Casilla encontrar_casilla(String nombre){
         //Recorremos las listas
-        for (ArrayList<Casilla> lado : this.posiciones){
+        for (ArrayList<Casilla> lado : posiciones){
             for (Casilla c : lado){
                 //Devolvemos cada casillaº
                 if (c.getNombre().equalsIgnoreCase(nombre)){
@@ -305,23 +213,6 @@ public class Tablero {
             }
         }
         return null;
-    }
-
-    //Método para calcular la siguiente carta
-    public Carta siguienteCarta(String tipo){
-        Carta carta = null;
-
-        //Buscamos cual es el tipo de la carta para poder calcular el indice que corresponda
-        if(tipo.equalsIgnoreCase("Suerte")){
-            carta = cartasSuerte.get(indiceSuerte);
-            indiceSuerte = (indiceSuerte +1) % cartasSuerte.size(); //de este modo avanza de manera circular
-        }else if(tipo.equalsIgnoreCase("Comunidad")){
-            carta = cartasComunidad.get(indiceComunidad);
-            indiceComunidad = (indiceComunidad + 1) % cartasComunidad.size();
-
-        }
-        //Devolvemos la carta
-        return carta;
     }
 
     //Método para describir la casilla
