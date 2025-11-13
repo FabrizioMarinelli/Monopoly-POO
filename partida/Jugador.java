@@ -19,7 +19,8 @@ public class Jugador {
     private int tiradasRepetidas;
     private ArrayList<Casilla> propiedades; //Propiedades que posee el jugador.
     private ArrayList<Casilla> hipotecas;
-    private ArrayList<Casilla> edificios;
+    //Creamos el ArrayList de edificios que tienen los jugadores
+    private ArrayList<Edificio> edificios = new ArrayList<>();
 
     //Constructor vacío. Se usará para crear la banca.
     public Jugador() {
@@ -140,13 +141,18 @@ public class Jugador {
         this.propiedades = propiedades;
     }
 
+    public ArrayList<Edificio> getEdificios() {
+        return edificios;
+    }
+
+
     //Otros métodos:
     //Método para añadir una propiedad al jugador. Como parámetro, la casilla a añadir.
     public void anhadirPropiedad(Casilla casilla) {
         //se comprueba que la casilla no pertenezca ya al jugador
         if(!propiedades.contains(casilla)){
             propiedades.add(casilla);
-            casilla.setDuenho(this);
+            casilla.    setDuenho(this);
         }
 
     }
@@ -222,6 +228,12 @@ public class Jugador {
 
     }
 
+    //Añadimos el edificio que se acaba de construír al jugador
+    public void anhadirEdificio(Edificio e) {
+        edificios.add(e);
+    }
+
+
     @Override
     public String toString() {
         return """
@@ -231,7 +243,8 @@ public class Jugador {
                     avatar: %s
                     propiedades: %s
                     edificios: %s
-                    hipotecas: %s
+                    hipoteca: %s
+
                 }
                 """.formatted(this.nombre, this.fortuna, this.avatar.getId(), this.propiedades.isEmpty()? "-" : this.propiedades.toString(), this.edificios.isEmpty()? "-" : this.edificios.toString(),this.hipotecas.isEmpty()? "-" : this.hipotecas.toString());
     }

@@ -64,7 +64,8 @@ class Grupo {
 
     //Getter del color del grupo
     public String getColorGrupo(){
-         return colorGrupo;
+        return colorGrupo;
+
     }
 
     //Getter de las casillas del grupo
