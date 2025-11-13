@@ -167,6 +167,16 @@ public class Menu {
                 } else {
                     hipotecarPropiedad(comandoSplit[1]);
                 }
+                break;
+            case "deshipotecar":
+                if (jugadores.size() < 2) {
+                    System.out.println("Todavia no hay jugadores suficientes");
+                } else if (comandoSplit.length != 2) {
+                    System.out.println("Comando invalido");
+                } else {
+                    deshipotecarPropiedad(comandoSplit[1]);
+                }
+                break;
             default:
                 System.out.println("Comando invalido");
                 break;
@@ -322,7 +332,7 @@ public class Menu {
         }
         //Declaramos el lugar actual del avatar para poder evaluar su posicion
         Casilla casillaActual = avatar.getLugar();
-        boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, valorTirada);
+        boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, tablero,valorTirada, jugadores);
 
         //Si el jugador se queda sin dinero suficiente debe declararse en bancarota
         if (!sigueEnJuego) {
@@ -333,8 +343,74 @@ public class Menu {
             return;
         }
     }
-    private void hipotecarPropiedad(String nombre){
 
+    private void hipotecarPropiedad(String nombre){
+        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
+        Casilla propiedadHipotecar;
+
+        //Recorrer cada propiedad del jugador
+        for (Casilla propiedadJugador: jugadorActual.getPropiedades()){
+            //Comprobar si coincide con la propiedad solicitada
+            if(propiedadJugador.getNombre().equalsIgnoreCase(nombre)){
+                propiedadHipotecar = propiedadJugador;
+
+                //Comprobar si esta hipotecada
+                if (!propiedadHipotecar.getPropiedadHipotecada()){
+
+                    //Setear hipotecada a true, otorgar dinero y avisar por mensaje
+                    propiedadHipotecar.setPropiedadHipotecada(true);
+                    jugadorActual.anhadirHipoteca(propiedadHipotecar);
+                    jugadorActual.sumarFortuna(propiedadHipotecar.getHipoteca());
+                    System.out.println("Se ha sumado "+propiedadHipotecar.getHipoteca()+" a la fortuna del jugador");
+                    return;
+
+                }else {
+                    System.out.println("Esta propiedad ya esta hipotecada");
+                    return;
+                }
+            }
+        }
+
+        //Si no es de su propiedad avisa al jugador
+        System.out.println("La propiedad no pertenece al jugador");
+
+    }
+    private void deshipotecarPropiedad(String nombre){
+        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
+        Casilla propiedadHipotecar;
+
+        //Recorrer cada propiedad del jugador
+        for (Casilla propiedadJugador: jugadorActual.getPropiedades()){
+            //Comprobar si coincide con la propiedad solicitada
+            if(propiedadJugador.getNombre().equalsIgnoreCase(nombre)){
+                propiedadHipotecar = propiedadJugador;
+
+                //Comprobar si esta hipotecada
+                if (propiedadHipotecar.getPropiedadHipotecada()){
+
+                    //Comprobar si el jugador tiene suficiente dinero
+                    if (jugadorActual.getFortuna() > propiedadHipotecar.getHipoteca()){
+                        //Setear hipotecada a false, cobrar dinero y avisar por mensaje
+                        propiedadHipotecar.setPropiedadHipotecada(false);
+                        jugadorActual.eliminarHipoteca(propiedadHipotecar);
+                        jugadorActual.sumarFortuna(-(propiedadHipotecar.getHipoteca()));
+                        System.out.println("Se ha cobrado "+propiedadHipotecar.getHipoteca()+", la propiedad ya no esta hipotecada ");
+                        return;
+                    } else{
+                        System.out.println("El jugador no posee suficiente dinero");
+                        return;
+                    }
+
+
+                }else {
+                    System.out.println("Esta propiedad no esta hipotecada");
+                    return;
+                }
+            }
+        }
+
+        //Si no es de su propiedad avisa al jugador
+        System.out.println("La propiedad no pertenece al jugador");
 
     }
     /*Método que ejecuta todas las acciones realizadas con el comando 'comprar nombre_casilla'.
