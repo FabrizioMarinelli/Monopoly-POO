@@ -15,6 +15,8 @@ public class Jugador {
     private boolean enCarcel; //Será true si el jugador está en la carcel
     private int tiradasCarcel; //Cuando está en la carcel, contará las tiradas sin éxito que ha hecho allí para intentar salir (se usa para limitar el numero de intentos).
     private int vueltas; //Cuenta las vueltas dadas al tablero.
+    private boolean tiradaDisponible;
+    private int tiradasRepetidas;
     private ArrayList<Casilla> propiedades; //Propiedades que posee el jugador.
     private ArrayList<Casilla> hipotecas;
     //Creamos el ArrayList de edificios que tienen los jugadores
@@ -31,12 +33,14 @@ public class Jugador {
         this.tiradasCarcel = 0;
         this.vueltas = 0;
         this.propiedades = new ArrayList<>();
+        this.tiradaDisponible = true;
+        this.tiradasRepetidas = 0;
     }
 
     /*Constructor principal. Requiere parámetros:
-    * Nombre del jugador, tipo del avatar que tendrá, casilla en la que empezará y ArrayList de
-    * avatares creados (usado para dos propósitos: evitar que dos jugadores tengan el mismo nombre y
-    * que dos avatares tengan mismo ID). Desde este constructor también se crea el avatar.
+     * Nombre del jugador, tipo del avatar que tendrá, casilla en la que empezará y ArrayList de
+     * avatares creados (usado para dos propósitos: evitar que dos jugadores tengan el mismo nombre y
+     * que dos avatares tengan mismo ID). Desde este constructor también se crea el avatar.
      */
     public Jugador(String nombre, String tipoAvatar, Casilla inicio, ArrayList<Avatar> avCreados, ArrayList<Jugador> jugadoresCreados) {
         this.nombre = nombre;
@@ -48,12 +52,27 @@ public class Jugador {
         this.propiedades = new ArrayList<>();
         this.hipotecas = new  ArrayList<>();
         this.edificios = new ArrayList<>();
+        this.tiradaDisponible = true;
+        this.tiradasRepetidas = 0;
         jugadoresCreados.add(this);
         //Por ultimo se crea el avatar
 
         this.avatar = new Avatar(tipoAvatar,this, inicio, avCreados);
     }
+
     //GETTERS Y SETTERS
+    public boolean getTiradaDisponible(){return tiradaDisponible;}
+
+    public void setTiradaDisponible(boolean valor){
+        this.tiradaDisponible = valor;
+    }
+
+    public int getTiradasRepetidas(){return tiradasRepetidas;}
+
+    public void setTiradasRepetidas(int valor){
+        this.tiradasRepetidas = valor;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -114,6 +133,10 @@ public class Jugador {
         return propiedades;
     }
 
+    public ArrayList<Casilla> getHipotecas(){
+        return hipotecas;
+    }
+
     public void setPropiedades(ArrayList<Casilla> propiedades) {
         this.propiedades = propiedades;
     }
@@ -143,6 +166,20 @@ public class Jugador {
         }
     }
 
+    public void anhadirHipoteca(Casilla casilla) {
+        //se comprueba que la casilla no pertenezca ya al jugador
+        if(!hipotecas.contains(casilla)){
+            hipotecas.add(casilla);
+        }
+
+    }
+
+    //Método para eliminar una propiedad del arraylist de propiedades de jugador.
+    public void eliminarHipoteca(Casilla casilla) {
+        //se comprueba que la propiedad pertenezca al jugador
+            hipotecas.remove(casilla);
+    }
+
     //Método para añadir fortuna a un jugador
     //Como parámetro se pide el valor a añadir. Si hay que restar fortuna, se pasaría un valor negativo.
     public void sumarFortuna(float valor) {
@@ -155,8 +192,8 @@ public class Jugador {
         this.gastos += valor;
     }
 
-    /*Método para establecer al jugador en la cárcel. 
-    * Se requiere disponer de las casillas del tablero para ello (por eso se pasan como parámetro).*/
+    /*Método para establecer al jugador en la cárcel.
+     * Se requiere disponer de las casillas del tablero para ello (por eso se pasan como parámetro).*/
     public void encarcelar(ArrayList<ArrayList<Casilla>> pos) {
         Casilla carcel = null;
         //Se busca la casilla de la carcel en el tablero
@@ -207,6 +244,7 @@ public class Jugador {
                     propiedades: %s
                     edificios: %s
                     hipoteca: %s
+
                 }
                 """.formatted(this.nombre, this.fortuna, this.avatar.getId(), this.propiedades.isEmpty()? "-" : this.propiedades.toString(), this.edificios.isEmpty()? "-" : this.edificios.toString(),this.hipotecas.isEmpty()? "-" : this.hipotecas.toString());
     }

@@ -1,9 +1,6 @@
 package monopoly;
-
 import partida.*;
-
 import java.util.ArrayList;
-
 public class Carta {
     private int id;
     private String tipo; // "Suerte" o "Comunidad"
@@ -11,7 +8,6 @@ public class Carta {
     private String accion; // nombre de la acción a realizar (por ejemplo: "PAGAR", "COBRAR", "MOVER", "CARCEL")
     private float cantidad; // importe a pagar o cobrar
     private String destino; // nombre de la casilla destino (si aplica)
-
     public Carta(int id, String tipo, String descripcion, String accion, float cantidad, String destino) {
         this.id = id;
         this.tipo = tipo;
@@ -20,7 +16,6 @@ public class Carta {
         this.cantidad = cantidad;
         this.destino = destino;
     }
-
     // getters
     public int getId() { return id; }
     public String getTipo() { return tipo; }
@@ -28,18 +23,15 @@ public class Carta {
     public String getAccion() { return accion; }
     public float getCantidad() { return cantidad; }
     public String getDestino() { return destino; }
-
     public void ejecutarCarta(Jugador jugador, Tablero tablero, ArrayList<Jugador> jugadores){
         System.out.println("Acción: " + descripcion);
-
         switch (accion.toUpperCase()){
             case "COBRAR":
                 jugador.sumarFortuna(this.cantidad);
                 break;
             case "PAGAR":
-
                 if (descripcion.contains("cada jugador")) {
-                    // Pagar a cada jugador (excepto uno mismo)
+// Pagar a cada jugador (excepto uno mismo)
                     for (Jugador j : jugadores) {
                         if (!j.equals(jugador)) {
                             j.sumarFortuna(cantidad);
@@ -48,27 +40,23 @@ public class Carta {
                         }
                     }
                 } else {
-                    // Carta normal de pagar al banco
+// Carta normal de pagar al banco
                     jugador.sumarFortuna(-cantidad);
                     jugador.sumarGastos(cantidad);
                 }
                 break;
             case "MOVER":
                 Casilla casillaDestino = tablero.encontrar_casilla(destino);
-
-                // Creamos un tablero para calcular posiciones que tiene que avanzar el personaje
+// Creamos un tablero para calcular posiciones que tiene que avanzar el personaje
                 ArrayList<Casilla> tableroJunto = new ArrayList<>();
                 for (ArrayList<Casilla> lado : tablero.getPosiciones()) {
                     tableroJunto.addAll(lado);
                 }
-
                 int posActual = tableroJunto.indexOf(jugador.getAvatar().getLugar());
                 int posDestino = tableroJunto.indexOf(casillaDestino);
-
-                // Calculamos cuántas casillas avanzar (considerando el ciclo del tablero)
+// Calculamos cuántas casillas avanzar (considerando el ciclo del tablero)
                 int avance = (posDestino - posActual + tableroJunto.size()) % tableroJunto.size();
-
-                // Movemos usando moverAvatar, que ya gestiona pasar por Salida
+// Movemos usando moverAvatar, que ya gestiona pasar por Salida
                 jugador.getAvatar().moverAvatar(tablero.getPosiciones(), avance);
                 break;
             case "CÁRCEL":
@@ -78,13 +66,5 @@ public class Carta {
                 jugador.getAvatar().moverAvatar(tablero.getPosiciones(), (int) this.cantidad);
                 break;
         }
-
-
     }
-
 }
-
-
-
-
-

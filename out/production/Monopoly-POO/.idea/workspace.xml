@@ -4,22 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f265fba-5a38-4188-a3d9-656047fab896" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/monopoly/Edificio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hola.txt" beforeDir="false" />
+    <list default="true" id="cd9968c9-4dcf-43d9-85d9-489e4047d161" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/monopoly/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Casilla.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monopoly/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monopoly/MonopolyETSE.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/MonopolyETSE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/hola.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/MonopolyETSE.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/MonopolyETSE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/partida/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Jugador.java" afterDir="false" />
-
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,10 +31,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="34PunbfInPHJcmUQKgq3gfINjKD" />
-
+  <component name="ProjectId" id="35Q9N6PAPcY1gGShtZWiuYD1thn" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -48,25 +42,22 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.MonopolyETSE.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/Documents/GitHub/Monopoly-POO/Monopoly-POO&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;git-widget-placeholder&quot;: &quot;Fabrizio&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="partida" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="MonopolyETSE" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="monopoly.MonopolyETSE" />
       <module name="Monopoly-POO" />
-      <option name="PROGRAM_PARAMETERS" value="comandos4.txt" />
+      <option name="PROGRAM_PARAMETERS" value="hola.txt" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="monopoly.*" />
@@ -92,30 +83,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4f265fba-5a38-4188-a3d9-656047fab896" name="Changes" comment="" />
-      <created>1761127696088</created>
+      <changelist id="cd9968c9-4dcf-43d9-85d9-489e4047d161" name="Changes" comment="" />
+      <created>1763031404549</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1761127696088</updated>
-      <workItem from="1761127697440" duration="1741000" />
-      <workItem from="1761738020382" duration="3039000" />
-      <workItem from="1762342195327" duration="71000" />
-      <workItem from="1762342284439" duration="7000" />
+      <updated>1763031404549</updated>
     </task>
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.NullPointerException" package="java.lang" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-
 </project>
