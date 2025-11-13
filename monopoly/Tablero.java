@@ -82,14 +82,6 @@ public class Tablero {
     }
 
 
-
-    //Getter para la posiciones
-    public ArrayList<ArrayList<Casilla>> getPosiciones() {
-        return posiciones;
-    }
-
-
-
     //Método para colorear las casillas
     private String colorearCasilla(Casilla c) {
         String color = RESET;
@@ -259,35 +251,41 @@ public class Tablero {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(); //StringBuilder para construir de manera eficiente el texto
-//Obtenemos las listas de las casillas de los diferentes lados del tablero
+
+        //Obtenemos las listas de las casillas de los diferentes lados del tablero
         ArrayList<Casilla> norte = posiciones.get(2);
         ArrayList<Casilla> sur = posiciones.get(0);
         ArrayList<Casilla> este = posiciones.get(3);
         ArrayList<Casilla> oeste = posiciones.get(1);
-//Imprimimos el lado norte
-        for (int i = 0; i < norte.size(); i++) {
-//Imprimimos la casilla del lado izquiero con sus barras laterales
+
+        //Imprimimos el lado norte
+        for(int i = 0; i < norte.size(); i++){
+            //Imprimimos la casilla del lado izquiero con sus barras laterales
             sb.append("|" + colorearCasilla(norte.get(i)) + mostrarAvatares(norte.get(i)));
         }
-        sb.append("|\n"); //Cuando se termine queremos que haga un salto de línea para que comience con los laterales
-//Imprimir los lados de los lados
-//En el for se imprimirá cada línea del medio del tablero
-        for (int i = 0; i < oeste.size(); i++) {
-//Imprimimos la casilla del lado izquiero con sus barras laterales
-            sb.append("|" + colorearCasilla(oeste.get(i)) + mostrarAvatares(oeste.get(i)) + "|");
-//Metemos más espacios en el medio para que el tablero tenga forma rectangular
-            sb.append(" ".repeat(17 * 9 - 1));
-//Imprimimos la casilla de la derecha
-            if (i < este.size()) {
-                sb.append("|" + colorearCasilla(este.get(i)) + mostrarAvatares(este.get(i)) + "|");
+        sb.append("|\n");   //Cuando se termine queremos que haga un salto de línea para que comience con los laterales
+
+        //Imprimir los lados de los lados
+        //En el for se imprimirá cada línea del medio del tablero
+        for(int e = 0; e < este.size(); e++){
+            int o = oeste.size() - 1 - e;
+            //Imprimimos la casilla del lado izquiero con sus barras laterales
+            sb.append("|" + colorearCasilla(oeste.get(o)) + mostrarAvatares(oeste.get(o)) + "|");
+
+            //Metemos más espacios en el medio para que el tablero tenga forma rectangular
+            sb.append(" ".repeat(17*9-1));
+
+            //Imprimimos la casilla de la derecha
+            if (e < este.size()){
+                sb.append("|" + colorearCasilla(este.get(e)) + mostrarAvatares(este.get(e)) + "|");
             }
-//Imprimimos el salto de línea para comenzar a realizar la línea inferior
+            //Imprimimos el salto de línea para comenzar a realizar la línea inferior
             sb.append("\n");
         }
-//Imprimimos el lado sur del revés para que se pueda cerrar el rectángulo
-//Si no las casillas saldrían en un orden inverso
-        for (int i = 0; i < sur.size(); i++) {
-//Imprimimos la casilla del lado izquiero con sus barras laterales
+        //Imprimimos el lado sur del revés para que se pueda cerrar el rectángulo
+        //Si no las casillas saldrían en un orden inverso
+        for(int i = sur.size() - 1; i >= 0 ; i--){
+            //Imprimimos la casilla del lado izquiero con sus barras laterales
             sb.append("|" + colorearCasilla(sur.get(i)) + mostrarAvatares(sur.get(i)));
         }
         sb.append("|\n");
@@ -295,12 +293,12 @@ public class Tablero {
     }
 
     //Método usado para buscar la casilla con el nombre pasado como argumento:
-    public Casilla encontrar_casilla(String nombre) {
-//Recorremos las listas
-        for (ArrayList<Casilla> lado : this.posiciones) {
-            for (Casilla c : lado) {
-//Devolvemos cada casillaº
-                if (c.getNombre().equalsIgnoreCase(nombre)) {
+    public Casilla encontrar_casilla(String nombre){
+        //Recorremos las listas
+        for (ArrayList<Casilla> lado : this.posiciones){
+            for (Casilla c : lado){
+                //Devolvemos cada casillaº
+                if (c.getNombre().equalsIgnoreCase(nombre)){
                     return c;
                 }
             }

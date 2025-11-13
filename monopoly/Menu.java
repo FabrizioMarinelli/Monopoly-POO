@@ -29,7 +29,6 @@ public class Menu {
     //Añadimos una nueva clase indice para saber cual es el jugador actual
     private int indiceJugadorActual;
     private boolean posible;    //Boolean que creamos para almacenar si es posible construir el ejercicio o no
-
     // Método para inciar una partida: crea los jugadores y avatares.
 
 
@@ -115,7 +114,8 @@ public class Menu {
                         listarJugadores();
                     } else if (comandoSplit[1].equals("enventa")) {
                         listarVenta();
-                    } else if (comandoSplit[1].equals("edificios")) {
+                    }
+                    else if (comandoSplit[1].equals("edificios")) {
                         listarEdificios();
                     }
                 }
@@ -163,8 +163,6 @@ public class Menu {
             case "ver":
                 verTablero();
                 break;
-            case "edificar":
-                edificar(comandoSplit[1]);
             case "hipotecar":
                 if (jugadores.size() < 2) {
                     System.out.println("Todavia no hay jugadores suficientes");
@@ -182,6 +180,9 @@ public class Menu {
                 } else {
                     deshipotecarPropiedad(comandoSplit[1]);
                 }
+                break;
+            case "edificar":
+                edificar(comandoSplit[1]);
                 break;
             default:
                 System.out.println("Comando invalido");
@@ -255,8 +256,7 @@ public class Menu {
         if (!jugadores.isEmpty()) {
             for (Jugador jugador : jugadores) {
                 if (partes[2].equals(jugador.getNombre())) {
-                    System.out.println(jugador);
-
+                    desJugador(jugador);
                     return;
                 }
             }
@@ -287,79 +287,6 @@ public class Menu {
         Jugador jugadorActual = jugadores.get(indiceJugadorActual);
         Avatar avatar = jugadorActual.getAvatar();
 
-        //Declaramos variable para contar las veces que se sacaron dobles
-        int contador = 0;
-        boolean repetirTirada = false;
-
-        do {
-            repetirTirada = false;
-            //Hacemos las tiradas
-            int tiradaDado1 = dado1.hacerTirada();
-            int tiradaDado2 = dado2.hacerTirada();
-            //calculamos el valor total
-            int valorTirada = tiradaDado1 + tiradaDado2;
-
-            System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
-            //comprobamos si se sacaron dobles
-            if (tiradaDado1 == tiradaDado2) {
-                contador ++;
-                //Comprobamos que el contador de dobles no sea igual a 3, de ser a si encarcelamos al jugador
-                if (contador == 3) {
-                    System.out.println(jugadorActual.getNombre() + " ha sacado tres dobles seguidos. Va a la cárcel.");
-                    jugadorActual.encarcelar(tablero.getPosiciones());
-                    return;
-                } else if (jugadorActual.isEnCarcel()){
-                    salirCarcel(jugadorActual,1);
-                }
-                repetirTirada = true;
-                System.out.println("Has sacado dobles vuelves a tirar.");
-            }
-
-            //Movemos al avatar el numero de posiciones que le corresponda
-            if (!jugadorActual.isEnCarcel()) {
-                avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
-                System.out.println("El jugador" + "avanza" + valorTirada + "posiciones.");
-            } else{
-                if (jugadorActual.getTiradasCarcel() ==3){
-                    salirCarcel(jugadorActual);
-                } else {
-                    System.out.println("El jugador esta en la carcel, no puede avanzar");
-                }
-            }
-            //Declaramos el lugar actual del avatar para poder evaluar su posicion
-            Casilla casillaActual = avatar.getLugar();
-            boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, valorTirada);
-
-            //Si el jugador se queda sin dinero suficiente debe declararse en bancarota
-            if (!sigueEnJuego) {
-                System.out.println(jugadorActual.getNombre() + " no tiene suficiente dinero. Debe hipotecar o declararse en bancarrota.");
-                return;
-            }
-
-        }while (repetirTirada);
-
-    }
-    private void lanzarDadosForzado(int dado1, int dado2) {
-        //Declaramos cual es el jugador actual
-        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
-        Avatar avatar = jugadorActual.getAvatar();
-
-        //El valor de la tirada sera la suma de los dados
-        int valorTirada = dado1 + dado2;
-
-        System.out.println("\nTirada forzada " + jugadorActual.getNombre() + " obtiene: " + dado1 + " + " + dado2 + " = " + valorTirada);
-
-        //Movemos al avatar de lugar
-        if (dado1 == dado2 && jugadorActual.isEnCarcel()) {
-            salirCarcel(jugadorActual,1);
-        }
-        Casilla casillaInicial = avatar.getLugar();
-        if (!jugadorActual.isEnCarcel()) {
-            avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
-            Casilla casillaFinal = avatar.getLugar();
-            System.out.println("El avatar " + avatar.getId() + " avanza " + valorTirada + " posiciones, desde " + casillaInicial.getNombre() + " hasta " + casillaFinal.getNombre() + ".");
-            // Evaluar la casilla en la que cayó el personaje
-            boolean sigueEnJuego = casillaFinal.evaluarCasilla(jugadorActual, banca, valorTirada);
         //Comprobar si el jugador tiene tiradas disponibles
         if(!jugadorActual.getTiradaDisponible()){
             System.out.println("El jugador actual no tiene tiradas disponibles");
@@ -410,7 +337,6 @@ public class Menu {
                 System.out.println("El jugador esta en la carcel, no puede avanzar");
             }
         }
-
         //Declaramos el lugar actual del avatar para poder evaluar su posicion
         Casilla casillaActual = avatar.getLugar();
         boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, tablero,valorTirada, jugadores);
@@ -550,24 +476,22 @@ public class Menu {
 
 
 
-
     //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'.
     private void salirCarcel(Jugador jugador) {
-
-            if(!jugador.isEnCarcel()){
-                System.out.println("El jugador no se encuentra encarcelado actualmente");
-                return;
-            }
-            if(jugador.getFortuna() >= 500_000f){
-                jugador.setFortuna(jugador.getFortuna() - 500_000f);
-                System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
-                jugador.setTiradasCarcel(0);
-                jugador.setEnCarcel(false);
-                System.out.println(jugador.getNombre() + " ha salido de la cárcel.");
-            }else{
-                //ver si tiene propiedades para vender o hipotecar o vender edificios
-                //jugador.setEliminado(true);
-            }
+        if(!jugador.isEnCarcel()){
+            System.out.println("El jugador no se encuentra encarcelado actualmente");
+            return;
+        }
+        if(jugador.getFortuna() >= 500_000f){
+            jugador.setFortuna(jugador.getFortuna() - 500_000f);
+            System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
+            jugador.setTiradasCarcel(0);
+            jugador.setEnCarcel(false);
+            System.out.println(jugador.getNombre() + " ha salido de la cárcel.");
+        }else{
+            //ver si tiene propiedades para vender o hipotecar o vender edificios
+            //jugador.setEliminado(true);
+        }
     }
     private void salirCarcel(Jugador jugador, int i) {
         jugador.setTiradasCarcel(0);
@@ -597,7 +521,6 @@ public class Menu {
                         System.out.println("  nombre: " +c.getNombre());
                         System.out.println("  tipo: " + c.getTipo() + ","); //Imprimimos el tipo de casilla
                         if (c.getTipo().equalsIgnoreCase("Solar")) {    //Si es un solar imprimimos el grupo al que pertenece
-
                             System.out.println("  grupo: " + c.getGrupo().getColorGrupo() + ",");
                         }
                         System.out.println("  valor: " + c.getValor());   //Se imprime el valor de la casilla
@@ -771,6 +694,4 @@ public class Menu {
             );
         }
     }
-
 }
-

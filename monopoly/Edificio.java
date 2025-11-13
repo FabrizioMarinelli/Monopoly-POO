@@ -47,18 +47,7 @@ public class Edificio {
 
     @Override
     public String toString() {
-        return """
-				    {
-					    id-edificio: %s
-					    propietario: %s
-					    casilla: %s
-					    grupo: %s
-					    coste: %.2f
-			        }
-			   """.formatted(this.id, this.propietario.getNombre(), this.casilla.getNombre(), (this.grupo != null) ? this.grupo.getColorGrupo() : "-", this.coste);
+        return "id-edificio: %s, propietario: %s, casilla: %s, grupo: %s, coste: %.2f".formatted(this.id, this.propietario.getNombre(), this.casilla.getNombre(), (this.grupo != null) ? this.grupo.getColorGrupo() : "-", this.coste);
     }
-
-
-
 
 }
