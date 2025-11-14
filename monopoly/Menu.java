@@ -107,7 +107,7 @@ public class Menu {
                 imprimirJugadorActual();
                 break;
             case "listar":
-                if (comandoSplit.length != 2) {
+                if (comandoSplit.length > 3) {
                     System.out.println("comando invalido");
                 }else{
                     if (comandoSplit[1].equals("jugadores")) {
@@ -116,7 +116,12 @@ public class Menu {
                         listarVenta();
                     }
                     else if (comandoSplit[1].equals("edificios")) {
-                        listarEdificios();
+                        if(comandoSplit.length == 2){
+                            listarEdificios();
+                        } else if (comandoSplit.length == 3) {
+                            listarEdificiosGrupo(comandoSplit[2]);
+                        }
+
                     }
                 }
                 break;
@@ -693,5 +698,126 @@ public class Menu {
                     e.getId(), (e.getPropietario() != null ? e.getPropietario().getNombre() : "-"), (e.getCasilla() != null ? e.getCasilla().getNombre() : "-"), grupoColor, e.getCoste()
             );
         }
+    }
+
+    //Método para mostrar todos los edificios de un grupo
+    private void listarEdificiosGrupo(String colorGrupo){
+        //Pasamos todo a mayúsculas
+        colorGrupo = colorGrupo.toUpperCase();
+
+        //Creamos un arraylist donde almacenaremos todas las casillas del grupo solicitado por el usuario
+        ArrayList<Casilla> casillasGrupo = new ArrayList<>();
+        //Recorremos todas las casillas del tablero
+        for(ArrayList<Casilla> lado : tablero.getPosiciones()){
+            for(Casilla c : lado){
+                //Comprobamos que la casilla tenga un grupo asignado y lo comparamos por el grupo pasado como parámetro
+                if(c.getGrupo() != null && c.getGrupo().getColorGrupo().equals(colorGrupo)){
+                    //En caso de que sea igual que el grupo pasado por parámetro lo añadimos al ArrayList
+                    casillasGrupo.add(c);
+                }
+            }
+        }
+        //Caso en el que el ArrayList está vacío, puede ser por dos motivcs, notificados por salida de pantalla
+        if(casillasGrupo.isEmpty()){
+            System.out.println("No existe edificios en este grupo o no existe este grupo, comprueba el comando escrito");
+        }
+        //Variables para saber que es posible construír
+        boolean posibleCasa = false;
+        boolean posibleHotel = false;
+        boolean posiblePiscina = false;
+        boolean posiblePista = false;
+
+        //Recorremos cada casilla del ArrayList
+        for(Casilla c : casillasGrupo){
+            //Creamos nuevos ArrayList para almacenar lo que tenemos construído en el grupo
+            ArrayList<String> casa = new ArrayList<>();
+            ArrayList<String> hotel = new ArrayList<>();
+            ArrayList<String> piscina = new ArrayList<>();
+            ArrayList<String> pista = new ArrayList<>();
+            //Recorremos todos los edificios del grupo y los añadimos a su correspondiente ArrayList para trabajar
+            //con ellos en un futuro y ver que se puede edificar a mayores
+            for(Edificio e : c.getEdificios()){
+                switch(e.getTipo()){
+                    case "casa":
+                        casa.add(e.getId());
+                        break;
+                    case "hotel":
+                        hotel.add(e.getId());
+                        break;
+                    case "piscina":
+                        piscina.add(e.getId());
+                        break;
+                    case "pista":
+                        pista.add(e.getId());
+                        break;
+                    default:
+                }
+            }
+            //Imprimimos los edificios pertenecientes al grupo
+            System.out.printf("""
+                {
+                    propiedad: %s,
+                    hoteles: %s,
+                    casas: %s,
+                    piscinas: %s,
+                    pistasDeDeporte: %s,
+                    alquiler: %.0f
+                },
+                """,
+                    c.getNombre(),
+                    hotel.isEmpty() ? "-" : hotel,
+                    casa.isEmpty() ? "-" : casa,
+                    piscina.isEmpty() ? "-" : piscina,
+                    pista.isEmpty() ? "-" : pista,
+                    c.getImpuesto()
+            );
+
+            //Comprobamos que podemos edificar en nuestro grupo tal como está su situación actual
+            if(casa.size() < 4){
+                posibleCasa = true;
+            }
+            if(casa.size() == 4 && hotel.isEmpty()){
+                posibleHotel = true;
+            }
+            if(hotel.size() == 1 && piscina.isEmpty()){
+                posiblePiscina = true;
+            }
+            if(hotel.size() == 1 && pista.isEmpty()){
+                posiblePista = true;
+            }
+        }
+
+        //Imprimimos que se puede construír finalmente en el grupo
+        //Creamos dos nuevos ArrayList para almacenar el tipo de propiedades que se pueden y no se pueden cosntruír
+        ArrayList<String> siSePuede = new ArrayList<>();
+        ArrayList<String> noSePuede = new ArrayList<>();
+
+        if(posibleCasa){
+            siSePuede.add("casas");
+        }else{
+            noSePuede.add("casas");
+        }
+        if(posibleHotel){
+            siSePuede.add("hotel");
+        }else{
+            noSePuede.add("hotel");
+        }
+        if(posiblePiscina){
+            siSePuede.add("piscina");
+        }else{
+            noSePuede.add("piscinas");
+        }
+        if(posiblePista){
+            siSePuede.add("pistas de deporte");
+        }else{
+            noSePuede.add("pistas de deporte");
+        }
+
+        //Comprobamos que no sean vacías y si no lo son imprimimos su contentido
+        if (!siSePuede.isEmpty())
+            System.out.println("Se puede edificar " + String.join(" y ", siSePuede) + ".");
+
+        if (!noSePuede.isEmpty())
+            System.out.println("No se pueden construir " + String.join(" ni ", noSePuede) + ".");
     }
 }
