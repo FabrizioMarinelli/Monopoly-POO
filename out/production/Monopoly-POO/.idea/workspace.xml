@@ -4,63 +4,48 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monopoly/Carta.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Carta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monopoly/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Casilla.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monopoly/Tablero.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Tablero.java" afterDir="false" />
+    <list default="true" id="8e76cb82-def1-4e75-aee7-cda5b9b8a6bc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Edificio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Edificio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Grupo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Grupo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/MonopolyETSE.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/MonopolyETSE.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Carolechu65"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/FabrizioMarinelli/Monopoly-POO.git&quot;,
-    &quot;accountId&quot;: &quot;58c50528-186d-4b85-82dc-b4450b35bc2c&quot;
-  }
-}</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 2
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="34Puad72K5z1fwCisykDGjZLtgl" />
+  <component name="ProjectId" id="35R8LqTY1TfgeITJLb0PpZFKf2E" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.MonopolyETSE.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Application.MonopolyETSE.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "carolina",
+    "git-widget-placeholder": "maria",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/carolina-silva/Escritorio/POO/Monopoly-POO"
+    "last_opened_file_path": "C:/Users/PC/Documents/GitHub/Monopoly-POO"
   }
 }]]></component>
   <component name="RunManager">
     <configuration name="MonopolyETSE" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="monopoly.MonopolyETSE" />
       <module name="Monopoly-POO" />
-      <option name="PROGRAM_PARAMETERS" value="comandos_4.txt" />
+      <option name="PROGRAM_PARAMETERS" value="comandos4.txt" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="monopoly.*" />
@@ -77,13 +62,20 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="" />
-      <created>1761127592592</created>
+      <changelist id="8e76cb82-def1-4e75-aee7-cda5b9b8a6bc" name="Changes" comment="" />
+      <created>1763061470691</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1761127592592</updated>
+      <updated>1763061470691</updated>
     </task>
     <servers />
   </component>

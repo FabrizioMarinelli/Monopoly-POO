@@ -15,9 +15,11 @@ public class Jugador {
     private boolean enCarcel; //Será true si el jugador está en la carcel
     private int tiradasCarcel; //Cuando está en la carcel, contará las tiradas sin éxito que ha hecho allí para intentar salir (se usa para limitar el numero de intentos).
     private int vueltas; //Cuenta las vueltas dadas al tablero.
+    private boolean tiradaDisponible;
+    private int tiradasRepetidas;
     private ArrayList<Casilla> propiedades; //Propiedades que posee el jugador.
     private ArrayList<Casilla> hipotecas;
-    private ArrayList<Casilla> edificios;
+    
     private float dineroInvertido = 0;           // dinero gastado en comprar cosas
     private float pagoTasasEImpuestos = 0;       // dinero pagado por tasas/impuestos
     private float pagoDeAlquileres = 0;          // dinero pagado al caer en propiedades de otros
@@ -25,6 +27,8 @@ public class Jugador {
     private float pasarPorCasillaDeSalida = 0;   // dinero ganado al pasar por salida
     private float premiosInversionesOBote = 0;   // dinero ganado por premios o parking
     private int vecesEnLaCarcel = 0;             // veces que fue encarcelado
+    //Creamos el ArrayList de edificios que tienen los jugadores
+    private ArrayList<Edificio> edificios = new ArrayList<>();
 
     //Constructor vacío. Se usará para crear la banca.
     public Jugador() {
@@ -37,12 +41,14 @@ public class Jugador {
         this.tiradasCarcel = 0;
         this.vueltas = 0;
         this.propiedades = new ArrayList<>();
+        this.tiradaDisponible = true;
+        this.tiradasRepetidas = 0;
     }
 
     /*Constructor principal. Requiere parámetros:
-    * Nombre del jugador, tipo del avatar que tendrá, casilla en la que empezará y ArrayList de
-    * avatares creados (usado para dos propósitos: evitar que dos jugadores tengan el mismo nombre y
-    * que dos avatares tengan mismo ID). Desde este constructor también se crea el avatar.
+     * Nombre del jugador, tipo del avatar que tendrá, casilla en la que empezará y ArrayList de
+     * avatares creados (usado para dos propósitos: evitar que dos jugadores tengan el mismo nombre y
+     * que dos avatares tengan mismo ID). Desde este constructor también se crea el avatar.
      */
     public Jugador(String nombre, String tipoAvatar, Casilla inicio, ArrayList<Avatar> avCreados, ArrayList<Jugador> jugadoresCreados) {
         this.nombre = nombre;
@@ -54,12 +60,27 @@ public class Jugador {
         this.propiedades = new ArrayList<>();
         this.hipotecas = new  ArrayList<>();
         this.edificios = new ArrayList<>();
+        this.tiradaDisponible = true;
+        this.tiradasRepetidas = 0;
         jugadoresCreados.add(this);
         //Por ultimo se crea el avatar
 
         this.avatar = new Avatar(tipoAvatar,this, inicio, avCreados);
     }
+
     //GETTERS Y SETTERS
+    public boolean getTiradaDisponible(){return tiradaDisponible;}
+
+    public void setTiradaDisponible(boolean valor){
+        this.tiradaDisponible = valor;
+    }
+
+    public int getTiradasRepetidas(){return tiradasRepetidas;}
+
+    public void setTiradasRepetidas(int valor){
+        this.tiradasRepetidas = valor;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -120,9 +141,18 @@ public class Jugador {
         return propiedades;
     }
 
+    public ArrayList<Casilla> getHipotecas(){
+        return hipotecas;
+    }
+
     public void setPropiedades(ArrayList<Casilla> propiedades) {
         this.propiedades = propiedades;
     }
+
+    public ArrayList<Edificio> getEdificios() {
+        return edificios;
+    }
+
 
     //Otros métodos:
     //Método para añadir una propiedad al jugador. Como parámetro, la casilla a añadir.
@@ -130,7 +160,7 @@ public class Jugador {
         //se comprueba que la casilla no pertenezca ya al jugador
         if(!propiedades.contains(casilla)){
             propiedades.add(casilla);
-            casilla.setDuenho(this);
+            casilla.    setDuenho(this);
         }
 
     }
@@ -142,6 +172,20 @@ public class Jugador {
             propiedades.remove(casilla);
             casilla.setDuenho(null);
         }
+    }
+
+    public void anhadirHipoteca(Casilla casilla) {
+        //se comprueba que la casilla no pertenezca ya al jugador
+        if(!hipotecas.contains(casilla)){
+            hipotecas.add(casilla);
+        }
+
+    }
+
+    //Método para eliminar una propiedad del arraylist de propiedades de jugador.
+    public void eliminarHipoteca(Casilla casilla) {
+        //se comprueba que la propiedad pertenezca al jugador
+            hipotecas.remove(casilla);
     }
 
     //Método para añadir fortuna a un jugador
@@ -156,8 +200,8 @@ public class Jugador {
         this.gastos += valor;
     }
 
-    /*Método para establecer al jugador en la cárcel. 
-    * Se requiere disponer de las casillas del tablero para ello (por eso se pasan como parámetro).*/
+    /*Método para establecer al jugador en la cárcel.
+     * Se requiere disponer de las casillas del tablero para ello (por eso se pasan como parámetro).*/
     public void encarcelar(ArrayList<ArrayList<Casilla>> pos) {
         Casilla carcel = null;
         //Se busca la casilla de la carcel en el tablero
@@ -192,6 +236,12 @@ public class Jugador {
 
     }
 
+    //Añadimos el edificio que se acaba de construír al jugador
+    public void anhadirEdificio(Edificio e) {
+        edificios.add(e);
+    }
+
+
     @Override
     public String toString() {
         return """
@@ -200,8 +250,9 @@ public class Jugador {
                     fortuna: %.2f
                     avatar: %s
                     propiedades: %s
-                    hipotecas: %s
                     edificios: %s
+                    hipoteca: %s
+
                 }
                 """.formatted(this.nombre, this.fortuna, this.avatar.getId(), this.propiedades.isEmpty()? "-" : this.propiedades.toString(), this.edificios.isEmpty()? "-" : this.edificios.toString(),this.hipotecas.isEmpty()? "-" : this.hipotecas.toString());
     }

@@ -28,6 +28,7 @@ public class Menu {
     private boolean solvente; //Booleano para comprobar si el jugador que tiene el turno es solvente, es decir, si ha pagado sus deudas.
     //Añadimos una nueva clase indice para saber cual es el jugador actual
     private int indiceJugadorActual;
+    private boolean posible;    //Boolean que creamos para almacenar si es posible construir el ejercicio o no
     // Método para inciar una partida: crea los jugadores y avatares.
 
 
@@ -49,7 +50,7 @@ public class Menu {
             linea = myObj.nextLine().trim().toLowerCase();
         }
     }
-    // Método para inciar una partida: crea los jugadores y avatares.
+    // Metodo para inciar una partida: crea los jugadores y avatares.
     private void iniciarPartida(BufferedReader br) {
         //Leer archivo
         try {
@@ -93,26 +94,34 @@ public class Menu {
     }
 
     /*Método que interpreta el comando introducido y toma la accion correspondiente.
-    * Parámetro: cadena de caracteres (el comando).
-    */
+     * Parámetro: cadena de caracteres (el comando).
+     */
     private void analizarComando(String comando) {
         String[] comandoSplit;
         comandoSplit = comando.split("[\\s]");
         switch (comandoSplit[0]) {
             case "crear":
-                    agregarJugador(comandoSplit);
+                agregarJugador(comandoSplit);
                 break;
             case "jugador":
                 imprimirJugadorActual();
                 break;
             case "listar":
-                if (comandoSplit.length != 2) {
+                if (comandoSplit.length > 3) {
                     System.out.println("comando invalido");
                 }else{
                     if (comandoSplit[1].equals("jugadores")) {
                         listarJugadores();
                     } else if (comandoSplit[1].equals("enventa")) {
                         listarVenta();
+                    }
+                    else if (comandoSplit[1].equals("edificios")) {
+                        if(comandoSplit.length == 2){
+                            listarEdificios();
+                        } else if (comandoSplit.length == 3) {
+                            listarEdificiosGrupo(comandoSplit[2]);
+                        }
+
                     }
                 }
                 break;
@@ -121,17 +130,17 @@ public class Menu {
                     System.out.println("Todavia no hay jugadores suficientes");
                 } else {
                     if (comandoSplit.length == 2) {
-                        lanzarDados();
+                        lanzarDados(0,0);
                     } else if (comandoSplit.length == 3) {
                         String[] splitDados = comandoSplit[2].split("\\+");
-                        lanzarDadosForzado(Integer.parseInt(splitDados[0].trim()), Integer.parseInt(splitDados[1].trim()));
+                        lanzarDados(Integer.parseInt(splitDados[0].trim()), Integer.parseInt(splitDados[1].trim()));
                     } else {
                         System.out.println("comando invalido");
                     }
                 }
                 break;
             case "acabar":
-                    acabarTurno();
+                acabarTurno();
                 break;
             case "salir":
                 if(jugadores.size() < 2){
@@ -144,9 +153,9 @@ public class Menu {
                 if(comandoSplit.length != 3 && comandoSplit.length != 2){
                     System.out.println("Comando invalido");
                 } else if (comandoSplit[1].equals("jugador")) {
-                        desJugador(comandoSplit);
+                    desJugador(comandoSplit);
                 } else {
-                        descCasilla(comandoSplit[1]);
+                    descCasilla(comandoSplit[1]);
                 }
                 break;
             case "comprar":
@@ -158,6 +167,27 @@ public class Menu {
                 break;
             case "ver":
                 verTablero();
+                break;
+            case "hipotecar":
+                if (jugadores.size() < 2) {
+                    System.out.println("Todavia no hay jugadores suficientes");
+                } else if (comandoSplit.length != 2) {
+                    System.out.println("Comando invalido");
+                } else {
+                    hipotecarPropiedad(comandoSplit[1]);
+                }
+                break;
+            case "deshipotecar":
+                if (jugadores.size() < 2) {
+                    System.out.println("Todavia no hay jugadores suficientes");
+                } else if (comandoSplit.length != 2) {
+                    System.out.println("Comando invalido");
+                } else {
+                    deshipotecarPropiedad(comandoSplit[1]);
+                }
+                break;
+            case "edificar":
+                edificar(comandoSplit[1]);
                 break;
             default:
                 System.out.println("Comando invalido");
@@ -231,7 +261,7 @@ public class Menu {
         if (!jugadores.isEmpty()) {
             for (Jugador jugador : jugadores) {
                 if (partes[2].equals(jugador.getNombre())) {
-                    System.out.println(jugador);
+                    desJugador(jugador);
                     return;
                 }
             }
@@ -251,111 +281,148 @@ public class Menu {
         }
 
     }
-    private void lanzarDados() {
-
+    private void lanzarDados(int d1, int d2) {
         //Creamos los dados con los que realizaremos las tiradas
         Dado dado1 = new Dado();
         Dado dado2 = new Dado();
+        int tiradaDado1;
+        int tiradaDado2;
 
         //Declaramos al jugador actual
         Jugador jugadorActual = jugadores.get(indiceJugadorActual);
         Avatar avatar = jugadorActual.getAvatar();
 
-        //Declaramos variable para contar las veces que se sacaron dobles
-        int contador = 0;
-        boolean repetirTirada = false;
-
-        do {
-            repetirTirada = false;
-            //Hacemos las tiradas
-            int tiradaDado1 = dado1.hacerTirada();
-            int tiradaDado2 = dado2.hacerTirada();
-            //calculamos el valor total
-            int valorTirada = tiradaDado1 + tiradaDado2;
-
-            System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
-            //comprobamos si se sacaron dobles
-            if (tiradaDado1 == tiradaDado2) {
-                contador ++;
-                //Comprobamos que el contador de dobles no sea igual a 3, de ser a si encarcelamos al jugador
-                if (contador == 3) {
-                    System.out.println(jugadorActual.getNombre() + " ha sacado tres dobles seguidos. Va a la cárcel.");
-                    jugadorActual.encarcelar(tablero.getPosiciones());
-                    return;
-                } else if (jugadorActual.isEnCarcel()){
-                    salirCarcel(jugadorActual,1);
-                }
-                repetirTirada = true;
-                System.out.println("Has sacado dobles vuelves a tirar.");
-            }
-
-            //Movemos al avatar el numero de posiciones que le corresponda
-            if (!jugadorActual.isEnCarcel()) {
-                avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
-                System.out.println("El jugador" + "avanza" + valorTirada + "posiciones.");
-            } else{
-                if (jugadorActual.getTiradasCarcel() ==3){
-                    salirCarcel(jugadorActual);
-                } else {
-                    System.out.println("El jugador esta en la carcel, no puede avanzar");
-                }
-            }
-            //Declaramos el lugar actual del avatar para poder evaluar su posicion
-            Casilla casillaActual = avatar.getLugar();
-            boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, tablero,valorTirada, jugadores);
-
-            //Si el jugador se queda sin dinero suficiente debe declararse en bancarota
-            if (!sigueEnJuego) {
-                System.out.println(jugadorActual.getNombre() + " no tiene suficiente dinero. Debe hipotecar o declararse en bancarrota.");
-                return;
-            }
-
-        }while (repetirTirada);
-
-    }
-    private void lanzarDadosForzado(int dado1, int dado2) {
-        //Declaramos cual es el jugador actual
-        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
-        Avatar avatar = jugadorActual.getAvatar();
-
-        //El valor de la tirada sera la suma de los dados
-        int valorTirada = dado1 + dado2;
-
-        System.out.println("\nTirada forzada " + jugadorActual.getNombre() + " obtiene: " + dado1 + " + " + dado2 + " = " + valorTirada);
-
-        //Movemos al avatar de lugar
-        if (dado1 == dado2 && jugadorActual.isEnCarcel()) {
-            salirCarcel(jugadorActual,1);
+        //Comprobar si el jugador tiene tiradas disponibles
+        if(!jugadorActual.getTiradaDisponible()){
+            System.out.println("El jugador actual no tiene tiradas disponibles");
+            return;
         }
-        Casilla casillaInicial = avatar.getLugar();
-        if (!jugadorActual.isEnCarcel()) {
-            avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
-            Casilla casillaFinal = avatar.getLugar();
-            System.out.println("El avatar " + avatar.getId() + " avanza " + valorTirada + " posiciones, desde " + casillaInicial.getNombre() + " hasta " + casillaFinal.getNombre() + ".");
-            // Evaluar la casilla en la que cayó el personaje
-            boolean sigueEnJuego = casillaFinal.evaluarCasilla(jugadorActual, banca, tablero,valorTirada,jugadores);
 
-            // Si el jugador cayó en IrCarcel lo metems en la carcel
-            if (casillaFinal.getNombre().equals("Carcel") && !jugadorActual.isEnCarcel()) {
+        //Declaramos variable para contar las veces que se sacaron dobles y seteamos a false tirada disponible
+        jugadorActual.setTiradaDisponible(false);
+
+        //Hacemos las tiradas
+        if (d1!= 0 && d2!=0){
+            tiradaDado1 = d1;
+            tiradaDado2 = d2;
+        } else {
+            tiradaDado1 = dado1.hacerTirada();
+            tiradaDado2 = dado2.hacerTirada();
+        }
+
+        //calculamos el valor total
+        int valorTirada = tiradaDado1 + tiradaDado2;
+        System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
+
+        //comprobamos si se sacaron dobles
+        if (tiradaDado1 == tiradaDado2) {
+            jugadorActual.setTiradasRepetidas(jugadorActual.getTiradasRepetidas() + 1);
+            //Comprobamos que el contador de dobles no sea igual a 3, de ser a si encarcelamos al jugador
+            if (jugadorActual.getTiradasRepetidas() == 3) {
+                System.out.println(jugadorActual.getNombre() + " ha sacado tres dobles seguidos. Va a la cárcel.");
                 jugadorActual.encarcelar(tablero.getPosiciones());
                 return;
+            } else if (jugadorActual.isEnCarcel()){
+                salirCarcel(jugadorActual,1);
+                jugadorActual.setTiradasRepetidas(jugadorActual.getTiradasRepetidas() - 1);
             }
+            jugadorActual.setTiradaDisponible(true);
+            System.out.println("Has sacado dobles vuelves a tirar.");
+        }
 
-            // Si el jugador se quedó sin dinero no puede continuar jugando y tiene que declararse en bancarota  o hipotecar
-            if (!sigueEnJuego) {
-                System.out.println( jugadorActual.getNombre() + " no tiene suficiente dinero. Debe hipotecar o declararse en bancarrota.");
-                return;
-            }
-
-        } else {
+        //Movemos al avatar el numero de posiciones que le corresponda
+        if (!jugadorActual.isEnCarcel()) {
+            avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
+            System.out.println("El jugador" + " avanza " + valorTirada + " posiciones.");
+        } else{
+            jugadorActual.setTiradasCarcel(jugadorActual.getTiradasCarcel() + 1);
             if (jugadorActual.getTiradasCarcel() ==3){
                 salirCarcel(jugadorActual);
-            }else {
+            } else {
                 System.out.println("El jugador esta en la carcel, no puede avanzar");
             }
         }
+        //Declaramos el lugar actual del avatar para poder evaluar su posicion
+        Casilla casillaActual = avatar.getLugar();
+        boolean sigueEnJuego = casillaActual.evaluarCasilla(jugadorActual, banca, tablero,valorTirada, jugadores);
+
+        //Si el jugador se queda sin dinero suficiente debe declararse en bancarota
+        if (!sigueEnJuego) {
+            System.out.println(jugadorActual.getNombre() + " no tiene suficiente dinero. Debe hipotecar o declararse en bancarrota.");
+            return;
+        }
+        if (jugadorActual.isEnCarcel()){
+            return;
+        }
+    }
+
+    private void hipotecarPropiedad(String nombre){
+        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
+        Casilla propiedadHipotecar;
+
+        //Recorrer cada propiedad del jugador
+        for (Casilla propiedadJugador: jugadorActual.getPropiedades()){
+            //Comprobar si coincide con la propiedad solicitada
+            if(propiedadJugador.getNombre().equalsIgnoreCase(nombre)){
+                propiedadHipotecar = propiedadJugador;
+
+                //Comprobar si esta hipotecada
+                if (!propiedadHipotecar.getPropiedadHipotecada()){
+
+                    //Setear hipotecada a true, otorgar dinero y avisar por mensaje
+                    propiedadHipotecar.setPropiedadHipotecada(true);
+                    jugadorActual.anhadirHipoteca(propiedadHipotecar);
+                    jugadorActual.sumarFortuna(propiedadHipotecar.getHipoteca());
+                    System.out.println("Se ha sumado "+propiedadHipotecar.getHipoteca()+" a la fortuna del jugador");
+                    return;
+
+                }else {
+                    System.out.println("Esta propiedad ya esta hipotecada");
+                    return;
+                }
+            }
+        }
+
+        //Si no es de su propiedad avisa al jugador
+        System.out.println("La propiedad no pertenece al jugador");
+
+    }
+    private void deshipotecarPropiedad(String nombre){
+        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
+        Casilla propiedadHipotecar;
+
+        //Recorrer cada propiedad del jugador
+        for (Casilla propiedadJugador: jugadorActual.getPropiedades()){
+            //Comprobar si coincide con la propiedad solicitada
+            if(propiedadJugador.getNombre().equalsIgnoreCase(nombre)){
+                propiedadHipotecar = propiedadJugador;
+
+                //Comprobar si esta hipotecada
+                if (propiedadHipotecar.getPropiedadHipotecada()){
+
+                    //Comprobar si el jugador tiene suficiente dinero
+                    if (jugadorActual.getFortuna() > propiedadHipotecar.getHipoteca()){
+                        //Setear hipotecada a false, cobrar dinero y avisar por mensaje
+                        propiedadHipotecar.setPropiedadHipotecada(false);
+                        jugadorActual.eliminarHipoteca(propiedadHipotecar);
+                        jugadorActual.sumarFortuna(-(propiedadHipotecar.getHipoteca()));
+                        System.out.println("Se ha cobrado "+propiedadHipotecar.getHipoteca()+", la propiedad ya no esta hipotecada ");
+                        return;
+                    } else{
+                        System.out.println("El jugador no posee suficiente dinero");
+                        return;
+                    }
 
 
+                }else {
+                    System.out.println("Esta propiedad no esta hipotecada");
+                    return;
+                }
+            }
+        }
+
+        //Si no es de su propiedad avisa al jugador
+        System.out.println("La propiedad no pertenece al jugador");
 
     }
     /*Método que ejecuta todas las acciones realizadas con el comando 'comprar nombre_casilla'.
@@ -401,32 +468,35 @@ public class Menu {
 
     }
     /*Método que realiza las acciones asociadas al comando 'describir avatar'.
-    * Parámetro: id del avatar a describir.
-    */
+     * Parámetro: id del avatar a describir.
+     */
     private void descAvatar(String ID) {
     }
 
     /* Método que realiza las acciones asociadas al comando 'describir nombre_casilla'.
-    * Parámetros: nombre de la casilla a describir.
-    */
+     * Parámetros: nombre de la casilla a describir.
+     */
 
     //Método que ejecuta todas las acciones relacionadas con el comando 'lanzar dados'.
 
 
 
-    //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'. 
+    //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'.
     private void salirCarcel(Jugador jugador) {
-
-            if(jugador.getFortuna() >= 500_000f){
-                jugador.setFortuna(jugador.getFortuna() - 500_000f);
-                System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
-                jugador.setTiradasCarcel(0);
-                jugador.setEnCarcel(false);
-                System.out.println(jugador.getNombre() + " ha salido de la cárcel.");
-            }else{
-                //ver si tiene propiedades para vender o hipotecar o vender edificios
-                //jugador.setEliminado(true);
-            }
+        if(!jugador.isEnCarcel()){
+            System.out.println("El jugador no se encuentra encarcelado actualmente");
+            return;
+        }
+        if(jugador.getFortuna() >= 500_000f){
+            jugador.setFortuna(jugador.getFortuna() - 500_000f);
+            System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
+            jugador.setTiradasCarcel(0);
+            jugador.setEnCarcel(false);
+            System.out.println(jugador.getNombre() + " ha salido de la cárcel.");
+        }else{
+            //ver si tiene propiedades para vender o hipotecar o vender edificios
+            //jugador.setEliminado(true);
+        }
     }
     private void salirCarcel(Jugador jugador, int i) {
         jugador.setTiradasCarcel(0);
@@ -528,6 +598,8 @@ public class Menu {
         }
         indiceJugadorActual = (indiceJugadorActual+1)%jugadores.size();
         Jugador siguiente = jugadores.get(indiceJugadorActual);
+        siguiente.setTiradaDisponible(true);
+        siguiente.setTiradasRepetidas(0);
         System.out.println("Turno del jugador: " + siguiente.getNombre());
     }
 
@@ -542,5 +614,210 @@ public class Menu {
         System.out.println("Estado actual del tablero:\n\n");
         System.out.println(tablero.toString());
 
+    }
+
+    //Método para edificar
+    public void edificar(String tipo){
+        tipo = tipo.toLowerCase();
+        Jugador propietario = jugadores.get(indiceJugadorActual);
+        Casilla casilla = propietario.getAvatar().getLugar();
+
+        float coste;
+
+        switch(tipo){
+            case "casa":
+                coste = casilla.getValorCasa();
+                break;
+            case "hotel":
+                coste = casilla.getValorHotel();
+                break;
+            case "piscina":
+                coste = casilla.getValorPiscina();
+                break;
+            case "pista_deporte":
+                coste = casilla.getValorPistaDeporte();
+                break;
+            default:
+                System.out.println("Tipo de edificio no válido: " + tipo);
+                return;
+        }
+
+        if(!casilla.posibleConstruir(tipo, propietario)){
+            System.out.println("No se cumplen los requesitos para construir el edificio que solicita en este solar\n");
+            return;
+        }
+        if(propietario.getFortuna() < coste){
+            System.out.println("La fortuna no es suficiente para construir el edificio\n");
+            return;
+        }
+        //Modificamos la fortuna del jugador
+        propietario.setFortuna(propietario.getFortuna() - coste);
+
+        //Creamos el nuevo edificio
+        Edificio nuevoEdificio = new Edificio(tipo, propietario, casilla, coste);
+
+        //Le asignamos al jugador su nuevo edificio
+        propietario.anhadirEdificio(nuevoEdificio);
+
+        //Le asignamos a la casilla su nuevo edificio
+        casilla.anhadirEdificio(nuevoEdificio);
+
+        System.out.printf("Nueva edificación: %s en el solar: %s. La fortuna de %s se reduce en %.2f€.%n", tipo, casilla.getNombre(), propietario.getNombre(), coste);
+    }
+
+    //Método para listar todos los edificios construidos en el juego
+    private void listarEdificios(){
+        ArrayList<Edificio> todosEdificios = new ArrayList<>();
+
+        //Recorremos todos los jugadores y acumulamos sus edificios
+        for(Jugador j : jugadores){
+            todosEdificios.addAll(j.getEdificios());
+        }
+
+        //Caso de que aún no se hayan construído edificios
+        if(todosEdificios.isEmpty()){
+            System.out.println("No hay edificios construidos todavía.");
+            return;
+        }
+
+        //Mostramos la información de cada edificio añadido al ArrayList
+        for(Edificio e : todosEdificios){
+            String grupoColor = (e.getCasilla() != null && e.getCasilla().getGrupo() != null)
+                    ? e.getCasilla().getGrupo().getColorGrupo()
+                    : "-";
+
+            System.out.printf("""
+                {
+                    id: %s,
+                    propietario: %s,
+                    casilla: %s,
+                    grupo: %s,
+                    coste: %.0f
+                },
+                """,
+                    e.getId(), (e.getPropietario() != null ? e.getPropietario().getNombre() : "-"), (e.getCasilla() != null ? e.getCasilla().getNombre() : "-"), grupoColor, e.getCoste()
+            );
+        }
+    }
+
+    //Método para mostrar todos los edificios de un grupo
+    private void listarEdificiosGrupo(String colorGrupo){
+        //Pasamos todo a mayúsculas
+        colorGrupo = colorGrupo.toUpperCase();
+
+        //Creamos un arraylist donde almacenaremos todas las casillas del grupo solicitado por el usuario
+        ArrayList<Casilla> casillasGrupo = new ArrayList<>();
+        //Recorremos todas las casillas del tablero
+        for(ArrayList<Casilla> lado : tablero.getPosiciones()){
+            for(Casilla c : lado){
+                //Comprobamos que la casilla tenga un grupo asignado y lo comparamos por el grupo pasado como parámetro
+                if(c.getGrupo() != null && c.getGrupo().getColorGrupo().equals(colorGrupo)){
+                    //En caso de que sea igual que el grupo pasado por parámetro lo añadimos al ArrayList
+                    casillasGrupo.add(c);
+                }
+            }
+        }
+        //Caso en el que el ArrayList está vacío, puede ser por dos motivcs, notificados por salida de pantalla
+        if(casillasGrupo.isEmpty()){
+            System.out.println("No existe edificios en este grupo o no existe este grupo, comprueba el comando escrito");
+        }
+        //Variables para saber que es posible construír
+        boolean posibleCasa = false;
+        boolean posibleHotel = false;
+        boolean posiblePiscina = false;
+        boolean posiblePista = false;
+
+        //Recorremos cada casilla del ArrayList
+        for(Casilla c : casillasGrupo){
+            //Creamos nuevos ArrayList para almacenar lo que tenemos construído en el grupo
+            ArrayList<String> casa = new ArrayList<>();
+            ArrayList<String> hotel = new ArrayList<>();
+            ArrayList<String> piscina = new ArrayList<>();
+            ArrayList<String> pista = new ArrayList<>();
+            //Recorremos todos los edificios del grupo y los añadimos a su correspondiente ArrayList para trabajar
+            //con ellos en un futuro y ver que se puede edificar a mayores
+            for(Edificio e : c.getEdificios()){
+                switch(e.getTipo()){
+                    case "casa":
+                        casa.add(e.getId());
+                        break;
+                    case "hotel":
+                        hotel.add(e.getId());
+                        break;
+                    case "piscina":
+                        piscina.add(e.getId());
+                        break;
+                    case "pista":
+                        pista.add(e.getId());
+                        break;
+                    default:
+                }
+            }
+            //Imprimimos los edificios pertenecientes al grupo
+            System.out.printf("""
+                {
+                    propiedad: %s,
+                    hoteles: %s,
+                    casas: %s,
+                    piscinas: %s,
+                    pistasDeDeporte: %s,
+                    alquiler: %.0f
+                },
+                """,
+                    c.getNombre(),
+                    hotel.isEmpty() ? "-" : hotel,
+                    casa.isEmpty() ? "-" : casa,
+                    piscina.isEmpty() ? "-" : piscina,
+                    pista.isEmpty() ? "-" : pista,
+                    c.getImpuesto()
+            );
+
+            //Comprobamos que podemos edificar en nuestro grupo tal como está su situación actual
+            if(casa.size() < 4){
+                posibleCasa = true;
+            }
+            if(casa.size() == 4 && hotel.isEmpty()){
+                posibleHotel = true;
+            }
+            if(hotel.size() == 1 && piscina.isEmpty()){
+                posiblePiscina = true;
+            }
+            if(hotel.size() == 1 && pista.isEmpty()){
+                posiblePista = true;
+            }
+        }
+
+        //Imprimimos que se puede construír finalmente en el grupo
+        //Creamos dos nuevos ArrayList para almacenar el tipo de propiedades que se pueden y no se pueden cosntruír
+        ArrayList<String> siSePuede = new ArrayList<>();
+        ArrayList<String> noSePuede = new ArrayList<>();
+
+        if(posibleCasa){
+            siSePuede.add("casas");
+        }else{
+            noSePuede.add("casas");
+        }
+        if(posibleHotel){
+            siSePuede.add("hotel");
+        }else{
+            noSePuede.add("hotel");
+        }
+        if(posiblePiscina){
+            siSePuede.add("piscina");
+        }else{
+            noSePuede.add("piscinas");
+        }
+        if(posiblePista){
+            siSePuede.add("pistas de deporte");
+        }else{
+            noSePuede.add("pistas de deporte");
+        }
+
+        //Comprobamos que no sean vacías y si no lo son imprimimos su contentido
+        if (!siSePuede.isEmpty())
+            System.out.println("Se puede edificar " + String.join(" y ", siSePuede) + ".");
+
+        if (!noSePuede.isEmpty())
+            System.out.println("No se pueden construir " + String.join(" ni ", noSePuede) + ".");
     }
 }
