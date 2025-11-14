@@ -266,6 +266,13 @@ public class Casilla {
                 actual.sumarGastos(impuesto);
                 //y se le suma el precio del alquiler a la fortuna de propietario
                 duenho.sumarFortuna(impuesto);
+
+                //se suma el valor del impuesto al pago de alquileres del que paga
+                actual.sumarPagoDeAlquileres(impuesto);
+
+                //y se le suma el cobro del alquiler al que recibe el valor
+                duenho.sumarCobroDeAlquileres(impuesto);
+
                 System.out.println(actual.getNombre() + " paga " + impuesto + "€ de alquiler a" + duenho.getNombre() + ".");
 
                 return actual.getFortuna() >= 0; // true si no ha quebrado
@@ -279,6 +286,10 @@ public class Casilla {
                 //se le suma a los gastos del jugador el impuesto a pagar
                 actual.sumarGastos(impuesto);
                 banca.sumarFortuna(impuesto);
+
+
+                //Aumentamos la estadistica de impuesto
+                actual.sumarPagoTasasEImpuestos(impuesto);
 
                 return actual.getFortuna() >= 0;
 
@@ -302,6 +313,8 @@ public class Casilla {
                 } else if (nombre.equalsIgnoreCase("Salida")) { //Cuando se pasa por la salida se reciben 2 millones, que se suman a la fortuna
                     System.out.println(actual.getNombre() + " ha pasado por la salida. ¡Recibe 2.000.000€!");
                     actual.sumarFortuna(2_000_000f);
+                    //sumamos el valor a la estadistica de pasar por la casilla de salida
+                    actual.sumarPasarPorCasillaDeSalida(2_000_000f);
                     return true;
                 } else {
                     System.out.println(actual.getNombre() + " ha caído en una casilla especial: " + nombre);
@@ -340,6 +353,8 @@ public class Casilla {
                 solicitante.sumarGastos(valor);
                 //Y se suma ese valor a la fortuna de la banca
                 banca.sumarFortuna(valor);
+
+                solicitante.sumarDineroInvertido(valor);
 
                 //se añade la propieda a las propiedades del solicitante
                 //this.duenho = solicitante;

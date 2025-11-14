@@ -32,3 +32,5 @@ edificar casa
 ver tablero
 listar edificios
 listar edificios cian
+estadisticas Pedro
+describir jugador Pedro

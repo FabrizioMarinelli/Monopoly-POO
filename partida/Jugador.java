@@ -19,7 +19,6 @@ public class Jugador {
     private int tiradasRepetidas;
     private ArrayList<Casilla> propiedades; //Propiedades que posee el jugador.
     private ArrayList<Casilla> hipotecas;
-    
     private float dineroInvertido = 0;           // dinero gastado en comprar cosas
     private float pagoTasasEImpuestos = 0;       // dinero pagado por tasas/impuestos
     private float pagoDeAlquileres = 0;          // dinero pagado al caer en propiedades de otros
@@ -153,6 +152,91 @@ public class Jugador {
         return edificios;
     }
 
+    public float getDineroInvertido() {
+        return dineroInvertido;
+    }
+
+    public void setDineroInvertido(float dineroInvertido) {
+        this.dineroInvertido = dineroInvertido;
+    }
+
+    public int getVecesEnLaCarcel() {
+        return vecesEnLaCarcel;
+    }
+
+    public void setVecesEnLaCarcel(int vecesEnLaCarcel) {
+        this.vecesEnLaCarcel = vecesEnLaCarcel;
+    }
+
+    public float getPremiosInversionesOBote() {
+        return premiosInversionesOBote;
+    }
+
+    public void setPremiosInversionesOBote(float premiosInversionesOBote) {
+        this.premiosInversionesOBote = premiosInversionesOBote;
+    }
+
+    public float getPasarPorCasillaDeSalida() {
+        return pasarPorCasillaDeSalida;
+    }
+
+    public void setPasarPorCasillaDeSalida(float pasarPorCasillaDeSalida) {
+        this.pasarPorCasillaDeSalida = pasarPorCasillaDeSalida;
+    }
+
+    public float getCobroDeAlquileres() {
+        return cobroDeAlquileres;
+    }
+
+    public void setCobroDeAlquileres(float cobroDeAlquileres) {
+        this.cobroDeAlquileres = cobroDeAlquileres;
+    }
+
+    public float getPagoDeAlquileres() {
+        return pagoDeAlquileres;
+    }
+
+    public void setPagoDeAlquileres(float pagoDeAlquileres) {
+        this.pagoDeAlquileres = pagoDeAlquileres;
+    }
+
+    public float getPagoTasasEImpuestos() {
+        return pagoTasasEImpuestos;
+    }
+
+    public void setPagoTasasEImpuestos(float pagoTasasEImpuestos) {
+        this.pagoTasasEImpuestos = pagoTasasEImpuestos;
+    }
+
+    //Funciones para modificar los valores de las estadisticas
+    public void sumarDineroInvertido(float cantidad) {
+        dineroInvertido += cantidad;
+    }
+
+    public void sumarPagoTasasEImpuestos(float cantidad) {
+        pagoTasasEImpuestos += cantidad;
+    }
+
+    public void sumarPagoDeAlquileres(float cantidad) {
+        pagoDeAlquileres += cantidad;
+    }
+
+    public void sumarCobroDeAlquileres(float cantidad) {
+        cobroDeAlquileres += cantidad;
+    }
+
+    public void sumarPasarPorCasillaDeSalida(float cantidad) {
+        pasarPorCasillaDeSalida += cantidad;
+    }
+
+    public void sumarPremiosInversionesOBote(float cantidad) {
+        premiosInversionesOBote += cantidad;
+    }
+
+    public void incrementarVecesEnCarcel() {
+        vecesEnLaCarcel++;
+    }
+
 
     //Otros métodos:
     //Método para añadir una propiedad al jugador. Como parámetro, la casilla a añadir.
@@ -229,6 +313,8 @@ public class Jugador {
 
             //Inicializamos el contador de tiradas en la carcel
             this.tiradasCarcel = 0;
+            //Actualizamos las estadisticas del jugador encarcelado
+            this.incrementarVecesEnCarcel();
 
             System.out.println(nombre + "ha sido enviado a la carcel.");
 

@@ -189,6 +189,14 @@ public class Menu {
             case "edificar":
                 edificar(comandoSplit[1]);
                 break;
+            case "estadisticas":
+                if (comandoSplit.length != 2) {
+                    System.out.println("Comando invalido");
+                } else {
+                    estadisticasJugador(comandoSplit[1]);
+                }
+                break;
+
             default:
                 System.out.println("Comando invalido");
                 break;
@@ -650,8 +658,9 @@ public class Menu {
             System.out.println("La fortuna no es suficiente para construir el edificio\n");
             return;
         }
-        //Modificamos la fortuna del jugador
+        //Modificamos la fortuna del jugador y actualizamos sus estadisticas
         propietario.setFortuna(propietario.getFortuna() - coste);
+        propietario.sumarDineroInvertido(coste);
 
         //Creamos el nuevo edificio
         Edificio nuevoEdificio = new Edificio(tipo, propietario, casilla, coste);
@@ -819,5 +828,32 @@ public class Menu {
 
         if (!noSePuede.isEmpty())
             System.out.println("No se pueden construir " + String.join(" ni ", noSePuede) + ".");
+    }
+
+    //Método para imprimir todas las estadisticas de un jugador
+    private void estadisticasJugador(String nombreJugador){
+        Jugador objetivo = null;
+
+        for (Jugador j : jugadores) {
+            if (j.getNombre().equalsIgnoreCase(nombreJugador)) {
+                objetivo = j;
+                break;
+            }
+        }
+
+        if (objetivo == null) {
+            System.out.println("El jugador " + nombreJugador + " no existe.");
+            return;
+        }
+        System.out.println("{");
+        System.out.println("  dineroInvertido: " + objetivo.getDineroInvertido() + ",");
+        System.out.println("  pagoTasasEImpuestos: " + objetivo.getPagoTasasEImpuestos() + ",");
+        System.out.println("  pagoDeAlquileres: " + objetivo.getPagoDeAlquileres() + ",");
+        System.out.println("  cobroDeAlquileres: " + objetivo.getCobroDeAlquileres() + ",");
+        System.out.println("  pasarPorCasillaDeSalida: " + objetivo.getPasarPorCasillaDeSalida() + ",");
+        System.out.println("  premiosInversionesOBote: " + objetivo.getPremiosInversionesOBote() + ",");
+        System.out.println("  vecesEnLaCarcel: " + objetivo.getVecesEnLaCarcel());
+        System.out.println("}");
+
     }
 }

@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="" />
+    <list default="true" id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comandos4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/comandos4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Carta.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Carta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Casilla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monopoly/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/comandos4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/comandos4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/partida/Jugador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/partida/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Jugador.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +67,7 @@
     <configuration name="MonopolyETSE" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="monopoly.MonopolyETSE" />
       <module name="Monopoly-POO" />
-      <option name="PROGRAM_PARAMETERS" value="comandos_4.txt" />
+      <option name="PROGRAM_PARAMETERS" value="comandos4.txt" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="monopoly.*" />
