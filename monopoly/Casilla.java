@@ -520,12 +520,6 @@ public class Casilla {
     /* Método para mostrar información de una casilla en venta.
      * Valor devuelto: texto con esa información.
      */
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> main
-
 
     //Realizamos las reglas de edifcicación
     //1.- Solo se puede construír en la casilla en la que está el jugador
@@ -623,15 +617,12 @@ public class Casilla {
     public void anhadirEdificio(Edificio e) {
         edificios.add(e);
     }
-<<<<<<< HEAD
+
     public void eliminarEdificio(Edificio e){
         edificios.remove(e);
     }
 
->>>>>>> Stashed changes
-=======
 
->>>>>>> main
     public String casEnVenta() {
         return "A";
     }

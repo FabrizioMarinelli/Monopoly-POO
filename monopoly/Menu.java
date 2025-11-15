@@ -187,9 +187,7 @@ public class Menu {
                     deshipotecarPropiedad(comandoSplit[1]);
                 }
                 break;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
+
             case "edificar":
                 edificar(comandoSplit[1]);
                 break;
@@ -200,11 +198,6 @@ public class Menu {
                 }
                 venderEdificios(comandoSplit[1],comandoSplit[2],comandoSplit[3]);
                 break;
-=======
-            case "edificar":
-                edificar(comandoSplit[1]);
-                break;
->>>>>>> main
             case "estadisticas":
                 if (comandoSplit.length == 1) {
                 // Imprime estadísticas de la partida completa
@@ -217,10 +210,6 @@ public class Menu {
                 }
                 break;
 
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> main
             default:
                 System.out.println("Comando invalido");
                 break;
@@ -661,11 +650,6 @@ public class Menu {
         System.out.println(tablero.toString());
 
     }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> main
 
     //Método para edificar
     public void edificar(String tipo){
@@ -716,7 +700,6 @@ public class Menu {
 
         System.out.printf("Nueva edificación: %s en el solar: %s. La fortuna de %s se reduce en %.2f€.%n", tipo, casilla.getNombre(), propietario.getNombre(), coste);
     }
-<<<<<<< HEAD
     private void venderEdificios(String tipo, String nombre, String cantidad) {
         //Obtener jugador actual
         Jugador jugadorActual =  jugadores.get(indiceJugadorActual);
@@ -750,8 +733,6 @@ public class Menu {
             System.out.println("Se vendieron " + eliminados + " " + tipo + "(s) en " + nombre + ".");
         }
     }
-=======
->>>>>>> main
 
     //Método para listar todos los edificios construidos en el juego
     private void listarEdificios(){
@@ -1012,8 +993,5 @@ public class Menu {
 
 
     }
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> main
+
 }
