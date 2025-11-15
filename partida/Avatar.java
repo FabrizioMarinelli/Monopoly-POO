@@ -114,6 +114,9 @@ public class Avatar {
         //añadimos el avatar al registro de avatares de la casilla
         nuevaCasilla.getAvatares().add(this);
 
+        //actualizamos las estadisticas de la partida
+        nuevaCasilla.incrementarVecesPisada();
+
         //Imprimimos donde se encuentra el avatar ahora
         System.out.println(jugador.getNombre() + "se ha movido a la casilla: " + nuevaCasilla.getNombre());
 
