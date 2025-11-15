@@ -80,7 +80,11 @@ public class Tablero {
     public ArrayList<ArrayList<Casilla>> getPosiciones() {
         return posiciones;
     }
-
+    //Getter para los grupos
+    //Es un paquete privado, para no exponer la variable grupos que es privada
+    ArrayList<Grupo> getGrupos() {
+        return new ArrayList<>(grupos.values());
+    }
 
     //Método para colorear las casillas
     private String colorearCasilla(Casilla c) {

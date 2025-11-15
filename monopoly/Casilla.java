@@ -25,6 +25,9 @@ public class Casilla {
     private float alquilerPiscina;
     private float alquilerPistaDeporte;
     private boolean hipotecada;
+    private float dineroGenerado = 0f; //Indica la cantidad de dinero que ha generado cada una de las casillas
+    private int vecesPisada = 0;  //Indica cuántas veces han caído avatares en cada casilla
+
 
 
     //Creamos el ArrayList de edificios que pueden estar en una casilla
@@ -212,6 +215,13 @@ public class Casilla {
         this.hipotecada = hipotecada;
     }
 
+    //getters para las estadisticas del juego
+    public float getDineroGenerado() { return dineroGenerado; }
+    public int getVecesPisada() { return vecesPisada; }
+    //Funciones para las estadisticas del juego
+    public void sumarDineroGenerado(float cantidad) { this.dineroGenerado += cantidad; }
+    public void incrementarVecesPisada() { this.vecesPisada++; }
+
     //Método utilizado para añadir un avatar al array de avatares en casilla.
     public void anhadirAvatar(Avatar av) {
         //Se comprueba si existe el avatar y si esta registrado en los avatares
@@ -244,7 +254,7 @@ public class Casilla {
         if(tipo == null) tipo = "";
         //se hace un switch para definir el funcionamineto de unas casillas o de otras
         switch (tipo.toLowerCase()){
-            case "solar": case "servicios": case "transporte":
+            case "solar":
                 //Se comprueba si la propiedad tiene dueño o no
                 if(duenho == null || duenho.equals(banca)){
                     System.out.println(actual.getNombre() + " ha caído en " + nombre + ". Está en venta por " + valor + "€.");
@@ -255,8 +265,9 @@ public class Casilla {
                     System.out.println(actual.getNombre() + " ha caído en su propia propiedad, no tiene que pagar nada.");
                     return true;
                 }
-                //Si la propiedad tiene un propietario distinto al jugador que cayo en ella, debeb de cobrarle el alquiler
+                //Si la propiedad tiene un propietario distinto al jugador que cayó en ella, debe de cobrarle el alquiler
                 System.out.println(actual.getNombre() + " ha caído en " + nombre + ", propiedad de " + duenho.getNombre() + ".");
+                System.out.println("Debe pagar " + impuesto + "€ de alquiler.");
 
 
                 //se resta el alquiler a la fortuna del jugador que cayó en la casilla
@@ -266,9 +277,98 @@ public class Casilla {
                 actual.sumarGastos(impuesto);
                 //y se le suma el precio del alquiler a la fortuna de propietario
                 duenho.sumarFortuna(impuesto);
+                //modificamos las estadisticas de los jugadores
+                actual.sumarPagoTasasEImpuestos(impuesto);
+                duenho.sumarCobroDeAlquileres(impuesto);
+
+                //actualizmos las estadisticas de la partida
+                this.sumarDineroGenerado(impuesto);
+
                 System.out.println(actual.getNombre() + " paga " + impuesto + "€ de alquiler a" + duenho.getNombre() + ".");
 
                 return actual.getFortuna() >= 0; // true si no ha quebrado
+
+            case "servicios":
+                //comprobamos que el duenho sea la banca y si queremos podemos comprar
+                if (duenho == null || duenho.equals(banca)) {
+                    System.out.println(actual.getNombre() + " ha caído en el servicio " + nombre + ". Está en venta por " + valor + "€.");
+                    return true;
+                }
+                //Si el propietario es el jugador no tiene que pagar nada
+                if (duenho.equals(actual)) {
+                    System.out.println(actual.getNombre() + " ha caído en su propio servicio. No paga nada.");
+                    return true;
+                }
+
+                // Contar cuántos servicios tiene el dueño
+                int numServicios = 0;
+                for (Casilla c : duenho.getPropiedades()) {
+                    if (c.getTipo().equalsIgnoreCase("servicios")) numServicios++;
+                }
+
+                // Calcular multiplicador segun el numero de servicios que tenga el dueño
+                int multiplicador = (numServicios == 2) ? 10 : 4;
+                //Calulamos el percio del alquiler
+                float alquilerServicio = multiplicador * tirada * impuesto;
+
+                System.out.println(actual.getNombre() + " ha caído en el servicio " + nombre + " de " + duenho.getNombre() + ". Debe pagar " + alquilerServicio + "€ (" + multiplicador + " × tirada × factorServicio).");
+
+                //Cambiamos la fortuna del jugador actual y del dueño del servicio
+                actual.sumarFortuna(-alquilerServicio);
+                actual.sumarGastos(alquilerServicio);
+                duenho.sumarFortuna(alquilerServicio);
+
+                //actualizamos las estadisticas de los jugadores
+                actual.sumarPagoDeAlquileres(alquilerServicio);
+                duenho.sumarCobroDeAlquileres(alquilerServicio);
+
+                //actualizmos las estadisticas de la partida
+                this.sumarDineroGenerado(alquilerServicio);
+
+
+                //Esta linea indica si el jugador aun tiene dinero
+                return actual.getFortuna() >= 0;
+
+            case "transporte":
+                //Comprobamos si la casilla perenece a la banca
+                if (duenho == null || duenho.equals(banca)) {
+                    System.out.println(actual.getNombre() + " ha caído en el transporte " + nombre + ". Está en venta por " + valor + "€.");
+                    return true;
+                }
+                //Comprobamos que la casilla no pertenezca ya al jugador
+                if (duenho.equals(actual)) {
+                    System.out.println(actual.getNombre() + " ha caído en su propio transporte. No paga nada.");
+                    return true;
+                }
+
+                // Calcular alquiler total: suma de los alquileres (impuestos) de todos los transportes del dueño
+                float alquilerTotal = 0;
+                int numTransportes = 0;
+                for (Casilla c : duenho.getPropiedades()) {
+                    if (c.getTipo().equalsIgnoreCase("transporte")) {
+                        alquilerTotal += c.getImpuesto();
+                        numTransportes++;
+                    }
+                }
+
+                System.out.println(actual.getNombre() + " ha caído en el transporte " + nombre + " de " + duenho.getNombre() + ". El propietario posee " + numTransportes + " transportes.");
+                System.out.println("Debe pagar un alquiler total de " + alquilerTotal + "€.");
+
+                //Se actualizan las fortunas del jugador y del dueño de la casilla
+                actual.sumarFortuna(-alquilerTotal);
+                actual.sumarGastos(alquilerTotal);
+                duenho.sumarFortuna(alquilerTotal);
+
+                //actualizamos las estadisticas de los jugadores
+                actual.sumarPagoDeAlquileres(alquilerTotal);
+                duenho.sumarCobroDeAlquileres(alquilerTotal);
+
+                //actualizmos las estadisticas de la partida
+                this.sumarDineroGenerado(alquilerTotal);
+
+
+                return actual.getFortuna() >= 0;
+
 
             case "impuesto":
                 //Cuando se cae en la casilla de impuesto se debe pagar siempre
@@ -279,6 +379,8 @@ public class Casilla {
                 //se le suma a los gastos del jugador el impuesto a pagar
                 actual.sumarGastos(impuesto);
                 banca.sumarFortuna(impuesto);
+                //actualizamos las estadisticas del jugador
+                actual.sumarPagoTasasEImpuestos(impuesto);
 
                 return actual.getFortuna() >= 0;
 
@@ -294,6 +396,8 @@ public class Casilla {
                 } else if (nombre.equalsIgnoreCase("Parking")) {    //Si se cae en el parking recibe un valor que se suma a su fortuna
                     System.out.println(actual.getNombre() + " ha caído en el Parking. Recibe " + valor + "€ del bote.");
                     actual.sumarFortuna(valor);
+                    //actualizamos las estadisticas
+                    actual.sumarPremiosInversionesOBote(valor);
                     this.valor = 0;
                     return true;
                 } else if (nombre.equalsIgnoreCase("Carcel")) { // Si se cae en la casilla de carcel, pero no le toca quedarse ahi, se considera que está de visita
@@ -302,6 +406,8 @@ public class Casilla {
                 } else if (nombre.equalsIgnoreCase("Salida")) { //Cuando se pasa por la salida se reciben 2 millones, que se suman a la fortuna
                     System.out.println(actual.getNombre() + " ha pasado por la salida. ¡Recibe 2.000.000€!");
                     actual.sumarFortuna(2_000_000f);
+                    //actualizamos estadisticas
+                    actual.sumarPasarPorCasillaDeSalida(2_000_000f);
                     return true;
                 } else {
                     System.out.println(actual.getNombre() + " ha caído en una casilla especial: " + nombre);
@@ -314,7 +420,8 @@ public class Casilla {
                 Carta cartaSuerte = tablero.siguienteCarta("suerte");
                 cartaSuerte.ejecutarCarta(actual, tablero, jugadores);
                 return true;
-            case "comunidad": // Aun falta por implementar
+
+            case "comunidad":   // Aun falta por implementar
                 System.out.println(actual.getNombre() + " ha caído en una casilla de Comunidad.");
                 Carta cartaComunidad = tablero.siguienteCarta("comunidad");
                 cartaComunidad.ejecutarCarta(actual,tablero, jugadores);
@@ -325,6 +432,7 @@ public class Casilla {
                 return true;
         }
     }
+
 
     /*Método usado para comprar una casilla determinada. Parámetros:
     * - Jugador que solicita la compra de la casilla.
@@ -340,6 +448,8 @@ public class Casilla {
                 solicitante.sumarGastos(valor);
                 //Y se suma ese valor a la fortuna de la banca
                 banca.sumarFortuna(valor);
+
+                solicitante.sumarDineroInvertido(valor);
 
                 //se añade la propieda a las propiedades del solicitante
                 //this.duenho = solicitante;

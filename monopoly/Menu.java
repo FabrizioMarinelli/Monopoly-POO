@@ -189,6 +189,18 @@ public class Menu {
             case "edificar":
                 edificar(comandoSplit[1]);
                 break;
+            case "estadisticas":
+                if (comandoSplit.length == 1) {
+                // Imprime estadísticas de la partida completa
+                estadisticasJuego();
+                } else if (comandoSplit.length == 2) {
+                    // Comando para las estadisticas de un jugador
+                    estadisticasJugador(comandoSplit[1]);
+                } else {
+                    System.out.println("Comando invalido");
+                }
+                break;
+
             default:
                 System.out.println("Comando invalido");
                 break;
@@ -650,8 +662,9 @@ public class Menu {
             System.out.println("La fortuna no es suficiente para construir el edificio\n");
             return;
         }
-        //Modificamos la fortuna del jugador
+        //Modificamos la fortuna del jugador y actualizamos sus estadisticas
         propietario.setFortuna(propietario.getFortuna() - coste);
+        propietario.sumarDineroInvertido(coste);
 
         //Creamos el nuevo edificio
         Edificio nuevoEdificio = new Edificio(tipo, propietario, casilla, coste);
@@ -819,5 +832,109 @@ public class Menu {
 
         if (!noSePuede.isEmpty())
             System.out.println("No se pueden construir " + String.join(" ni ", noSePuede) + ".");
+    }
+
+    //Método para imprimir todas las estadisticas de un jugador
+    private void estadisticasJugador(String nombreJugador){
+        Jugador objetivo = null;
+
+        for (Jugador j : jugadores) {
+            if (j.getNombre().equalsIgnoreCase(nombreJugador)) {
+                objetivo = j;
+                break;
+            }
+        }
+
+        if (objetivo == null) {
+            System.out.println("El jugador " + nombreJugador + " no existe.");
+            return;
+        }
+        System.out.println("{");
+        System.out.println("  dineroInvertido: " + objetivo.getDineroInvertido() + ",");
+        System.out.println("  pagoTasasEImpuestos: " + objetivo.getPagoTasasEImpuestos() + ",");
+        System.out.println("  pagoDeAlquileres: " + objetivo.getPagoDeAlquileres() + ",");
+        System.out.println("  cobroDeAlquileres: " + objetivo.getCobroDeAlquileres() + ",");
+        System.out.println("  pasarPorCasillaDeSalida: " + objetivo.getPasarPorCasillaDeSalida() + ",");
+        System.out.println("  premiosInversionesOBote: " + objetivo.getPremiosInversionesOBote() + ",");
+        System.out.println("  vecesEnLaCarcel: " + objetivo.getVecesEnLaCarcel());
+        System.out.println("}");
+
+    }
+
+    // Método pra imprimir las estadisticas de la partida
+    private void estadisticasJuego(){
+        //Definimos todas las variables necesarias
+        Casilla casillaMasRentable = null;
+        float max = -1f;
+
+        Grupo grupoMasRentable = null;
+        float max2 = -1f;
+
+        Casilla casillaMasFrecuentada = null;
+        int max3 = -1;
+
+        Jugador jugadorMasVueltas = null;
+        int max4 = -1;
+
+        Jugador jugadorEnCabeza = null;
+        float maxFortuna = -1f;
+
+        //Calculamos cual es la casilla mas rentable
+        for (ArrayList<Casilla> lado : tablero.getPosiciones()) {
+            for (Casilla c : lado) {
+                if (c.getDineroGenerado() > max) {
+                    max = c.getDineroGenerado();
+                    casillaMasRentable = c;
+                }
+            }
+        }
+
+        //Calculamos cual es el grupo mas rentable
+        for (Grupo g : tablero.getGrupos()) {
+            float generado = g.getDineroGenerado();
+            if (generado > max2) {
+                max2 = generado;
+                grupoMasRentable = g;
+            }
+        }
+
+        //Calculamos la casilla mas frecuentada
+        for (ArrayList<Casilla> lado : tablero.getPosiciones()) {
+            for (Casilla c : lado) {
+                if (c.getVecesPisada() > max3) {
+                    max3 = c.getVecesPisada();
+                    casillaMasFrecuentada = c;
+                }
+            }
+        }
+
+        //Calculamos cual es el jugador que lleva mas vueltas
+        for (Jugador j : jugadores) {
+            if (j.getVueltas() > max4) {
+                max4 = j.getVueltas();
+                jugadorMasVueltas = j;
+            }
+        }
+
+        //Calculamos cual es el jugador que va en cabeza segun su fortuna
+        for (Jugador j : jugadores) {
+            // Fortuna total = dinero en mano + valor de propiedades y edificaciones
+            float totalFortuna = j.getFortuna() + j.getDineroInvertido();
+            if (totalFortuna > maxFortuna) {
+                maxFortuna = totalFortuna;
+                jugadorEnCabeza = j;
+            }
+        }
+
+        //Imprimimos todas las estadisticas
+        System.out.println("{");
+        System.out.println("    casillaMasRentable: " + (casillaMasRentable != null ? casillaMasRentable.getNombre() : "Ninguna") + ",");
+        System.out.println("    grupoMasRentable: " + (grupoMasRentable != null ? grupoMasRentable.getColorGrupo() : "Ninguna") + ",");
+        System.out.println("    casillaMasFrecuentada: " + (casillaMasFrecuentada != null ? casillaMasFrecuentada.getNombre() : "Ninguna") + ",");
+        System.out.println("    jugadorMasVueltas: " + (jugadorMasVueltas != null ? jugadorMasVueltas.getNombre() : "Ninguno") + ",");
+        System.out.println("    jugadorEnCabeza: " + (jugadorEnCabeza != null ? jugadorEnCabeza.getNombre() : "NInguno"));
+        System.out.println("}");
+
+
     }
 }
