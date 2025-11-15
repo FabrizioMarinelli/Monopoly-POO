@@ -3,7 +3,10 @@ package monopoly;
 import partida.*;
 
 import partida.*;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> main
 
 
 public class Edificio {
@@ -51,6 +54,7 @@ public class Edificio {
         return "id-edificio: %s, propietario: %s, casilla: %s, grupo: %s, coste: %.2f".formatted(this.id, this.propietario.getNombre(), this.casilla.getNombre(), (this.grupo != null) ? this.grupo.getColorGrupo() : "-", this.coste);
     }
 
+<<<<<<< HEAD
     @Override
     public boolean equals(Object o) {
         // 1) misma referencia
@@ -66,4 +70,6 @@ public class Edificio {
     public int hashCode() {
         return Objects.hash(id);
     }
+=======
+>>>>>>> main
 }

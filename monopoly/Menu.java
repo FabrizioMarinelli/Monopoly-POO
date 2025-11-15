@@ -29,6 +29,7 @@ public class Menu {
     private boolean solvente; //Booleano para comprobar si el jugador que tiene el turno es solvente, es decir, si ha pagado sus deudas.
     //Añadimos una nueva clase indice para saber cual es el jugador actual
     private int indiceJugadorActual;
+    private boolean posible;    //Boolean que creamos para almacenar si es posible construir el ejercicio o no
     // Método para inciar una partida: crea los jugadores y avatares.
 
 
@@ -94,26 +95,34 @@ public class Menu {
     }
 
     /*Método que interpreta el comando introducido y toma la accion correspondiente.
-    * Parámetro: cadena de caracteres (el comando).
-    */
+     * Parámetro: cadena de caracteres (el comando).
+     */
     private void analizarComando(String comando) {
         String[] comandoSplit;
         comandoSplit = comando.split("[\\s]");
         switch (comandoSplit[0]) {
             case "crear":
-                    agregarJugador(comandoSplit);
+                agregarJugador(comandoSplit);
                 break;
             case "jugador":
                 imprimirJugadorActual();
                 break;
             case "listar":
-                if (comandoSplit.length != 2) {
+                if (comandoSplit.length > 3) {
                     System.out.println("comando invalido");
                 }else{
                     if (comandoSplit[1].equals("jugadores")) {
                         listarJugadores();
                     } else if (comandoSplit[1].equals("enventa")) {
                         listarVenta();
+                    }
+                    else if (comandoSplit[1].equals("edificios")) {
+                        if(comandoSplit.length == 2){
+                            listarEdificios();
+                        } else if (comandoSplit.length == 3) {
+                            listarEdificiosGrupo(comandoSplit[2]);
+                        }
+
                     }
                 }
                 break;
@@ -132,7 +141,7 @@ public class Menu {
                 }
                 break;
             case "acabar":
-                    acabarTurno();
+                acabarTurno();
                 break;
             case "salir":
                 if(jugadores.size() < 2){
@@ -145,9 +154,9 @@ public class Menu {
                 if(comandoSplit.length != 3 && comandoSplit.length != 2){
                     System.out.println("Comando invalido");
                 } else if (comandoSplit[1].equals("jugador")) {
-                        desJugador(comandoSplit);
+                    desJugador(comandoSplit);
                 } else {
-                        descCasilla(comandoSplit[1]);
+                    descCasilla(comandoSplit[1]);
                 }
                 break;
             case "comprar":
@@ -178,6 +187,7 @@ public class Menu {
                     deshipotecarPropiedad(comandoSplit[1]);
                 }
                 break;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
             case "edificar":
@@ -190,6 +200,11 @@ public class Menu {
                 }
                 venderEdificios(comandoSplit[1],comandoSplit[2],comandoSplit[3]);
                 break;
+=======
+            case "edificar":
+                edificar(comandoSplit[1]);
+                break;
+>>>>>>> main
             case "estadisticas":
                 if (comandoSplit.length == 1) {
                 // Imprime estadísticas de la partida completa
@@ -202,7 +217,10 @@ public class Menu {
                 }
                 break;
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
             default:
                 System.out.println("Comando invalido");
                 break;
@@ -275,7 +293,7 @@ public class Menu {
         if (!jugadores.isEmpty()) {
             for (Jugador jugador : jugadores) {
                 if (partes[2].equals(jugador.getNombre())) {
-                    System.out.println(jugador);
+                    desJugador(jugador);
                     return;
                 }
             }
@@ -496,35 +514,35 @@ public class Menu {
     }
 
     /*Método que realiza las acciones asociadas al comando 'describir avatar'.
-    * Parámetro: id del avatar a describir.
-    */
+     * Parámetro: id del avatar a describir.
+     */
     private void descAvatar(String ID) {
     }
 
     /* Método que realiza las acciones asociadas al comando 'describir nombre_casilla'.
-    * Parámetros: nombre de la casilla a describir.
-    */
+     * Parámetros: nombre de la casilla a describir.
+     */
 
     //Método que ejecuta todas las acciones relacionadas con el comando 'lanzar dados'.
 
 
 
-    //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'. 
+    //Método que ejecuta todas las acciones relacionadas con el comando 'salir carcel'.
     private void salirCarcel(Jugador jugador) {
-            if(!jugador.isEnCarcel()){
-                System.out.println("El jugador no se encuentra encarcelado actualmente");
-                return;
-            }
-            if(jugador.getFortuna() >= 500_000f){
-                jugador.setFortuna(jugador.getFortuna() - 500_000f);
-                System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
-                jugador.setTiradasCarcel(0);
-                jugador.setEnCarcel(false);
-                System.out.println(jugador.getNombre() + " ha salido de la cárcel.");
-            }else{
-                //ver si tiene propiedades para vender o hipotecar o vender edificios
-                //jugador.setEliminado(true);
-            }
+        if(!jugador.isEnCarcel()){
+            System.out.println("El jugador no se encuentra encarcelado actualmente");
+            return;
+        }
+        if(jugador.getFortuna() >= 500_000f){
+            jugador.setFortuna(jugador.getFortuna() - 500_000f);
+            System.out.println(jugador.getNombre() + " ha pagado 500.000 y ha salido de la cárcel.");
+            jugador.setTiradasCarcel(0);
+            jugador.setEnCarcel(false);
+            System.out.println(jugador.getNombre() + " ha salido de la cárcel.");
+        }else{
+            //ver si tiene propiedades para vender o hipotecar o vender edificios
+            //jugador.setEliminado(true);
+        }
     }
     private void salirCarcel(Jugador jugador, int i) {
         jugador.setTiradasCarcel(0);
@@ -643,8 +661,11 @@ public class Menu {
         System.out.println(tablero.toString());
 
     }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> main
 
     //Método para edificar
     public void edificar(String tipo){
@@ -695,6 +716,7 @@ public class Menu {
 
         System.out.printf("Nueva edificación: %s en el solar: %s. La fortuna de %s se reduce en %.2f€.%n", tipo, casilla.getNombre(), propietario.getNombre(), coste);
     }
+<<<<<<< HEAD
     private void venderEdificios(String tipo, String nombre, String cantidad) {
         //Obtener jugador actual
         Jugador jugadorActual =  jugadores.get(indiceJugadorActual);
@@ -728,6 +750,8 @@ public class Menu {
             System.out.println("Se vendieron " + eliminados + " " + tipo + "(s) en " + nombre + ".");
         }
     }
+=======
+>>>>>>> main
 
     //Método para listar todos los edificios construidos en el juego
     private void listarEdificios(){
@@ -988,5 +1012,8 @@ public class Menu {
 
 
     }
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
 }

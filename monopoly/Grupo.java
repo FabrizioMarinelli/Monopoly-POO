@@ -64,11 +64,21 @@ class Grupo {
 
     //Getter del color del grupo
     public String getColorGrupo(){
-         return colorGrupo;
+        return colorGrupo;
+
     }
 
     //Getter de las casillas del grupo
     public ArrayList<Casilla> getMiembros() {
         return miembros;
+    }
+
+    //Método para saber el dinero generado por un grupo
+    public float getDineroGenerado() {
+        float total = 0;
+        for (Casilla c : miembros) {
+            total += c.getDineroGenerado();   // ya lo tienes implementado en Casilla
+        }
+        return total;
     }
 }
