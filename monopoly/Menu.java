@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.Iterator;
 public class Menu {
 
     //Atributos
@@ -177,6 +178,31 @@ public class Menu {
                     deshipotecarPropiedad(comandoSplit[1]);
                 }
                 break;
+<<<<<<< Updated upstream
+=======
+            case "edificar":
+                edificar(comandoSplit[1]);
+                break;
+            case "vender":
+                if (comandoSplit.length != 4) {
+                    System.out.println("Comando invalido");
+                    return;
+                }
+                venderEdificios(comandoSplit[1],comandoSplit[2],comandoSplit[3]);
+                break;
+            case "estadisticas":
+                if (comandoSplit.length == 1) {
+                // Imprime estadísticas de la partida completa
+                estadisticasJuego();
+                } else if (comandoSplit.length == 2) {
+                    // Comando para las estadisticas de un jugador
+                    estadisticasJugador(comandoSplit[1]);
+                } else {
+                    System.out.println("Comando invalido");
+                }
+                break;
+
+>>>>>>> Stashed changes
             default:
                 System.out.println("Comando invalido");
                 break;
@@ -343,7 +369,6 @@ public class Menu {
             return;
         }
     }
-
     private void hipotecarPropiedad(String nombre){
         Jugador jugadorActual = jugadores.get(indiceJugadorActual);
         Casilla propiedadHipotecar;
@@ -353,6 +378,16 @@ public class Menu {
             //Comprobar si coincide con la propiedad solicitada
             if(propiedadJugador.getNombre().equalsIgnoreCase(nombre)){
                 propiedadHipotecar = propiedadJugador;
+
+                //Comprobar tipo
+                if (!propiedadHipotecar.getTipo().equalsIgnoreCase("solar")){
+                    System.out.println("Esta propiedad no es un solar");
+                }
+                //Comprobar si tiene edificios
+                if(!propiedadHipotecar.getEdificios().isEmpty()){
+                    System.out.println("No se puede hipotecar una propiedad con edificios");
+                    return;
+                }
 
                 //Comprobar si esta hipotecada
                 if (!propiedadHipotecar.getPropiedadHipotecada()){
@@ -385,6 +420,10 @@ public class Menu {
             if(propiedadJugador.getNombre().equalsIgnoreCase(nombre)){
                 propiedadHipotecar = propiedadJugador;
 
+                //Comprobar tipo
+                if (!propiedadHipotecar.getTipo().equalsIgnoreCase("solar")){
+                    System.out.println("Esta propiedad no es un solar");
+                }
                 //Comprobar si esta hipotecada
                 if (propiedadHipotecar.getPropiedadHipotecada()){
 
@@ -455,6 +494,7 @@ public class Menu {
         //System.out.println(jugadorActual.getNombre() + " ha comprado la casilla '" + nombre + "' por " + precio + ".");
 
     }
+
     /*Método que realiza las acciones asociadas al comando 'describir avatar'.
     * Parámetro: id del avatar a describir.
     */
@@ -603,4 +643,350 @@ public class Menu {
         System.out.println(tablero.toString());
 
     }
+<<<<<<< Updated upstream
+=======
+
+    //Método para edificar
+    public void edificar(String tipo){
+        tipo = tipo.toLowerCase();
+        Jugador propietario = jugadores.get(indiceJugadorActual);
+        Casilla casilla = propietario.getAvatar().getLugar();
+
+        float coste;
+
+        switch(tipo){
+            case "casa":
+                coste = casilla.getValorCasa();
+                break;
+            case "hotel":
+                coste = casilla.getValorHotel();
+                break;
+            case "piscina":
+                coste = casilla.getValorPiscina();
+                break;
+            case "pista_deporte":
+                coste = casilla.getValorPistaDeporte();
+                break;
+            default:
+                System.out.println("Tipo de edificio no válido: " + tipo);
+                return;
+        }
+
+        if(!casilla.posibleConstruir(tipo, propietario)){
+            System.out.println("No se cumplen los requesitos para construir el edificio que solicita en este solar\n");
+            return;
+        }
+        if(propietario.getFortuna() < coste){
+            System.out.println("La fortuna no es suficiente para construir el edificio\n");
+            return;
+        }
+        //Modificamos la fortuna del jugador y actualizamos sus estadisticas
+        propietario.setFortuna(propietario.getFortuna() - coste);
+        propietario.sumarDineroInvertido(coste);
+
+        //Creamos el nuevo edificio
+        Edificio nuevoEdificio = new Edificio(tipo, propietario, casilla, coste);
+
+        //Le asignamos al jugador su nuevo edificio
+        propietario.anhadirEdificio(nuevoEdificio);
+
+        //Le asignamos a la casilla su nuevo edificio
+        casilla.anhadirEdificio(nuevoEdificio);
+
+        System.out.printf("Nueva edificación: %s en el solar: %s. La fortuna de %s se reduce en %.2f€.%n", tipo, casilla.getNombre(), propietario.getNombre(), coste);
+    }
+    private void venderEdificios(String tipo, String nombre, String cantidad) {
+        //Obtener jugador actual
+        Jugador jugadorActual =  jugadores.get(indiceJugadorActual);
+
+        //Buscar casilla
+        Casilla casilla = tablero.encontrar_casilla(nombre);
+        if (casilla == null){
+            System.out.println("La casilla " + nombre + " no se encuentra en el tablero.");
+            return;
+        }
+        //Comprobar que la casilla es propiedad del jugador
+        if (!casilla.getDuenho().getNombre().equalsIgnoreCase(jugadorActual.getNombre())){
+            System.out.println("La casilla " + nombre + " no le pertenece al jugador.");
+            return;
+        }
+        //Operatoria cantidad vendida
+        int cantidadPorVender = Integer.parseInt(cantidad);
+        int eliminados = 0;
+        Iterator<Edificio> iterador = jugadorActual.getEdificios().iterator();
+        while (iterador.hasNext() && eliminados < cantidadPorVender){
+            Edificio e = iterador.next();
+            if(e.getTipo().equalsIgnoreCase(tipo) && e.getCasilla().getNombre().equalsIgnoreCase(nombre)){
+                jugadorActual.sumarFortuna(e.getCoste());
+                iterador.remove();
+                eliminados++;
+            }
+        }
+        if (eliminados == 0) {
+            System.out.println("No hay edificios de tipo " + tipo + " para vender en " + nombre + ".");
+        } else {
+            System.out.println("Se vendieron " + eliminados + " " + tipo + "(s) en " + nombre + ".");
+        }
+    }
+
+    //Método para listar todos los edificios construidos en el juego
+    private void listarEdificios(){
+        ArrayList<Edificio> todosEdificios = new ArrayList<>();
+
+        //Recorremos todos los jugadores y acumulamos sus edificios
+        for(Jugador j : jugadores){
+            todosEdificios.addAll(j.getEdificios());
+        }
+
+        //Caso de que aún no se hayan construído edificios
+        if(todosEdificios.isEmpty()){
+            System.out.println("No hay edificios construidos todavía.");
+            return;
+        }
+
+        //Mostramos la información de cada edificio añadido al ArrayList
+        for(Edificio e : todosEdificios){
+            String grupoColor = (e.getCasilla() != null && e.getCasilla().getGrupo() != null)
+                    ? e.getCasilla().getGrupo().getColorGrupo()
+                    : "-";
+
+            System.out.printf("""
+                {
+                    id: %s,
+                    propietario: %s,
+                    casilla: %s,
+                    grupo: %s,
+                    coste: %.0f
+                },
+                """,
+                    e.getId(), (e.getPropietario() != null ? e.getPropietario().getNombre() : "-"), (e.getCasilla() != null ? e.getCasilla().getNombre() : "-"), grupoColor, e.getCoste()
+            );
+        }
+    }
+
+    //Método para mostrar todos los edificios de un grupo
+    private void listarEdificiosGrupo(String colorGrupo){
+        //Pasamos todo a mayúsculas
+        colorGrupo = colorGrupo.toUpperCase();
+
+        //Creamos un arraylist donde almacenaremos todas las casillas del grupo solicitado por el usuario
+        ArrayList<Casilla> casillasGrupo = new ArrayList<>();
+        //Recorremos todas las casillas del tablero
+        for(ArrayList<Casilla> lado : tablero.getPosiciones()){
+            for(Casilla c : lado){
+                //Comprobamos que la casilla tenga un grupo asignado y lo comparamos por el grupo pasado como parámetro
+                if(c.getGrupo() != null && c.getGrupo().getColorGrupo().equals(colorGrupo)){
+                    //En caso de que sea igual que el grupo pasado por parámetro lo añadimos al ArrayList
+                    casillasGrupo.add(c);
+                }
+            }
+        }
+        //Caso en el que el ArrayList está vacío, puede ser por dos motivcs, notificados por salida de pantalla
+        if(casillasGrupo.isEmpty()){
+            System.out.println("No existe edificios en este grupo o no existe este grupo, comprueba el comando escrito");
+        }
+        //Variables para saber que es posible construír
+        boolean posibleCasa = false;
+        boolean posibleHotel = false;
+        boolean posiblePiscina = false;
+        boolean posiblePista = false;
+
+        //Recorremos cada casilla del ArrayList
+        for(Casilla c : casillasGrupo){
+            //Creamos nuevos ArrayList para almacenar lo que tenemos construído en el grupo
+            ArrayList<String> casa = new ArrayList<>();
+            ArrayList<String> hotel = new ArrayList<>();
+            ArrayList<String> piscina = new ArrayList<>();
+            ArrayList<String> pista = new ArrayList<>();
+            //Recorremos todos los edificios del grupo y los añadimos a su correspondiente ArrayList para trabajar
+            //con ellos en un futuro y ver que se puede edificar a mayores
+            for(Edificio e : c.getEdificios()){
+                switch(e.getTipo()){
+                    case "casa":
+                        casa.add(e.getId());
+                        break;
+                    case "hotel":
+                        hotel.add(e.getId());
+                        break;
+                    case "piscina":
+                        piscina.add(e.getId());
+                        break;
+                    case "pista":
+                        pista.add(e.getId());
+                        break;
+                    default:
+                }
+            }
+            //Imprimimos los edificios pertenecientes al grupo
+            System.out.printf("""
+                {
+                    propiedad: %s,
+                    hoteles: %s,
+                    casas: %s,
+                    piscinas: %s,
+                    pistasDeDeporte: %s,
+                    alquiler: %.0f
+                },
+                """,
+                    c.getNombre(),
+                    hotel.isEmpty() ? "-" : hotel,
+                    casa.isEmpty() ? "-" : casa,
+                    piscina.isEmpty() ? "-" : piscina,
+                    pista.isEmpty() ? "-" : pista,
+                    c.getImpuesto()
+            );
+
+            //Comprobamos que podemos edificar en nuestro grupo tal como está su situación actual
+            if(casa.size() < 4){
+                posibleCasa = true;
+            }
+            if(casa.size() == 4 && hotel.isEmpty()){
+                posibleHotel = true;
+            }
+            if(hotel.size() == 1 && piscina.isEmpty()){
+                posiblePiscina = true;
+            }
+            if(hotel.size() == 1 && pista.isEmpty()){
+                posiblePista = true;
+            }
+        }
+
+        //Imprimimos que se puede construír finalmente en el grupo
+        //Creamos dos nuevos ArrayList para almacenar el tipo de propiedades que se pueden y no se pueden cosntruír
+        ArrayList<String> siSePuede = new ArrayList<>();
+        ArrayList<String> noSePuede = new ArrayList<>();
+
+        if(posibleCasa){
+            siSePuede.add("casas");
+        }else{
+            noSePuede.add("casas");
+        }
+        if(posibleHotel){
+            siSePuede.add("hotel");
+        }else{
+            noSePuede.add("hotel");
+        }
+        if(posiblePiscina){
+            siSePuede.add("piscina");
+        }else{
+            noSePuede.add("piscinas");
+        }
+        if(posiblePista){
+            siSePuede.add("pistas de deporte");
+        }else{
+            noSePuede.add("pistas de deporte");
+        }
+
+        //Comprobamos que no sean vacías y si no lo son imprimimos su contentido
+        if (!siSePuede.isEmpty())
+            System.out.println("Se puede edificar " + String.join(" y ", siSePuede) + ".");
+
+        if (!noSePuede.isEmpty())
+            System.out.println("No se pueden construir " + String.join(" ni ", noSePuede) + ".");
+    }
+
+    //Método para imprimir todas las estadisticas de un jugador
+    private void estadisticasJugador(String nombreJugador){
+        Jugador objetivo = null;
+
+        for (Jugador j : jugadores) {
+            if (j.getNombre().equalsIgnoreCase(nombreJugador)) {
+                objetivo = j;
+                break;
+            }
+        }
+
+        if (objetivo == null) {
+            System.out.println("El jugador " + nombreJugador + " no existe.");
+            return;
+        }
+        System.out.println("{");
+        System.out.println("  dineroInvertido: " + objetivo.getDineroInvertido() + ",");
+        System.out.println("  pagoTasasEImpuestos: " + objetivo.getPagoTasasEImpuestos() + ",");
+        System.out.println("  pagoDeAlquileres: " + objetivo.getPagoDeAlquileres() + ",");
+        System.out.println("  cobroDeAlquileres: " + objetivo.getCobroDeAlquileres() + ",");
+        System.out.println("  pasarPorCasillaDeSalida: " + objetivo.getPasarPorCasillaDeSalida() + ",");
+        System.out.println("  premiosInversionesOBote: " + objetivo.getPremiosInversionesOBote() + ",");
+        System.out.println("  vecesEnLaCarcel: " + objetivo.getVecesEnLaCarcel());
+        System.out.println("}");
+
+    }
+
+    // Método pra imprimir las estadisticas de la partida
+    private void estadisticasJuego(){
+        //Definimos todas las variables necesarias
+        Casilla casillaMasRentable = null;
+        float max = -1f;
+
+        Grupo grupoMasRentable = null;
+        float max2 = -1f;
+
+        Casilla casillaMasFrecuentada = null;
+        int max3 = -1;
+
+        Jugador jugadorMasVueltas = null;
+        int max4 = -1;
+
+        Jugador jugadorEnCabeza = null;
+        float maxFortuna = -1f;
+
+        //Calculamos cual es la casilla mas rentable
+        for (ArrayList<Casilla> lado : tablero.getPosiciones()) {
+            for (Casilla c : lado) {
+                if (c.getDineroGenerado() > max) {
+                    max = c.getDineroGenerado();
+                    casillaMasRentable = c;
+                }
+            }
+        }
+
+        //Calculamos cual es el grupo mas rentable
+        for (Grupo g : tablero.getGrupos()) {
+            float generado = g.getDineroGenerado();
+            if (generado > max2) {
+                max2 = generado;
+                grupoMasRentable = g;
+            }
+        }
+
+        //Calculamos la casilla mas frecuentada
+        for (ArrayList<Casilla> lado : tablero.getPosiciones()) {
+            for (Casilla c : lado) {
+                if (c.getVecesPisada() > max3) {
+                    max3 = c.getVecesPisada();
+                    casillaMasFrecuentada = c;
+                }
+            }
+        }
+
+        //Calculamos cual es el jugador que lleva mas vueltas
+        for (Jugador j : jugadores) {
+            if (j.getVueltas() > max4) {
+                max4 = j.getVueltas();
+                jugadorMasVueltas = j;
+            }
+        }
+
+        //Calculamos cual es el jugador que va en cabeza segun su fortuna
+        for (Jugador j : jugadores) {
+            // Fortuna total = dinero en mano + valor de propiedades y edificaciones
+            float totalFortuna = j.getFortuna() + j.getDineroInvertido();
+            if (totalFortuna > maxFortuna) {
+                maxFortuna = totalFortuna;
+                jugadorEnCabeza = j;
+            }
+        }
+
+        //Imprimimos todas las estadisticas
+        System.out.println("{");
+        System.out.println("    casillaMasRentable: " + (casillaMasRentable != null ? casillaMasRentable.getNombre() : "Ninguna") + ",");
+        System.out.println("    grupoMasRentable: " + (grupoMasRentable != null ? grupoMasRentable.getColorGrupo() : "Ninguna") + ",");
+        System.out.println("    casillaMasFrecuentada: " + (casillaMasFrecuentada != null ? casillaMasFrecuentada.getNombre() : "Ninguna") + ",");
+        System.out.println("    jugadorMasVueltas: " + (jugadorMasVueltas != null ? jugadorMasVueltas.getNombre() : "Ninguno") + ",");
+        System.out.println("    jugadorEnCabeza: " + (jugadorEnCabeza != null ? jugadorEnCabeza.getNombre() : "NInguno"));
+        System.out.println("}");
+
+
+    }
+>>>>>>> Stashed changes
 }

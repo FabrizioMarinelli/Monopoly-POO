@@ -375,6 +375,111 @@ public class Casilla {
     /* Método para mostrar información de una casilla en venta.
      * Valor devuelto: texto con esa información.
      */
+<<<<<<< Updated upstream
+=======
+
+
+    //Realizamos las reglas de edifcicación
+    //1.- Solo se puede construír en la casilla en la que está el jugador
+    //2.- No se puede tener más de 4 casas sin tener ningún hotel
+    //3.- No se puede tener una piscina/pista de deporte si no hay un hotel
+    //4.- No se puede construír má si ya están todos los edificios posibles en el grupo
+
+    //Todas las restricciones anteriores las implementamos dentro de un método boolean que nos devuelva si se puede construír eñ edificio o no
+    public boolean posibleConstruir(String tipo, Jugador jugador){
+        Casilla casilla = new Casilla();
+        //Solo se puede construir si el jugador es dueño de la casilla
+        if (this.getDuenho() == null || !this.getDuenho().equals(jugador)) {
+            System.out.println("No puedes construir en una propiedad que no te pertenece.");
+            return false;
+        }
+
+        //No se puede construir si la casilla está hipotecada
+        if(casilla.isHipotecada()){
+            System.out.println("No puedes construir en una propiedad hipotecada.");
+            return false;
+        }
+
+        //Contamos qué hay ya en la casilla
+        int casas = 0;
+        int hoteles = 0;
+        int piscinas = 0;
+        int pistas = 0;
+        //Para esto utilizamos un for-each
+        for(Edificio e : casilla.getEdificios()) {
+            switch (e.getTipo()) {
+                case "casa":
+                    casas++;
+                    break;
+                case "hotel":
+                    hoteles++;
+                    break;
+                case "piscina":
+                    piscinas++;
+                    break;
+                case "pista_deporte":
+                    pistas++;
+                    break;
+            }
+        }
+
+        //En función de lo que se quiera construír comprobamos unas cosas u otras
+        switch(tipo){
+            case "casa":
+                if(casas >= 4){
+                    System.out.println("Ya no se pueden construir más casas en este solar.");
+                    return false;
+                }
+                break;
+
+            case "hotel":
+                if(casas < 4){
+                    System.out.println("No puedes construir un hotel sin tener 4 casas primero.");
+                    return false;
+                }
+                if(hoteles >= 1){
+                    System.out.println("Ya existe un hotel en este solar.");
+                    return false;
+                }
+                break;
+
+            case "piscina":
+                if(hoteles == 0){
+                    System.out.println("No puedes construir una piscina sin tener un hotel.");
+                    return false;
+                }
+                if(piscinas >= 1){
+                    System.out.println("Ya existe una piscina en este solar.");
+                    return false;
+                }
+                break;
+
+            case "pista_deporte":
+                if(hoteles == 0){
+                    System.out.println("No puedes construir una pista de deporte sin tener un hotel.");
+                    return false;
+                }
+                if(pistas >= 1){
+                    System.out.println("Ya existe una pista de deporte en este solar.");
+                    return false;
+                }
+
+                break;
+        }
+
+        return true;
+    }
+
+
+    //Añadimos edificios
+    public void anhadirEdificio(Edificio e) {
+        edificios.add(e);
+    }
+    public void eliminarEdificio(Edificio e){
+        edificios.remove(e);
+    }
+
+>>>>>>> Stashed changes
     public String casEnVenta() {
         return "A";
     }
