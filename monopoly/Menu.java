@@ -44,6 +44,7 @@ public class Menu {
         }
         // Lectura mientras la entrada sea != "fin" o vacio
         while (!linea.equals("fin")) {
+            System.out.println(" ");
             analizarComando(linea);
 
             // Siguiente lectura para la próxima iteración
@@ -58,6 +59,7 @@ public class Menu {
             String linea;
             while ((linea = br.readLine()) != null) {
                 linea = linea.toLowerCase();
+                System.out.println(" ");
                 System.out.println(linea);
                 analizarComando(linea);
             }
@@ -333,7 +335,7 @@ public class Menu {
 
         //calculamos el valor total
         int valorTirada = tiradaDado1 + tiradaDado2;
-        System.out.println("Dados lanzados" + tiradaDado1 + "+" + tiradaDado2);
+        System.out.println("Dados lanzados " + tiradaDado1 + "+" + tiradaDado2);
 
         //comprobamos si se sacaron dobles
         if (tiradaDado1 == tiradaDado2) {
@@ -354,7 +356,7 @@ public class Menu {
         //Movemos al avatar el numero de posiciones que le corresponda
         if (!jugadorActual.isEnCarcel()) {
             avatar.moverAvatar(tablero.getPosiciones(), valorTirada);
-            System.out.println("El jugador" + " avanza " + valorTirada + " posiciones.");
+            System.out.println("El jugador avanza " + valorTirada + " posiciones.");
         } else{
             jugadorActual.setTiradasCarcel(jugadorActual.getTiradasCarcel() + 1);
             if (jugadorActual.getTiradasCarcel() ==3){
@@ -403,19 +405,17 @@ public class Menu {
                     propiedadHipotecar.setPropiedadHipotecada(true);
                     jugadorActual.anhadirHipoteca(propiedadHipotecar);
                     jugadorActual.sumarFortuna(propiedadHipotecar.getHipoteca());
-                    System.out.println("Se ha sumado "+propiedadHipotecar.getHipoteca()+" a la fortuna del jugador");
+                    System.out.println(jugadorActual.getNombre() + " recibe "+propiedadHipotecar.getHipoteca()+" por la hipoteca de " + propiedadHipotecar.getNombre() + ". No puede recibir alquileres ni edificar en el grupo " +propiedadHipotecar.getGrupo().getColorGrupo());
                     return;
 
                 }else {
-                    System.out.println("Esta propiedad ya esta hipotecada");
+                    System.out.println(jugadorActual.getNombre()+ " no puede hipotecar " + propiedadHipotecar.getNombre()+". Ya esta hipotecada");
                     return;
                 }
             }
         }
-
         //Si no es de su propiedad avisa al jugador
-        System.out.println("La propiedad no pertenece al jugador");
-
+        System.out.println(jugadorActual.getNombre()+ " no puede hipotecar " + nombre +". No es una propiedad que le pertenece");
     }
     private void deshipotecarPropiedad(String nombre){
         Jugador jugadorActual = jugadores.get(indiceJugadorActual);
@@ -440,7 +440,7 @@ public class Menu {
                         propiedadHipotecar.setPropiedadHipotecada(false);
                         jugadorActual.eliminarHipoteca(propiedadHipotecar);
                         jugadorActual.sumarFortuna(-(propiedadHipotecar.getHipoteca()));
-                        System.out.println("Se ha cobrado "+propiedadHipotecar.getHipoteca()+", la propiedad ya no esta hipotecada ");
+                        System.out.println(jugadorActual.getNombre() + " paga "+propiedadHipotecar.getHipoteca()+" por deshipotecar " + propiedadHipotecar.getNombre() + ". Ahora puede recibir alquileres y edificar en el grupo " +propiedadHipotecar.getGrupo().getColorGrupo());
                         return;
                     } else{
                         System.out.println("El jugador no posee suficiente dinero");
@@ -449,14 +449,14 @@ public class Menu {
 
 
                 }else {
-                    System.out.println("Esta propiedad no esta hipotecada");
+                    System.out.println(jugadorActual.getNombre() +" no puede deshipotecar "+propiedadJugador.getNombre() +". No esta hipotecada");
                     return;
                 }
             }
         }
 
         //Si no es de su propiedad avisa al jugador
-        System.out.println("La propiedad no pertenece al jugador");
+        System.out.println(jugadorActual.getNombre() + " no puede deshipotecar " +nombre + ". No es una propiedad que le pertenece");
 
     }
     /*Método que ejecuta todas las acciones realizadas con el comando 'comprar nombre_casilla'.
@@ -718,12 +718,21 @@ public class Menu {
         //Operatoria cantidad vendida
         int cantidadPorVender = Integer.parseInt(cantidad);
         int eliminados = 0;
+
+        //Convertir tipo plural a singular
+        String tipoEdificio = tipo;
+        if(tipoEdificio.equalsIgnoreCase("casas")){
+            tipoEdificio = "casa";
+        } else if(tipoEdificio.equalsIgnoreCase("hoteles")){
+            tipoEdificio = "hotel";
+        }
         Iterator<Edificio> iterador = jugadorActual.getEdificios().iterator();
         while (iterador.hasNext() && eliminados < cantidadPorVender){
             Edificio e = iterador.next();
-            if(e.getTipo().equalsIgnoreCase(tipo) && e.getCasilla().getNombre().equalsIgnoreCase(nombre)){
+            if(e.getTipo().equalsIgnoreCase(tipoEdificio) && e.getCasilla().getNombre().equalsIgnoreCase(nombre)){
                 jugadorActual.sumarFortuna(e.getCoste());
                 iterador.remove();
+                e.getCasilla().eliminarEdificio(e);
                 eliminados++;
             }
         }

@@ -191,12 +191,13 @@ public class Casilla {
         return edificios;
     }
 
+
     public float getValorCasa(){
         return valorCasa;
     }
 
     public float getValorHotel(){
-        return valorHotel;
+        return this.valorHotel;
     }
 
     public float getValorPiscina(){
@@ -267,7 +268,6 @@ public class Casilla {
                 }
                 //Si la propiedad tiene un propietario distinto al jugador que cayó en ella, debe de cobrarle el alquiler
                 System.out.println(actual.getNombre() + " ha caído en " + nombre + ", propiedad de " + duenho.getNombre() + ".");
-                System.out.println("Debe pagar " + impuesto + "€ de alquiler.");
 
 
                 //se resta el alquiler a la fortuna del jugador que cayó en la casilla
@@ -455,13 +455,14 @@ public class Casilla {
                 //this.duenho = solicitante;
                 this.setDuenho(solicitante);
                 solicitante.anhadirPropiedad(this);
-                System.out.println("El jugador" + solicitante.getNombre() + "haa compprado la propiedad:" + nombre);
+                System.out.println("El jugador " + solicitante.getNombre() + "ha comprado la propiedad: " + this.nombre);
+                return;
             }
-            System.out.println("El jugador" + solicitante.getNombre() + "no dispone del dinero necesario para comprar la propiedad.");
-
+            System.out.println("El jugador " + solicitante.getNombre() + " no dispone del dinero necesario para comprar la propiedad.");
+            return;
         }
         System.out.println("La propiedad ya pertenece a " +  duenho.getNombre());
-
+        return;
     }
 
     /*Método para añadir valor a una casilla. Utilidad:

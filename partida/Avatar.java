@@ -116,10 +116,6 @@ public class Avatar {
 
         //actualizamos las estadisticas de la partida
         nuevaCasilla.incrementarVecesPisada();
-
-        //Imprimimos donde se encuentra el avatar ahora
-        System.out.println(jugador.getNombre() + "se ha movido a la casilla: " + nuevaCasilla.getNombre());
-
     }
 
     /*Método que permite generar un ID para un avatar. Sólo lo usamos en esta clase (por ello es privado).

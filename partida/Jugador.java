@@ -137,11 +137,11 @@ public class Jugador {
     }
 
     public ArrayList<Casilla> getPropiedades() {
-        return propiedades;
+        return this.propiedades;
     }
 
     public ArrayList<Casilla> getHipotecas(){
-        return hipotecas;
+        return this.hipotecas;
     }
 
     public void setPropiedades(ArrayList<Casilla> propiedades) {
@@ -149,7 +149,7 @@ public class Jugador {
     }
 
     public ArrayList<Edificio> getEdificios() {
-        return edificios;
+        return this.edificios;
     }
 
     public float getDineroInvertido() {
