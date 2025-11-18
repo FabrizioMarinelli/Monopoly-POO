@@ -278,7 +278,7 @@ public class Casilla {
                 //y se le suma el precio del alquiler a la fortuna de propietario
                 duenho.sumarFortuna(impuesto);
                 //modificamos las estadisticas de los jugadores
-                actual.sumarPagoTasasEImpuestos(impuesto);
+                actual.sumarPagoDeAlquileres(impuesto);
                 duenho.sumarCobroDeAlquileres(impuesto);
 
                 //actualizmos las estadisticas de la partida
@@ -530,7 +530,6 @@ public class Casilla {
 
     //Todas las restricciones anteriores las implementamos dentro de un método boolean que nos devuelva si se puede construír eñ edificio o no
     public boolean posibleConstruir(String tipo, Jugador jugador){
-        Casilla casilla = new Casilla();
         //Solo se puede construir si el jugador es dueño de la casilla
         if (this.getDuenho() == null || !this.getDuenho().equals(jugador)) {
             System.out.println("No puedes construir en una propiedad que no te pertenece.");
@@ -538,7 +537,7 @@ public class Casilla {
         }
 
         //No se puede construir si la casilla está hipotecada
-        if(casilla.isHipotecada()){
+        if(this.isHipotecada()){
             System.out.println("No puedes construir en una propiedad hipotecada.");
             return false;
         }
@@ -549,7 +548,7 @@ public class Casilla {
         int piscinas = 0;
         int pistas = 0;
         //Para esto utilizamos un for-each
-        for(Edificio e : casilla.getEdificios()) {
+        for(Edificio e : this.getEdificios()) {
             switch (e.getTipo()) {
                 case "casa":
                     casas++;

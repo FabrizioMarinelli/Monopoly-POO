@@ -102,6 +102,7 @@ public class Avatar {
         //Si el jugador pasa por la casilla de salida debe recibir 2 millones y sumar una vuelta a ese jugador
         if ( posicionActual + valorTirada >= totalCasillas){
             jugador.sumarFortuna(2000000);
+            jugador.sumarPasarPorCasillaDeSalida(2000000);
             jugador.setVueltas(jugador.getVueltas() + 1);
             System.out.println(jugador.getNombre() + "ha pasado por la casilla de salida, recibe 2 millones de euros");
         }
