@@ -391,6 +391,7 @@ public class Menu {
                 //Comprobar tipo
                 if (!propiedadHipotecar.getTipo().equalsIgnoreCase("solar")){
                     System.out.println("Esta propiedad no es un solar");
+                    return;
                 }
                 //Comprobar si tiene edificios
                 if(!propiedadHipotecar.getEdificios().isEmpty()){
