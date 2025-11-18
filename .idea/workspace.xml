@@ -6,15 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="77930734-b7bd-4a8e-af55-26c655ddd805" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comandos4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/comandos4.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monopoly/Casilla.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Casilla.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monopoly/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/monopoly/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Casilla.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Edificio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Edificio.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Menu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/monopoly/Tablero.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Monopoly-POO/comandos4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Monopoly-POO/comandos4.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/partida/Avatar.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Avatar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partida/Jugador.java" beforeDir="false" afterPath="$PROJECT_DIR$/partida/Jugador.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +36,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/FabrizioMarinelli/Monopoly-POO.git&quot;,
-    &quot;accountId&quot;: &quot;58c50528-186d-4b85-82dc-b4450b35bc2c&quot;
+    &quot;accountId&quot;: &quot;da6d8202-d032-4363-b272-574637010d6d&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -51,18 +47,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MonopolyETSE.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/carolina-silva/Escritorio/POO/Monopoly-POO"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MonopolyETSE.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;maria&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/carolina-silva/Escritorio/POO/Monopoly-POO&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="MonopolyETSE" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="monopoly.MonopolyETSE" />
