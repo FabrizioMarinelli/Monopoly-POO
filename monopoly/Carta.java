@@ -67,7 +67,7 @@ public class Carta {
                 // Movemos usando moverAvatar, que ya gestiona pasar por Salida
                 jugador.getAvatar().moverAvatar(tablero.getPosiciones(), avance);
                 break;
-            case "CÁRCEL":
+            case "CARCEL":
                 //Se mete al jugador en la carcel
                 jugador.encarcelar(tablero.getPosiciones());
                 break;
